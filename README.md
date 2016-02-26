@@ -15,17 +15,17 @@
 	
 * **Game State Representation**
   * _State_ class will contain:
-	  * vector< vector< char >> board - Contains the board pieces
-		* int num_moves - Total number of moves made in the game
+	  * `vector< vector< char >> board` - Contains the board pieces
+		* `int num_moves` - Total number of moves made in the game
 	* Previous moves/Undo function:
 	  * Previous states will be stored in a vector of States. This will allow for "undoing" of moves
 		
 * **Operators** - Possible moves according to a given piece
 
-|      | Moves   |       |
-|:----:|:-------:|:-----:|
+|   -   | Moves   |   -   |
+| :---: | :---: | :---: |
 | Left | Forward | Right |
-|      |   o/x   |       |
+|   -  |   o/x   |   -   |
 | Left | Forward | Right |
 
 * **Operator Validity**
