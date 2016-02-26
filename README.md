@@ -32,10 +32,11 @@
 * **Operators** - Possible moves according to a given piece
 
 |   -   | Moves   |   -   |
-| :---: | :---: | :---: |
-| Left | Forward | Right |
-|   -  |   o/x   |   -   |
-| Left | Forward | Right |
+| :---: | :---:   | :---: |
+| Left  | Forward | Right |
+|   -   |    o    |   -   |
+|   -   |    x    |   -   |
+| Left  | Forward | Right |
 
 * **Operator Validity**
 
