@@ -21,6 +21,7 @@
 	  * Previous states will be stored in a vector of States. This will allow for "undoing" of moves
 		
 * **Operators** - Possible moves according to a given piece
+
 | Left | Forward | Right |
 |      |   o/x   |       |
 | Left | Forward | Right |
