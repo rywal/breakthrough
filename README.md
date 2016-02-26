@@ -7,17 +7,17 @@
 
 * **Board Representation** - Showing the board and location of its pieces
 
-  * White = 'o'
+ * White = 'o'
 	
-	* Black = 'x'
+ * Black = 'x'
 	
-	* Empty = '_'
+ * Empty = '_'
 	
-	* Rows are indexed: 1-8 (bottom to top)
+ * Rows are indexed: 1-8 (bottom to top)
 	
-	* Columns are indexed: a-h (left to right)
+ * Columns are indexed: a-h (left to right)
 	
-	* Client will **always** start with white
+ * Client will **always** start with white
 	
 * **Game State Representation**
 
