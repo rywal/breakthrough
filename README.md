@@ -1,8 +1,6 @@
 # CSCE315 - Project 2
 ## Breakthrough Online
 
-***
-
 ###Compile##
 
 * To compile the game, use `make game`
