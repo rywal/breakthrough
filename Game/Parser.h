@@ -9,4 +9,8 @@
 
 #include <stdio.h>
 
+class Parser {
+    
+};
+
 #endif /* Parser_h */

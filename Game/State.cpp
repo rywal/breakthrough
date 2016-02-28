@@ -1,9 +1,10 @@
 //
 //  State.cpp
 //  
-//
-//  Created by Ryan Walters on 2/28/16.
-//
-//
 
 #include "State.h"
+
+
+#define WHITE 'o'
+#define BLACK 'x'
+#define EMPTY '_'
