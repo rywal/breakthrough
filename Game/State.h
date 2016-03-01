@@ -15,7 +15,6 @@ class State {
 private:
     
     //  The board is an 8x8 playing board
-    //
     //  Rows are indexed 1-8, (BOTTOM to top)
     //  Columns are indexed A-H (Left to right)
     //

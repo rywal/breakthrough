@@ -8,6 +8,7 @@
 #define Game_h
 
 #include <stdio.h>
+#include "state.h"
 
 //  Possible moves from each piece
 //
@@ -23,6 +24,8 @@ private:
     //  Holds the current state of the game
     State current_state;
     
+    //0 for white, 1 for black;
+    bool whose_turn;
     
     //  Vector of all previous game states
     //
@@ -34,6 +37,9 @@ public:
     Game();
     Game(Game g);
     ~Game();
+    
+bool valid_move(column, row, DIRECTION);    
+State update(column, row, DIRECTION);
     
     
 };
