@@ -36,7 +36,7 @@ State Game::update(char column, int row, DIRECTION d){
 		printf("%s", current_state.get_board()[1][2]);
 		//temp_board[row][column/* - ascii number for A */]=
 		
-		
+		 
 		
 	}
 	else {
