@@ -41,7 +41,7 @@ public:
     void display_board();
 	int game_status(State);
 
-	State update(char column, int row, DIRECTION d);
+	State update(int row, char column, DIRECTION d);
     
 };
 

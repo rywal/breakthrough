@@ -23,6 +23,7 @@ State::State(){
 				board[i].push_back(EMPTY);
 		}
 	}
+	person_is_player=true;
 	num_moves=0;
 	status=-1;
 }	
