@@ -32,8 +32,14 @@ State::State(State *s){
 	
 	for(int i=0; i<8; i++)
 		for(int j=0; j<8; j++)
-					board[i][j]=s.board[i][j];
+					board[i][j]=s->board[i][j];
 	
-	num_moves=s.num_moves;
-	status=s.status;
+	num_moves=s->num_moves;
+	status=s->status;
 }
+
+vector<vector<char > > State::get_board(){return board;}
+
+bool State::get_turn(){return person_is_player;}
+
+void State::set_turn(bool turn){person_is_player=turn;}

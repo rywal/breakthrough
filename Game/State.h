@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <vector>
 
+using namespace std;
+
 class State {
     
 private:
@@ -36,7 +38,6 @@ private:
     //  FALSE if current player is opponent(could be AI or human)
     bool person_is_player;
     
-    
     //  Status of game
     //
     //  -1 for unfinished game
@@ -53,8 +54,10 @@ public:
     State(State *s);
     
     //  Destructor
-    ~State();
-    
+    ~State(){}
+vector<vector<char> > get_board();    
+bool get_turn();
+void set_turn(bool turn);
 };
 
 #endif /* State_h */

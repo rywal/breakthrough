@@ -14,7 +14,7 @@ endif
 all: game
 
 game:
-	$(cc) -std=c++11 -g -o breakthrough Game/Game.cpp
+	$(cc) -std=c++11 -g -o breakthrough Game/Game.cpp Game/State.cpp
 
 clean:
 	rm -f *.o a.out breakthrough
