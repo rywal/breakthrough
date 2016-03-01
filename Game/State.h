@@ -7,6 +7,7 @@
 #ifndef State_h
 #define State_h
 
+#include <iostream>
 #include <stdio.h>
 #include <vector>
 
@@ -55,9 +56,11 @@ public:
     
     //  Destructor
     ~State(){}
-vector<vector<char> > get_board();    
-bool get_turn();
-void set_turn(bool turn);
+    
+	vector<vector<char> > get_board();    
+	void set_board(int i, int j, char a);
+	bool get_turn();
+	void set_turn(bool turn);
 };
 
 #endif /* State_h */

@@ -15,7 +15,7 @@
 //  Here, FORWARD direction is assumed to be the direction a piece can legally advance in
 //  Here, LEFT/RIGHT is assumed to be FORWARD one place and LEFT/RIGHT one place
 //    LEFT/RIGHT are assumed to be with respect to the game board(Column A will always be "most left", Column H will always be "most right")
-enum DIRECTION { LEFT, FORWARD, RIGHT };
+enum DIRECTION { LEFT, FWD, RIGHT };
 
 class Game {
 
@@ -35,14 +35,13 @@ public:
     
     Game();
     Game(const Game &g);
-    ~Game();
+    ~Game(){}
     
-bool valid_move(char column, int row, DIRECTION d);    
-int game_status(State);
+	bool valid_move(char column, int row, DIRECTION d);
+    void display_board();
+	int game_status(State);
 
-State update(char column, int row, DIRECTION d);
-
-    
+	State update(char column, int row, DIRECTION d);
     
 };
 

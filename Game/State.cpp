@@ -11,18 +11,18 @@
 
 
 State::State(){
-	
+	vector<char> empty;
 	for(int i=0; i<8; i++){
+		board.push_back(empty);
 		for(int j=0; j<8; j++){
 			if (i==1 || i==0)
 				board[i].push_back(WHITE);
 			else if (i==6 || i==7)
-				board[i].push_back(BLACK);
+				board[i].push_back(BLACK);			
 			else
 				board[i].push_back(EMPTY);
 		}
 	}
-	
 	num_moves=0;
 	status=-1;
 }	
@@ -39,6 +39,8 @@ State::State(State *s){
 }
 
 vector<vector<char > > State::get_board(){return board;}
+
+void State::set_board(int i, int j, char a){ board[i][j]=a;}
 
 bool State::get_turn(){return person_is_player;}
 

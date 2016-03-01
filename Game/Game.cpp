@@ -33,10 +33,8 @@ bool Game::valid_move(char column, int row, DIRECTION d){
 State Game::update(char column, int row, DIRECTION d){
 
 	if(valid_move(column, row, d)){
-		printf("%s", current_state.get_board()[1][2]);
-		//temp_board[row][column/* - ascii number for A */]=
 		
-		 
+		
 		
 	}
 	else {
@@ -44,7 +42,19 @@ State Game::update(char column, int row, DIRECTION d){
 	}
 }
 
+void Game::display_board(){
+
+	for (int i=0; i<8; i++){
+		for(int j=0; j<8; j++){
+			cout<<'|'<<current_state.get_board()[i][j];
+		}
+		cout<<"|\n";	
+	}	
+}
+
 int main(){
 	Game new_game;
+	new_game.display_board();
+	
 	
 }
