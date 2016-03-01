@@ -37,11 +37,11 @@ public:
     Game(const Game &g);
     ~Game(){}
     
-	bool valid_move(char column, int row, DIRECTION d);
+	bool valid_move(int row, char column, DIRECTION d);
     void display_board();
 	int game_status(State);
 
-	State update(int row, char column, DIRECTION d);
+	State update(char column, int row, DIRECTION d);
     
 };
 

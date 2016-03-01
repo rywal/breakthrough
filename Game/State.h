@@ -61,6 +61,7 @@ public:
 	void set_board(int i, int j, char a);
 	bool get_turn();
 	void set_turn(bool turn);
+	void switch_turn();
 };
 
 #endif /* State_h */
