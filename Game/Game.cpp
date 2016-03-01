@@ -33,10 +33,10 @@ bool Game::valid_move(char column, int row, DIRECTION d){
 State Game::update(char column, int row, DIRECTION d){
 
 	if(valid_move(column, row, d)){
-		//vector<vector<char > temp_board=current_state.get_board();
+		printf("%s", current_state.get_board()[1][2]);
 		//temp_board[row][column/* - ascii number for A */]=
 		
-		
+		 
 		
 	}
 	else {
@@ -45,5 +45,6 @@ State Game::update(char column, int row, DIRECTION d){
 }
 
 int main(){
-
+	Game new_game;
+	
 }
