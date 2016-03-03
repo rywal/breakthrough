@@ -1,15 +1,18 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string>
 #include <iostream>
 #include <cstring>
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <regex>
+#include <boost/regex.hpp>
 using namespace std;
 
 //------GLOBAL-VARIABLE------//
 ofstream output;
-int error;
+int error; //Give error message for debugging/output
 int line_number;
 string delimiters;
 size_t buffer_size;
@@ -19,12 +22,113 @@ string f_or_h;
 vector<string> command_line;
 //---------------------------//
 
+bool is_difficulty(string d){
+	if(d=="easy"||d=="medium"||d=="hard"){
+		return true;
+	} else{
+		return false;
+	}
+}
+
+bool is_ip(string s){
+	char* temp;
+	vector<string> ips;
+	
+	temp = strtok((char*)s.c_str(), ".");
+	while (temp != NULL){
+		ips.push_back(temp);
+		temp = strtok (NULL, ".");
+	}
+	if(ips.size()!=4){
+		output<<"IP address did not have correct amount of sets of numbers"<<endl;
+		error = 6;
+		return false;
+	}
+	char *ptr;
+	for(int i = 0; i<ips.size();i++){
+		if(atoi(ips[i].c_str())==0 && ips[i].c_str()!="0"){ //NOT AN INTEGER
+			output<<"In an IP check: " << ips[i].c_str()<<" is not an Integer"<<endl;
+			error = 7;
+			return false;
+		} else if(atoi(ips[i].c_str())<=255){ //An IP address must not go beyond 255
+			//Do nothing
+		} else{
+			output<<"IP is out of range"<<endl;
+			error = 8;
+			return false;
+		}
+	}
+	return true;
+	
+}
+
+
+bool is_server(string s){
+	cout<<"In server"<<endl;
+	
+	if(is_ip(s)){
+		cout<<"Yes!!"<<endl;
+	} else{
+		cout<<"Not valid IP"<<endl;
+	}
+}
 
 void do_command(vector<string> command_line){
 	for(int i = 0; i<command_line.size();i++){
 		cout<<command_line[i]<<endl;
 	}
-	cout<<"End of Doc"<<endl;
+	if(command_line.size()==0){
+		output<<"No input was given"<<endl;
+	} else if(command_line[0]=="exit"){//Checking for "EXIT" command - Preventing SegFault
+		if(command_line.size()==1){
+			output<<"-=-=-=-=-EXITED-=-=-=-=-"<<endl;
+			exit(0);
+		} else{
+			output<<"Exit had too many arguments"<<endl;
+			error=1;
+		}
+	} else if(command_line[0]=="display"){
+		if(command_line.size()==1){
+			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+		} else{
+			output<<"Display had too many arguments"<<endl;
+			error=2;
+		}
+	} else if(command_line[0]=="undo"){
+		if(command_line.size()==1){
+			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+		} else{
+			output<<"Undo had too many arguments"<<endl;
+			error=3;
+		}
+	} else if(command_line[0]=="human-ai"){
+		if(command_line.size()==2){
+			if(is_difficulty(command_line[1])){
+				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			} else{
+				output<<command_line[1]<<" is not a difficulty"<<endl;
+				error=4;
+			}
+		} else{
+			output<<"Human-AI had incorrect amount of arguments"<<endl;
+			error=5;
+		}
+			
+	} else if(command_line[0]=="ai-ai"){
+		if(command_line.size()==6){
+			if(is_server(command_line[1])){
+				
+			} else{
+				output<<command_line[1]<<" is not a server"<<endl;
+				error=7;
+			}
+		} else{
+			output<<"AI-AI had incorrect amount of arguments"<<endl;
+			error=8;
+		}
+	}
+	
+	cout<<"EOF"<<endl<<endl;
 }
 
 //------------------------------------------//
@@ -37,23 +141,30 @@ void clear_input(){ //  This
 	cin.ignore();//     cleared (For sure)
 }
 
-void handle_action(string command, char* pch){
+void handle_action(string command, bool is_file){
+	output<<"Given input: ";
+	if(is_file){
+		//------Lexer-for-file-input-commands------//
+		pch = strtok (str, delimiters.c_str()); //tokenizes the command
+		//-----------------------------------------//
+	} else{
+		//------Lexer-for-hand-typed-commands------//
+		pch = strtok ((char*)command.c_str(), delimiters.c_str()); //tokenizes the command
+		//-----------------------------------------//
+	}
 	//------Continued-Lexer-for-both-inputs------//
-	output<<"Given input: " <<command<<endl;
+	
 	while (pch != NULL) {
 		string temp = pch;
 		transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
 		command_line.push_back(temp); //put the token into a vector to make the command easy to parse
+		output<<temp<<" "; // For output file
 		pch = strtok (NULL, delimiters.c_str());
 	}
+	output<<endl; //For output file
 	//-------------------------------------------//
-	error=0;
-	if(command_line[0]=="exit" && command_line.size()==1){//Checking for "EXIT" command - Preventing SegFault
-		output<<"-=-=-=-=-EXITED-=-=-=-=-"<<endl;
-		exit(0);
-	} else{	
-		do_command(command_line);   /*/---Where-the-command-is-executed--/*/
-	}
+	error=0;	
+	do_command(command_line);   /*/---Where-the-command-is-executed--/*/
 	if(error==0){
 		output<<"Line number "<<line_number<<" was successful!"<<endl; //Prints status to Output file
 	} else {
@@ -71,11 +182,11 @@ int main() {
 	//------Definining-Variables------//
 	int i=0;
 	buffer_size=0;
-	delimiters = " ,();\n";
+	delimiters = " \n";
 	line_number=1;
 	//--------------------------------//
 
-	printf("Intake from file [f] or hand[h]?\n(\".txt\"'s in input will be assumed as a file)\n>");//Giving better testing handles
+	printf("file[f] or hand[h]?\n>");//Giving better testing handles
 	cin >>  f_or_h;
 	clear_input();//Clears CIN
 	int loop=1;
@@ -114,12 +225,7 @@ int main() {
 				getline(&str, &buffer_size, input); 
 				string command(str);
 				printf("The given command is: %s\n",str); //prints the command back to the user
-				
-				//------Lexer-for-file-input-commands------//
-				pch = strtok (str, delimiters.c_str()); //tokenizes the command
-				//-----------------------------------------//
-				
-				handle_action(command, pch); /*/---Where-the-command-is-processed--/*/
+				handle_action(command, true); /*/---Where-the-command-is-processed--/*/
 			}
 			fclose(input);
 		} else{
@@ -134,12 +240,7 @@ int main() {
 			printf("Please enter a command:\n>");
 			string command;
 			getline (cin,command);
-			
-			//------Lexer-for-hand-typed-commands------//
-			pch = strtok ((char*)command.c_str(), delimiters.c_str()); //tokenizes the command
-			//-----------------------------------------//
-			
-			handle_action(command, pch); /*/---Where-the-command-is-processed--/*/
+			handle_action(command, false); /*/---Where-the-command-is-processed--/*/
 		}
 	}
 	output<<"-=-=-=-=-=END-=-=-=-=-=-";
