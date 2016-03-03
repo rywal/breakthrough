@@ -4,6 +4,7 @@
 #include <cstring>
 #include <vector>
 #include <fstream>
+#include <algorithm>
 using namespace std;
 
 //------GLOBAL-VARIABLE------//
@@ -19,9 +20,11 @@ vector<string> command_line;
 //---------------------------//
 
 
-
 void do_command(vector<string> command_line){
-	
+	for(int i = 0; i<command_line.size();i++){
+		cout<<command_line[i]<<endl;
+	}
+	cout<<"End of Doc"<<endl;
 }
 
 //------------------------------------------//
@@ -36,14 +39,16 @@ void clear_input(){ //  This
 
 void handle_action(string command, char* pch){
 	//------Continued-Lexer-for-both-inputs------//
+	output<<"Given input: " << command<<endl;
 	while (pch != NULL) {
-		command_line.push_back(pch); //put the token into a vector to make the command easy to parse
+		string temp = pch;
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
+		command_line.push_back(temp); //put the token into a vector to make the command easy to parse
 		pch = strtok (NULL, delimiters.c_str());
 	}
 	//-------------------------------------------//
-	
 	error=0;
-	if(command_line[0]=="EXIT" && command_line.size()==1){//Checking for "EXIT" command - Preventing SegFault
+	if(command_line[0]=="exit" && command_line.size()==1){//Checking for "EXIT" command - Preventing SegFault
 		output<<"-=-=-=-=-EXITED-=-=-=-=-"<<endl;
 		exit(0);
 	} else{	
@@ -77,7 +82,6 @@ int main() {
 	int loop=1;
 	while (loop==1){
 		if(f_or_h != "h" && f_or_h != "H" && f_or_h != "f" && f_or_h != "F" && !strstr(f_or_h.c_str(),".txt")){
-			clear_input();//Clears CIN
 			printf("Please re-enter your prefered input method [f\\h]\n>");
 			cin >>  f_or_h;
 		} else{loop=0;}
@@ -109,21 +113,24 @@ int main() {
 			getline(&str, &buffer_size, input); 
 			string command(str);
 			printf("The given command is: %s\n",str); //prints the command back to the user
+			
 			//------Lexer-for-file-input-commands------//
 			pch = strtok (str, delimiters.c_str()); //tokenizes the command
 			//-----------------------------------------//
+			
 			handle_action(command, pch); /*/---Where-the-command-is-processed--/*/
 		}
 		fclose(input);
 	} else if (f_or_h == "h" || f_or_h == "H"){
 		while(1){
-			clear_input();
-			printf("Please enter a command:\n");
+			printf("Please enter a command:\n>");
 			string command;
 			getline (cin,command);
+			
 			//------Lexer-for-hand-typed-commands------//
 			pch = strtok ((char*)command.c_str(), delimiters.c_str()); //tokenizes the command
 			//-----------------------------------------//
+			
 			handle_action(command, pch); /*/---Where-the-command-is-processed--/*/
 		}
 	}
