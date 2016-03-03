@@ -39,7 +39,7 @@ void clear_input(){ //  This
 
 void handle_action(string command, char* pch){
 	//------Continued-Lexer-for-both-inputs------//
-	output<<"Given input: " << command<<endl;
+	output<<"Given input: " <<command<<endl;
 	while (pch != NULL) {
 		string temp = pch;
 		transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
@@ -78,7 +78,6 @@ int main() {
 	printf("Intake from file [f] or hand[h]?\n(\".txt\"'s in input will be assumed as a file)\n>");//Giving better testing handles
 	cin >>  f_or_h;
 	clear_input();//Clears CIN
-	if(f_or_h == ""){f_or_h="h";} //Assume that you want to write by hand
 	int loop=1;
 	while (loop==1){
 		if(f_or_h != "h" && f_or_h != "H" && f_or_h != "f" && f_or_h != "F" && !strstr(f_or_h.c_str(),".txt")){
@@ -100,6 +99,7 @@ int main() {
 			while (loop==1){ //Ask for input multiple times
 				printf("Please input the file you would like to use. \n(Please note, this is automated, no other input will be read)\n>");
 				cin>>input_f;
+				if(input_f == "h" || input_f == "H"){loop==0; break;}//User changed mind
 				string input_w = "Game/" + input_f;
 				filename = "Game/" + input_f;
 				input=fopen(input_w.c_str(), "r");
@@ -109,19 +109,27 @@ int main() {
 				}else{loop=0;}
 			}
 		}
-		while(!feof(input)){ //get a command from the file
-			getline(&str, &buffer_size, input); 
-			string command(str);
-			printf("The given command is: %s\n",str); //prints the command back to the user
-			
-			//------Lexer-for-file-input-commands------//
-			pch = strtok (str, delimiters.c_str()); //tokenizes the command
-			//-----------------------------------------//
-			
-			handle_action(command, pch); /*/---Where-the-command-is-processed--/*/
+		if(input_f != "h" && input_f != "H"){
+			while(!feof(input)){ //get a command from the file
+				getline(&str, &buffer_size, input); 
+				string command(str);
+				printf("The given command is: %s\n",str); //prints the command back to the user
+				
+				//------Lexer-for-file-input-commands------//
+				pch = strtok (str, delimiters.c_str()); //tokenizes the command
+				//-----------------------------------------//
+				
+				handle_action(command, pch); /*/---Where-the-command-is-processed--/*/
+			}
+			fclose(input);
+		} else{
+			f_or_h="h";
+			printf("The user has transfered into the hand-typed command mode\n");
+			output<<"The user has transfered into the hand-typed command mode"<<endl;
+			clear_input();//Clears CIN
 		}
-		fclose(input);
-	} else if (f_or_h == "h" || f_or_h == "H"){
+	}
+	if (f_or_h == "h" || f_or_h == "H"){
 		while(1){
 			printf("Please enter a command:\n>");
 			string command;
