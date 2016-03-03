@@ -11,10 +11,13 @@ endif
 
 .PHONY: all game clean
 
-all: game
+all: game parser
 
 game:
 	$(cc) -std=c++11 -g -o breakthrough Game/Game.cpp Game/State.cpp
+	
+parser:
+	$(cc) -std=c++11 -g -o par Game/Parser.cpp
 
 clean:
-	rm -f *.o a.out breakthrough
+	rm -f *.o a.out breakthrough par
