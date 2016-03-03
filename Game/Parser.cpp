@@ -4,6 +4,7 @@
 #include <cstring>
 #include <vector>
 #include <fstream>
+using namespace std;
 
 //------GLOBAL-VARIABLE------//
 ofstream output;
@@ -13,7 +14,19 @@ string delimiters;
 size_t buffer_size;
 char* str;
 char* pch;
+string f_or_h;
+vector<string> command_line;
 //---------------------------//
+
+
+
+void do_command(vector<string> command_line){
+	
+}
+
+//------------------------------------------//
+//-----------Below-is-main-intake-----------//
+//------------------------------------------//
 
 void clear_input(){ //  This
 	cin.clear();   //   Ensures
@@ -21,39 +34,30 @@ void clear_input(){ //  This
 	cin.ignore();//     cleared (For sure)
 }
 
-int file_input(FILE *input, string filename, bool is_open){
-	//--------Local-Variables--------//
-	vector<string> command_list;
-	//-------------------------------//
-	
-	while(!feof(input)){ //get a command from the file
-		getline(&str, &buffer_size, input); 
-		string command(str);
-		printf("The given command is: %s\n",str); //prints the command back to the user
-		pch = strtok (str, delimiters.c_str()); //tokenizes the command
-		while (pch != NULL) {
-			command_list.push_back(pch); //put the token into a vector to make the command easy to parse
-			pch = strtok (NULL, delimiters.c_str());
-		}
-		if(command_list[0]=="EXIT" && command_list.size()==1){//Checking for "EXIT" command - Preventing SegFault
-			output<<"-=-=-=-=-EXITED-=-=-=-=-"<<endl;
-			exit(0);
-		} else{	
-		//This marks the beginning of the query/command interpretation
-			//query_or_command(db, command_list);   //////////////////////////////////////////////////////////////////
-		}
-		if(error==0){
-			output<<"Line number "<<line_number<<" was successful!"<<endl; //Prints status to Output file
-		} else {
-			output<<"Line number "<<line_number<<" FAILED!"<<endl; //Prints status to Output file
-		}
-		//prepare for next command
-		command_list.clear();
-		free(pch);
-		line_number++;
-		error=0;
+void handle_action(string command, char* pch){
+	//------Continued-Lexer-for-both-inputs------//
+	while (pch != NULL) {
+		command_line.push_back(pch); //put the token into a vector to make the command easy to parse
+		pch = strtok (NULL, delimiters.c_str());
 	}
-	fclose(input);
+	//-------------------------------------------//
+	
+	error=0;
+	if(command_line[0]=="EXIT" && command_line.size()==1){//Checking for "EXIT" command - Preventing SegFault
+		output<<"-=-=-=-=-EXITED-=-=-=-=-"<<endl;
+		exit(0);
+	} else{	
+		do_command(command_line);   /*/---Where-the-command-is-executed--/*/
+	}
+	if(error==0){
+		output<<"Line number "<<line_number<<" was successful!"<<endl; //Prints status to Output file
+	} else {
+		output<<"Line number "<<line_number<<" FAILED!"<<endl; //Prints status to Output file
+	}
+	//prepare for next command
+	command_line.clear();
+	free(pch);
+	line_number++;
 }
 
 int main() {
@@ -63,11 +67,9 @@ int main() {
 	int i=0;
 	buffer_size=0;
 	delimiters = " ,();\n";
-	vector<string> command_list;
 	line_number=1;
 	//--------------------------------//
-	
-	string f_or_h;
+
 	printf("Intake from file [f] or hand[h]?\n(\".txt\"'s in input will be assumed as a file)\n>");//Giving better testing handles
 	cin >>  f_or_h;
 	clear_input();//Clears CIN
@@ -90,7 +92,7 @@ int main() {
 			filename = "Game/" + f_or_h;
 			input=fopen(input_w.c_str(), "r");
 		}else{
-			loop=1;
+			int loop=1;
 			while (loop==1){ //Ask for input multiple times
 				printf("Please input the file you would like to use. \n(Please note, this is automated, no other input will be read)\n>");
 				cin>>input_f;
@@ -103,33 +105,26 @@ int main() {
 				}else{loop=0;}
 			}
 		}
-		///////////////////////////////////////////////////////////////////////////////////////////////////////
-		//file_input(db, input, filename, false);//Where the action happens
+		while(!feof(input)){ //get a command from the file
+			getline(&str, &buffer_size, input); 
+			string command(str);
+			printf("The given command is: %s\n",str); //prints the command back to the user
+			//------Lexer-for-file-input-commands------//
+			pch = strtok (str, delimiters.c_str()); //tokenizes the command
+			//-----------------------------------------//
+			handle_action(command, pch); /*/---Where-the-command-is-processed--/*/
+		}
+		fclose(input);
 	} else if (f_or_h == "h" || f_or_h == "H"){
 		while(1){
-			error=0;
+			clear_input();
 			printf("Please enter a command:\n");
 			string command;
-			std::getline (std::cin,command);
-			
-			pch = strtok ((char*)command.c_str(), delimiters.c_str());//Lexer
-				while (pch != NULL) {
-					command_list.push_back(pch);
-					pch = strtok (NULL, delimiters.c_str());
-			}
-			if(command_list[0]=="EXIT" && command_list.size()==1){//Preventing SegFault
-				exit(0);
-			} else{
-				//query_or_command(db, command_list); ////////////////////////////////////////////////////////////////
-				}
-			if(error==0){
-				output<<"Command number "<<line_number<<" was successful!"<<endl;
-			} else{
-				output<<"Command number "<<line_number<<" Failed!"<<endl;
-			}
-			command_list.clear();
-			free(pch);
-			line_number++;
+			getline (cin,command);
+			//------Lexer-for-hand-typed-commands------//
+			pch = strtok ((char*)command.c_str(), delimiters.c_str()); //tokenizes the command
+			//-----------------------------------------//
+			handle_action(command, pch); /*/---Where-the-command-is-processed--/*/
 		}
 	}
 	output<<"-=-=-=-=-=END-=-=-=-=-=-";
