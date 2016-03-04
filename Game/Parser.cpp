@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <boost/regex.hpp>
+#include <cctype>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -122,14 +123,6 @@ bool is_dir(string d){
 	return (d=="fwd"||d=="left"||d=="right");	
 }
 
-bool con_com(){ //Stands for Contains_Comment
-	return (find(command_line.begin(), command_line.end(), ";")!=command_line.end()); //command_line is global variable
-}
-
-void handle_comment(){
-	/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
-}
-
 void do_command(vector<string> command_line){
 	if(command_line.size()==0){
 		output<<"No input was given"<<endl;
@@ -139,34 +132,30 @@ void do_command(vector<string> command_line){
 			output.close();
 			exit(0);
 		} else{
-			if(con_com()){
-				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
-			} else{
-				output<<"Exit had too many arguments"<<endl;
-				error=1;
-			}
+			output<<"Exit had too many arguments"<<endl;
+			error=1;
 		}
+	} else if(command_line[0]==";"){
+		if(command_line.size()==1){
+			printf("Empty comment");
+		}
+		for(int i=1; i<command_line.size(); i++){
+			printf("%s ", command_line[i].c_str());
+		}
+		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
 			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 		} else{
-			if(con_com()){
-				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
-			} else{
-				output<<"Display had too many arguments"<<endl;
-				error=2;
-			}
+			output<<"Display had too many arguments"<<endl;
+			error=2;
 		}
 	} else if(command_line[0]=="undo"){
 		if(command_line.size()==1){
 			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 		} else{
-			if(con_com()){
-				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
-			} else{
-				output<<"Undo had too many arguments"<<endl;
-				error=3;
-			}
+			output<<"Undo had too many arguments"<<endl;
+			error=3;
 		}
 	} else if(command_line[0]=="human-ai"){
 		if(command_line.size()==2){
@@ -177,14 +166,9 @@ void do_command(vector<string> command_line){
 				error=4;
 			}
 		} else{
-			if(con_com()){
-				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
-			} else{
-				output<<"Human-AI had incorrect amount of arguments"<<endl;
-				error=5;
-			}
-		}
-			
+			output<<"Human-AI had incorrect amount of arguments"<<endl;
+			error=5;
+		}	
 	} else if(command_line[0]=="ai-ai"){
 		if(command_line.size()==6){
 			if(is_server(command_line[1])){
@@ -205,12 +189,8 @@ void do_command(vector<string> command_line){
 				//Error given in is_server
 			}
 		} else{
-			if(con_com()){
-				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
-			} else{
-				output<<"AI-AI had incorrect amount of arguments"<<endl;
-				error=15;
-			}
+			output<<"AI-AI had incorrect amount of arguments"<<endl;
+			error=15;
 		}
 	} else if(command_line[0].size()==2){
 		if(command_line.size()==2){
@@ -233,12 +213,8 @@ void do_command(vector<string> command_line){
 				error = 18;
 			}
 		} else{
-			if(con_com()){
-				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
-			} else{
-				output<<"Move had incorrect amount of arguments"<<endl;
-				error=19;
-			}
+			output<<"Move had incorrect amount of arguments"<<endl;
+			error=19;
 		}
 	}
 }
@@ -263,6 +239,11 @@ void handle_action(string command, bool is_file){
 		//------Lexer-for-hand-typed-commands------//
 		pch = strtok ((char*)command.c_str(), delimiters.c_str()); //tokenizes the command
 		//-----------------------------------------//
+	}
+	if(is_file){
+		string temp = pch;
+		temp.erase(std::remove(temp.begin(), temp.end(), ' '), temp.end());
+		temp.erase(std::remove(temp.begin(), temp.end(), '\n'), temp.end());
 	}
 	//------Continued-Lexer-for-both-inputs------//
 	
@@ -336,8 +317,11 @@ int main() {
 			while(!feof(input)){ //get a command from the file
 				getline(&str, &buffer_size, input); 
 				string command(str);
-				printf("The given command is: %s\n",str); //prints the command back to the user
-				handle_action(command, true); /*/---Where-the-command-is-processed--/*/
+				//command..erase(remove_if(command.begin(), command.end(), isspace), command.end());
+				//command.erase(std::remove(command.begin(), command.end(), ' '), command.end());
+				//command.erase(std::remove(command.begin(), command.end(), '\n'), command.end());
+				printf("The given command is: %s",command.c_str()); //prints the command back to the user
+				handle_action(command.c_str(), true); /*/---Where-the-command-is-processed--/*/
 			}
 			fclose(input);
 		} else{
