@@ -1,13 +1,14 @@
+#include <algorithm>
+#include <boost/regex.hpp>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <regex>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include <iostream>
-#include <cstring>
 #include <vector>
-#include <fstream>
-#include <algorithm>
-#include <regex>
-#include <boost/regex.hpp>
+
 using namespace std;
 
 //------GLOBAL-VARIABLE------//
@@ -40,7 +41,7 @@ bool is_ip(string s){
 		temp = strtok (NULL, ".");
 	}
 	if(ips.size()!=4){
-		output<<"IP address did not have correct amount of sets of numbers"<<endl;
+		//IP address did not have correct amount of sets of numbers
 		error = 6;
 		return false;
 	}
@@ -59,24 +60,68 @@ bool is_ip(string s){
 		}
 	}
 	return true;
-	
+}
+
+bool is_hostname(string h){
+	if(h.size()>=49){
+		output<<"Hostname cannot exceed 49 characters"<<endl;
+		error = 9;
+		return false;
+	}
+	for(int i=0; i<h.size();i++){
+		if(!isalnum(h[i])&&(h[i]!='-')){
+			output<<h[i]<<" is an invalid character for a hostname"<<endl;
+			error = 10;
+			return false;
+		}
+	}
+	return true;
 }
 
 
 bool is_server(string s){
-	cout<<"In server"<<endl;
-	
-	if(is_ip(s)){
-		cout<<"Yes!!"<<endl;
+	if(is_ip(s) || is_hostname(s)){
+		error = 0;
+		return true;
 	} else{
-		cout<<"Not valid IP"<<endl;
+		if(error=6){ //Prevent false negatives in Output.txt
+			output<<"IP address did not have correct amount of sets of numbers"<<endl;
+		}
+		//Error is given by is_ip/is_hostname
+		return false;
 	}
 }
 
-void do_command(vector<string> command_line){
-	for(int i = 0; i<command_line.size();i++){
-		cout<<command_line[i]<<endl;
+bool is_port(string p){
+	for(int i=0; i<p.size();i++){
+		if(!isdigit(p[i])){
+			output<<p[i]<<" is not a valid character in a port"<<endl;
+			error = 11;
+			return false;
+		}
 	}
+	if(atoi(p.c_str())>0){
+		return true;
+	} else{
+		output<<"A port must be a postive integer."<<endl;
+		error = 12;
+		return false;
+	}
+}
+
+bool is_dir(string d){
+	return (d=="fwd"||d=="left"||d=="right");	
+}
+
+bool con_com(){ //Stands for Contains_Comment
+	return (find(command_line.begin(), command_line.end(), ";")!=command_line.end()); //command_line is global variable
+}
+
+void handle_comment(){
+	/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+}
+
+void do_command(vector<string> command_line){
 	if(command_line.size()==0){
 		output<<"No input was given"<<endl;
 	} else if(command_line[0]=="exit"){//Checking for "EXIT" command - Preventing SegFault
@@ -84,22 +129,34 @@ void do_command(vector<string> command_line){
 			output<<"-=-=-=-=-EXITED-=-=-=-=-"<<endl;
 			exit(0);
 		} else{
-			output<<"Exit had too many arguments"<<endl;
-			error=1;
+			if(con_com()){
+				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			} else{
+				output<<"Exit had too many arguments"<<endl;
+				error=1;
+			}
 		}
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
 			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 		} else{
-			output<<"Display had too many arguments"<<endl;
-			error=2;
+			if(con_com()){
+				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			} else{
+				output<<"Display had too many arguments"<<endl;
+				error=2;
+			}
 		}
 	} else if(command_line[0]=="undo"){
 		if(command_line.size()==1){
 			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 		} else{
-			output<<"Undo had too many arguments"<<endl;
-			error=3;
+			if(con_com()){
+				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			} else{
+				output<<"Undo had too many arguments"<<endl;
+				error=3;
+			}
 		}
 	} else if(command_line[0]=="human-ai"){
 		if(command_line.size()==2){
@@ -110,25 +167,70 @@ void do_command(vector<string> command_line){
 				error=4;
 			}
 		} else{
-			output<<"Human-AI had incorrect amount of arguments"<<endl;
-			error=5;
+			if(con_com()){
+				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			} else{
+				output<<"Human-AI had incorrect amount of arguments"<<endl;
+				error=5;
+			}
 		}
 			
 	} else if(command_line[0]=="ai-ai"){
 		if(command_line.size()==6){
 			if(is_server(command_line[1])){
-				
+				if(is_port(command_line[2])){
+					if(is_difficulty(command_line[4])&& is_difficulty(command_line[5])){
+						error=0;
+						/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+					} else{
+						output<<"Incorrect input for difficulty"<<endl;
+						error=13;
+					}
+				} else{
+					output<<command_line[2]<<" is not a port"<<endl;
+					error=14;
+				}
 			} else{
 				output<<command_line[1]<<" is not a server"<<endl;
-				error=7;
+				//Error given in is_server
 			}
 		} else{
-			output<<"AI-AI had incorrect amount of arguments"<<endl;
-			error=8;
+			if(con_com()){
+				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			} else{
+				output<<"AI-AI had incorrect amount of arguments"<<endl;
+				error=15;
+			}
+		}
+	} else if(command_line[0].size()==2){
+		if(command_line.size()==2){
+			char tc = command_line[0][0];//tc, standing for Temporary Char
+			if(tc=='a'||tc=='b'||tc=='c'||tc=='d'||tc=='e'||tc=='f'||tc=='g'){
+				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
+				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
+					if(is_dir(command_line[1])){
+						/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+					} else{
+						output<<command_line[1]<<" is not a valid direction"<<endl;
+						error = 16;
+					}
+				} else{
+					output<<t2<<" is not a valid row number"<<endl;
+					error = 17;
+				}
+			} else{
+				output<<tc<<" is not a valid column letter"<<endl;
+				error = 18;
+			}
+		} else{
+			if(con_com()){
+				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			} else{
+				output<<"Move had incorrect amount of arguments"<<endl;
+				error=19;
+			}
 		}
 	}
-	
-	cout<<"EOF"<<endl<<endl;
 }
 
 //------------------------------------------//

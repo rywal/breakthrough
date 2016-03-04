@@ -1,2 +1,14 @@
 -=-=-=-=-BEGIN=-=-=-=-=-
 The user has transfered into the hand-typed command mode
+Given input: display 
+Line number 1 was successful!
+Given input: undo 
+Line number 2 was successful!
+Given input: human-ai easy 
+Line number 3 was successful!
+Given input: e2 fwd 
+Line number 4 was successful!
+Given input: ai-ai ser 80 pass easy easy 
+Line number 5 was successful!
+Given input: exit 
+-=-=-=-=-EXITED-=-=-=-=-
