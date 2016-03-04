@@ -85,7 +85,9 @@ public:
 	bool valid_move(int row, char column, DIRECTION d);
     void display_board();
 	int game_status(State);
-
+	void save_state();
+	void undo();
+	void undo_to_person();
 	State update(char column, int row, DIRECTION d);
     
 };
