@@ -1,14 +1,14 @@
--=-=-=-=-BEGIN=-=-=-=-=-
-The user has transfered into the hand-typed command mode
+=-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 Given input: display 
 Line number 1 was successful!
 Given input: undo 
 Line number 2 was successful!
 Given input: human-ai easy 
 Line number 3 was successful!
-Given input: e2 fwd 
+Given input: ai-ai 192.168.1.2 8080 p@s5w0rd hard easy 
 Line number 4 was successful!
-Given input: ai-ai ser 80 pass easy easy 
+Given input: e2 fwd 
 Line number 5 was successful!
-Given input: exit 
--=-=-=-=-EXITED-=-=-=-=-
+Given input: a8 right 
+Line number 6 was successful!
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=

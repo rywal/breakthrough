@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <regex>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -22,6 +23,14 @@ char* pch;
 string f_or_h;
 vector<string> command_line;
 //---------------------------//
+
+void  ctrl_c(int signo){//This is to protect formatting of output
+  if (signo == SIGINT){
+    output<<"=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=";
+	output.close();
+	exit(0);
+  }
+}
 
 bool is_difficulty(string d){
 	if(d=="easy"||d=="medium"||d=="hard"){
@@ -126,7 +135,8 @@ void do_command(vector<string> command_line){
 		output<<"No input was given"<<endl;
 	} else if(command_line[0]=="exit"){//Checking for "EXIT" command - Preventing SegFault
 		if(command_line.size()==1){
-			output<<"-=-=-=-=-EXITED-=-=-=-=-"<<endl;
+			output<<"=-=-=-=-=-=-EXITED-=-=-=-=-=-=";
+			output.close();
 			exit(0);
 		} else{
 			if(con_com()){
@@ -280,7 +290,7 @@ void handle_action(string command, bool is_file){
 
 int main() {
 	output.open ("Output.txt");
-	output<<"-=-=-=-=-BEGIN=-=-=-=-=-"<<endl;
+	output<<"=-=-=-=-=-=-BEGIN=-=-=-=-=-=-="<<endl;
 	//------Definining-Variables------//
 	int i=0;
 	buffer_size=0;
@@ -341,11 +351,13 @@ int main() {
 		while(1){
 			printf("Please enter a command:\n>");
 			string command;
+			signal(SIGINT, ctrl_c);
 			getline (cin,command);
+			signal(SIGINT, ctrl_c);
 			handle_action(command, false); /*/---Where-the-command-is-processed--/*/
 		}
 	}
-	output<<"-=-=-=-=-=END-=-=-=-=-=-";
+	output<<"=-=-=-=-=-=-=EOF-=-=-=-=-=-=-=";
 	output.close();
     return 0;
 }
