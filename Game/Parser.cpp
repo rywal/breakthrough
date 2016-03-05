@@ -136,12 +136,16 @@ void do_command(vector<string> command_line){
 			error=1;
 		}
 	} else if(command_line[0]==";"){
+		output<<"COMMENT: ";
 		if(command_line.size()==1){
 			printf("Empty comment");
+			output<<"EMPTY COMMENT";
 		}
 		for(int i=1; i<command_line.size(); i++){
+			output<<command_line[i].c_str()<<" ";
 			printf("%s ", command_line[i].c_str());
 		}
+		output<<endl;
 		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
@@ -216,6 +220,9 @@ void do_command(vector<string> command_line){
 			output<<"Move had incorrect amount of arguments"<<endl;
 			error=19;
 		}
+	} else{
+	output<<command_line[0].c_str()<<" is not a valid command"<<endl;
+	error=20;
 	}
 }
 
@@ -245,12 +252,16 @@ void handle_action(string command, bool is_file){
 		string temp = pch;
 		if(is_file){ //GET RID OF GARBAGE AT END--------//
 			string temp2;
-			for(int i=0; (i+2)<temp.size();i++){ //This will copy all but the last two elements
-				temp2.push_back(temp[i]);
-			}
-			for(int g=(temp.size()-2); g<temp.size();g++){//If string has null at end, delete them
-				if(!isspace(temp[g])){
-					temp2.push_back(temp[g]);
+			if(temp.size()<=2){
+				temp2=temp.c_str();
+			} else{
+				for(int i=0; (i+2)<temp.size();i++){ //This will copy all but the last two elements
+					temp2.push_back(temp[i]);
+				}
+				for(int g=(temp.size()-2); g<temp.size();g++){//If string has null at end, delete them
+					if(!isspace(temp[g])){
+						temp2.push_back(temp[g]);
+					}
 				}
 			}
 			temp=temp2.c_str();//Put new temp into old temp 
@@ -321,24 +332,10 @@ int main() {
 			}
 		}
 		if(input_f != "h" && input_f != "H"){
+			output<<"Input from file started"<<endl;
 			while(!feof(input)){ //get a command from the file
 				getline(&str, &buffer_size, input); 
 				string command(str);
-				/*string temp;
-				int loop = 0;
-				for(int i=0;i<command.size(); i++){
-					loop = 0;
-					if(command[i]!='\r' && command[i]!='\n'){
-						if((i+1)>command.size()){//There's 2 elements more
-							if(isspace(command[i]) && isspace(command[i+1])){
-								loop = 1; //skip this element
-							}
-						}
-						if(loop==0){
-							temp.push_back(command[i]);//Get rid of garbage values
-						}
-					}
-				}*/
 				printf("The given command is: %s",command.c_str()); //prints the command back to the user
 				handle_action(command.c_str(), true); /*/---Where-the-command-is-processed--/*/
 			}
