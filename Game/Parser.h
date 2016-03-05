@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <algorithm>
 #include <boost/regex.hpp>
 #include <cctype>
@@ -35,7 +34,7 @@ void  ctrl_c(int signo){//This is to protect formatting of output
 		exit(0);
 	} else if(signo == SIGSEGV){
 		if(error==0){
-			printf("\n\nThere has been a Segmentation Fault in a non-Paser file");
+			printf("\n\nThere has been a Segmentation Fault with unknown error");
 		}else{
 			printf("\n\nThere has been a Segmentation Fault. The error code is: %d", error);
 		}
@@ -147,6 +146,7 @@ DIRECTION to_dir(string d){
 
 void do_command(vector<string> command_line){
 	if(command_line.size()==0){
+		error=22;
 		output<<"No input was given"<<endl;
 	} else if(command_line[0]=="exit"){//Checking for "EXIT" command - Preventing SegFault
 		if(command_line.size()==1){
@@ -160,26 +160,34 @@ void do_command(vector<string> command_line){
 	} else if(command_line[0]==";"){
 		output<<"COMMENT: ";
 		printf("\n");
+		string single_string;
+		single_string.push_back(';');
+		single_string.push_back(' ');
 		if(command_line.size()==1){
 			printf("Empty comment");
 			output<<"EMPTY COMMENT";
 		}
 		for(int i=1; i<command_line.size(); i++){
 			output<<command_line[i].c_str()<<" ";
-			printf("%s ", command_line[i].c_str());
+			//printf("%s ", command_line[i].c_str());
+			for(int g=0;g<command_line[i].size(); g++){
+				single_string.push_back(command_line[i][g]);
+			}
+			single_string.push_back(' ');
 		}
+		cout<<endl<<single_string<<endl;
 		output<<endl;
 		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
-			new_game.display_toggle();
+			new_game.display_board();
 		} else{
 			output<<"Display had too many arguments"<<endl;
 			error=2;
 		}
 	} else if(command_line[0]=="undo"){
 		if(command_line.size()==1){
-			new_game.undo();
+			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 		} else{
 			output<<"Undo had too many arguments"<<endl;
 			error=3;
@@ -226,27 +234,35 @@ void do_command(vector<string> command_line){
 				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
-						cout<<tc<<" : "<<t2<<" : "<<command_line[1]<<'\n';
-						new_game.update(tc, t2-48 , to_dir(command_line[1].c_str()));
+						if(new_game.valid_move((int)t2, tc, to_dir(command_line[1].c_str()))){
+							new_game.update((int)t2, tc, to_dir(command_line[1].c_str()));
+						} else{
+							printf("%c%c is an invalid move\n", tc,t2);
+							output<<tc<<t2<<" is an invalid move"<<endl;
+							error = 16;
+						}
 					} else{
 						output<<command_line[1]<<" is not a valid direction"<<endl;
-						error = 16;
+						error = 17;
 					}
 				} else{
 					output<<t2<<" is not a valid row number"<<endl;
-					error = 17;
+					error = 18;
 				}
 			} else{
 				output<<tc<<" is not a valid column letter"<<endl;
-				error = 18;
+				error = 19;
 			}
 		} else{
 			output<<"Move had incorrect amount of arguments"<<endl;
-			error=19;
+			error=20;
 		}
-	} else{
-	output<<command_line[0].c_str()<<" is not a valid command"<<endl;
-	error=20;
+	}  else if(command_line.size()==1){//Is this a MOVE?
+		output<<"PASSWORD: "<<command_line[0]<<endl;
+		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+	}else{
+		output<<command_line[0].c_str()<<" is not a valid command"<<endl;
+		error=21;
 	}
 }
 
@@ -260,7 +276,7 @@ void clear_input(){ //  This
 	cin.ignore();//     cleared (For sure)
 }
 
-void handle_action(string command, bool is_file){
+void handle_action(string command, int &ln, bool is_file){
 	output<<"Given input: ";
 	if(is_file){
 		//------Lexer-for-file-input-commands------//
@@ -301,47 +317,55 @@ void handle_action(string command, bool is_file){
 	error=0;	
 	do_command(command_line);   /*/---Where-the-command-is-executed--/*/
 	if(error==0){
-		output<<"Line number "<<line_number<<" was successful!"<<endl; //Prints status to Output file
+		output<<"Command number "<<line_number<<" was successful!"<<endl; //Prints status to Output file
 	} else {
-		output<<"Line number "<<line_number<<" FAILED!"<<endl; //Prints status to Output file
+		output<<"Command number "<<line_number<<" FAILED!"<<endl; //Prints status to Output file
 	}
 	//prepare for next command
 	command_line.clear();
 	free(pch);
 	line_number++;
+	ln=line_number;
 }
-=======
-#include "Parser.h"
->>>>>>> 41d128b9f778ae587bf22f82239e0aa4727acb3e
 
-int main() {
-	//------Need-to-include-in-each-MAIN------//
-	output.open ("Output.txt");
-	output<<"=-=-=-=-=-=-BEGIN=-=-=-=-=-=-="<<endl;
-	line_number=1;
+void take_command(int &ln){
+	line_number=ln;
+	buffer_size=0;
+	delimiters = " \n";
+	printf("\n>");
+	string command;
 	signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
 	signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
-	//------^-^-^-^-^-^-^-^-^-^-^-^-^-^-^------//
-	
-	//Example of a main-----------------------------------------------------//
-	while(true){
-		printf("file[f] or hand[h]?\n>");//Giving better testing handles
-		cin >>  f_or_h;
-		clear_input();//Clears CIN
-		int loop=1;
-		while (loop==1){
-			if(f_or_h != "h" && f_or_h != "H" && f_or_h != "f" && f_or_h != "F" && !strstr(f_or_h.c_str(),".txt")){
-				printf("Please re-enter your prefered input method [f\\h]\n>");
-				cin >>  f_or_h;
-			} else{loop=0;}
+	getline (cin,command);
+	handle_action(command, ln, false); /*/---Where-the-command-is-processed--/*/
+}
+
+void parse_file(int &ln){
+	line_number=ln;
+	buffer_size=0;
+	delimiters = " \n";
+	char* input_file;
+	FILE *input;
+	string input_f="";//To prevent errors
+	printf("Please input the file you would like to use.\n>");
+	cin>>input_f;
+	string input_w = "Game/" + input_f;
+	input=fopen(input_w.c_str(), "r");
+	if(!input){
+		printf("\nThe file: %s not found!", input_w.c_str());
+		printf("\nPlease place the input folder as in the same folder as %s.\n\n", __FILE__);
+		output<<"The file: "<<input_w.c_str()<<" was not found"<<endl;
+	} else{
+		output<<"Input from file started"<<endl;
+		while(!feof(input)){ //get a command from the file
+			getline(&str, &buffer_size, input); 
+			string command(str);
+			printf("The given command is: %s",command.c_str()); //prints the command back to the user
+			signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
+			signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
+			handle_action(command.c_str(), ln, true); /*/---Where-the-command-is-processed--/*/
 		}
-		if(f_or_h == "f" || f_or_h == "F"){
-			parse_file(line_number);
-		} else if (f_or_h == "h" || f_or_h == "H"){
-			take_command(line_number);
-		}
+		fclose(input);
+		output<<"=-=-=-=-=-=-=EOF-=-=-=-=-=-=-=\n";
 	}
-	output.close();
-    return 0;
-	//Example of a main-----------------------------------------------------//
 }
