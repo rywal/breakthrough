@@ -23,6 +23,7 @@ char* str;
 char* pch;
 string f_or_h;
 vector<string> command_line;
+Game new_game;
 //---------------------------//
 
 void  ctrl_c(int signo){//This is to protect formatting of output
@@ -137,6 +138,7 @@ void do_command(vector<string> command_line){
 		}
 	} else if(command_line[0]==";"){
 		output<<"COMMENT: ";
+		printf<<endl;
 		if(command_line.size()==1){
 			printf("Empty comment");
 			output<<"EMPTY COMMENT";
@@ -149,7 +151,7 @@ void do_command(vector<string> command_line){
 		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
-			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			new_game.display_board();
 		} else{
 			output<<"Display had too many arguments"<<endl;
 			error=2;
@@ -196,14 +198,14 @@ void do_command(vector<string> command_line){
 			output<<"AI-AI had incorrect amount of arguments"<<endl;
 			error=15;
 		}
-	} else if(command_line[0].size()==2){
+	} else if(command_line[0].size()==2){//Is this a MOVE?
 		if(command_line.size()==2){
 			char tc = command_line[0][0];//tc, standing for Temporary Char
 			if(tc=='a'||tc=='b'||tc=='c'||tc=='d'||tc=='e'||tc=='f'||tc=='g'){
 				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
-						/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+						new_game.update(t2, tc, command_line[1]);
 					} else{
 						output<<command_line[1]<<" is not a valid direction"<<endl;
 						error = 16;
