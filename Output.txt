@@ -7,10 +7,15 @@ Given input: d7 fwd
 Line number 3 was successful!
 Given input: d3 fwd 
 Line number 4 was successful!
-Given input: e2 fwd 
-e2 is an invalid move
+Given input: d2 fwd 
+d2 is an invalid move
 Line number 5 FAILED!
 Given input: ; this is a comment 
 COMMENT: this is a comment 
 Line number 6 was successful!
 =-=-=-=-=-=-=EOF-=-=-=-=-=-=-=
+Given input: this is a test, which should fail 
+this is not a valid command
+Line number 7 FAILED!
+Given input: exit 
+=-=-=-=-=-=-EXITED-=-=-=-=-=-=

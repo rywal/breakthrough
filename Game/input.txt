@@ -2,5 +2,5 @@ display
 undo
 human-ai easy
 ai-ai 192.168.1.1 8080 p@s5w0rd easy hard
-e2 fwd
+d2 fwd
 ; This is a comment
