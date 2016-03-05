@@ -12,8 +12,8 @@ Game::Game(){
 }
 
 bool Game::valid_move(int row, char column, DIRECTION d){
-		if (row<1 || row>8){return false;}
-		if (column<'a' || column >'h'){ return false;}
+		if (row<1 || row>8){ cout<<"Bad row\n"; return false;}
+		if (column<'a' || column >'h'){ cout<<"Bad column\n"; return false;}
 		
 		
 		if(current_state.get_turn()){	//I am assuming that the person is always white
@@ -29,8 +29,9 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 			if (current_state.get_board()[row][column-'a']!='_') return false;
 			return true;
 		}else {
+			cout<<"return black\n";
 			//check if piece is black
-			if (current_state.get_board()[row-1][column-'a']!='o') return false;
+			if (current_state.get_board()[row-1][column-'a']!='x') return false;
 			//check if the piece can move d
 			//things to consider:
 				//remember black is moving in the opposite direction
@@ -102,15 +103,15 @@ void Game::undo_to_person(){
 int main(){
 	Game new_game;
 	new_game.display_board();
-	new_game.update(2, 'b', RIGHT);
+	new_game.update('b', 2, RIGHT);
 	new_game.display_board();
-	new_game.update(7, 'b', FWD);
+	new_game.update('b', 7, FWD);
 	new_game.display_board();
-	new_game.update(2, 'b', RIGHT);
+	new_game.update('b', 2, RIGHT);
 	new_game.display_board();
-	new_game.update(2, 'b', RIGHT);
+	new_game.update('b', 0, RIGHT);
 	new_game.display_board();
-	new_game.update(2, 'b', RIGHT);
+	new_game.update('c', 3, RIGHT);
 	new_game.display_board();
 	
 }
