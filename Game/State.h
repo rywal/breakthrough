@@ -52,16 +52,19 @@ public:
     State();
     
     //  Copy Constructor
-    State(State *s);
-    
+    State(State* s);
+
     //  Destructor
     ~State(){}
-    
-	vector<vector<char> > get_board();    
+    	
+	vector<vector<char> > get_board();  
+	int get_num_moves();
+	int get_status();  
 	void set_board(int i, int j, char a);
 	bool get_turn();
 	void set_turn(bool turn);
 	void switch_turn();
 };
+
 
 #endif /* State_h */
