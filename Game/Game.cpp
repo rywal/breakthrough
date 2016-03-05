@@ -49,7 +49,7 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 State Game::update(char column, int row, DIRECTION d){
 	State temp;
 	if(valid_move(row, column, d)){
-	current_state.set_board(row-1,column-'a', '_');
+		current_state.set_board(row-1,column-'a', '_');
 		if(current_state.get_turn()){
 			if (d==FWD)
 				current_state.set_board(row,column-'a', 'o');
@@ -68,6 +68,7 @@ State Game::update(char column, int row, DIRECTION d){
 		if(display)
 			display_board();
 		current_state.switch_turn();
+		save_state();
 	} else {
 		printf("That's an invalid move! Try again.\n");
 	}
@@ -99,17 +100,17 @@ void Game::save_state(){
 }
 
 void Game::undo(){
-	current_state=previous_states[previous_states.size()-1];
 	previous_states.pop_back();
+	current_state=previous_states[previous_states.size()-1];
 	if(display)
 		display_board();
 }
 
 void Game::undo_to_person(){ 
 //when playing an AI they may move to fast to press undo twice
-	current_state=previous_states[previous_states.size()-2];
 	previous_states.pop_back();
 	previous_states.pop_back();
+	current_state=previous_states[previous_states.size()-1];
 	if(display)
 		display_board();
 }

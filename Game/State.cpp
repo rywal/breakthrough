@@ -29,14 +29,14 @@ State::State(){
 }	
 
 //this assumes that the state passed as an argument is a completely updated and defined state
-State::State(State *s){
+State::State(State* s){
 	
 	for(int i=0; i<8; i++)
 		for(int j=0; j<8; j++)
-					board[i][j]=s->board[i][j];
+					board[i][j]=s->get_board()[i][j];
 	
-	num_moves=s->num_moves;
-	status=s->status;
+	num_moves=s->get_num_moves();
+	status=s->get_status();
 }
 
 
@@ -44,7 +44,9 @@ State::State(State *s){
 vector<vector<char > > State::get_board(){return board;}
 
 void State::set_board(int i, int j, char a){ board[i][j]=a;}
-
+int State::get_num_moves(){return num_moves;}
+int State::get_status(){return status;}
 bool State::get_turn(){return person_is_player;}
 void State::set_turn(bool turn){person_is_player=turn;}
 void State::switch_turn(){person_is_player=(!person_is_player);}
+
