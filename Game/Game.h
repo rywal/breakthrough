@@ -31,6 +31,8 @@ private:
     //  This exists to easily allow reverting to a previous state, via an undo command
     std::vector< State > previous_states;
     
+    //Display Toggle
+    bool display;
 public:
     
     Game();
@@ -43,6 +45,7 @@ public:
 	void save_state();
 	void undo();
 	void undo_to_person();
+	void display_toggle();
 	State update(char column, int row, DIRECTION d);
     
 };
