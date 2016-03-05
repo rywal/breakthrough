@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include "Game.h"
 
 using namespace std;
 
@@ -23,14 +24,24 @@ char* str;
 char* pch;
 string f_or_h;
 vector<string> command_line;
+Game new_game;
 //---------------------------//
 
 void  ctrl_c(int signo){//This is to protect formatting of output
-  if (signo == SIGINT){
-    output<<"=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=";
-	output.close();
-	exit(0);
-  }
+	if (signo == SIGINT){
+		output<<"=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=";
+		output.close();
+		exit(0);
+	} else if(signo == SIGSEGV){
+		if(error==0){
+			printf("\n\nThere has been a Segmentation Fault in a non-Paser file");
+		}else{
+			printf("\n\nThere has been a Segmentation Fault. The error code is: %d", error);
+		}
+		output<<"^-^-^-Segmentation Fault-^-^-^";
+		output.close();
+		exit(139);//System Error code
+	}
 }
 
 bool is_difficulty(string d){
@@ -123,6 +134,16 @@ bool is_dir(string d){
 	return (d=="fwd"||d=="left"||d=="right");	
 }
 
+DIRECTION to_dir(string d){
+	if(d=="fwd"){
+		return FWD;
+	} else if(d=="left"){
+		return LEFT;
+	} else if(d=="right"){
+		return RIGHT;
+	}
+}
+
 void do_command(vector<string> command_line){
 	if(command_line.size()==0){
 		output<<"No input was given"<<endl;
@@ -136,16 +157,21 @@ void do_command(vector<string> command_line){
 			error=1;
 		}
 	} else if(command_line[0]==";"){
+		output<<"COMMENT: ";
+		printf("\n");
 		if(command_line.size()==1){
 			printf("Empty comment");
+			output<<"EMPTY COMMENT";
 		}
 		for(int i=1; i<command_line.size(); i++){
+			output<<command_line[i].c_str()<<" ";
 			printf("%s ", command_line[i].c_str());
 		}
+		output<<endl;
 		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
-			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			new_game.display_board();
 		} else{
 			output<<"Display had too many arguments"<<endl;
 			error=2;
@@ -159,10 +185,10 @@ void do_command(vector<string> command_line){
 		}
 	} else if(command_line[0]=="human-ai"){
 		if(command_line.size()==2){
-			if(is_difficulty(command_line[1])){
+			if(is_difficulty(command_line[1].c_str())){
 				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 			} else{
-				output<<command_line[1]<<" is not a difficulty"<<endl;
+				output<<command_line[1].c_str()<<" is not a difficulty"<<endl;
 				error=4;
 			}
 		} else{
@@ -192,14 +218,14 @@ void do_command(vector<string> command_line){
 			output<<"AI-AI had incorrect amount of arguments"<<endl;
 			error=15;
 		}
-	} else if(command_line[0].size()==2){
+	} else if(command_line[0].size()==2){//Is this a MOVE?
 		if(command_line.size()==2){
 			char tc = command_line[0][0];//tc, standing for Temporary Char
 			if(tc=='a'||tc=='b'||tc=='c'||tc=='d'||tc=='e'||tc=='f'||tc=='g'){
 				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
-						/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+						new_game.update(t2, (int)tc, to_dir(command_line[1].c_str()));
 					} else{
 						output<<command_line[1]<<" is not a valid direction"<<endl;
 						error = 16;
@@ -216,6 +242,9 @@ void do_command(vector<string> command_line){
 			output<<"Move had incorrect amount of arguments"<<endl;
 			error=19;
 		}
+	} else{
+	output<<command_line[0].c_str()<<" is not a valid command"<<endl;
+	error=20;
 	}
 }
 
@@ -240,18 +269,29 @@ void handle_action(string command, bool is_file){
 		pch = strtok ((char*)command.c_str(), delimiters.c_str()); //tokenizes the command
 		//-----------------------------------------//
 	}
-	if(is_file){
-		string temp = pch;
-		temp.erase(std::remove(temp.begin(), temp.end(), ' '), temp.end());
-		temp.erase(std::remove(temp.begin(), temp.end(), '\n'), temp.end());
-	}
 	//------Continued-Lexer-for-both-inputs------//
-	
 	while (pch != NULL) {
 		string temp = pch;
+		if(is_file){ //GET RID OF GARBAGE AT END--------//
+			string temp2;
+			if(temp.size()<=2){
+				temp2=temp.c_str();
+			} else{
+				for(int i=0; (i+2)<temp.size();i++){ //This will copy all but the last two elements
+					temp2.push_back(temp[i]);
+				}
+				for(int g=(temp.size()-2); g<temp.size();g++){//If string has null at end, delete them
+					if(!isspace(temp[g])){
+						temp2.push_back(temp[g]);
+					}
+				}
+			}
+			temp=temp2.c_str();//Put new temp into old temp 
+		}//-----------GET RID OF GARBAGE AT END--------//
 		transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
 		command_line.push_back(temp); //put the token into a vector to make the command easy to parse
 		output<<temp<<" "; // For output file
+		temp.clear();
 		pch = strtok (NULL, delimiters.c_str());
 	}
 	output<<endl; //For output file
@@ -314,13 +354,13 @@ int main() {
 			}
 		}
 		if(input_f != "h" && input_f != "H"){
+			output<<"Input from file started"<<endl;
 			while(!feof(input)){ //get a command from the file
 				getline(&str, &buffer_size, input); 
 				string command(str);
-				//command..erase(remove_if(command.begin(), command.end(), isspace), command.end());
-				//command.erase(std::remove(command.begin(), command.end(), ' '), command.end());
-				//command.erase(std::remove(command.begin(), command.end(), '\n'), command.end());
 				printf("The given command is: %s",command.c_str()); //prints the command back to the user
+				signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
+				signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
 				handle_action(command.c_str(), true); /*/---Where-the-command-is-processed--/*/
 			}
 			fclose(input);
@@ -335,9 +375,9 @@ int main() {
 		while(1){
 			printf("Please enter a command:\n>");
 			string command;
-			signal(SIGINT, ctrl_c);
+			signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
+			signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
 			getline (cin,command);
-			signal(SIGINT, ctrl_c);
 			handle_action(command, false); /*/---Where-the-command-is-processed--/*/
 		}
 	}

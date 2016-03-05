@@ -100,7 +100,8 @@ void Game::undo_to_person(){
 	previous_states.pop_back();
 	previous_states.pop_back();
 }
-int main(){
+
+/*int main(){
 	Game new_game;
 	new_game.display_board();
 	new_game.update('b', 2, RIGHT);
@@ -114,4 +115,4 @@ int main(){
 	new_game.update('c', 3, RIGHT);
 	new_game.display_board();
 	
-}
+}*/
