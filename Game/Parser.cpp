@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include "Game.h"
 
 using namespace std;
 
@@ -27,11 +28,20 @@ Game new_game;
 //---------------------------//
 
 void  ctrl_c(int signo){//This is to protect formatting of output
-  if (signo == SIGINT){
-    output<<"=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=";
-	output.close();
-	exit(0);
-  }
+	if (signo == SIGINT){
+		output<<"=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=";
+		output.close();
+		exit(0);
+	} else if(signo == SIGSEGV){
+		if(error==0){
+			printf("\n\nThere has been a Segmentation Fault in a non-Paser file");
+		}else{
+			printf("\n\nThere has been a Segmentation Fault. The error code is: %d", error);
+		}
+		output<<"^-^-^-Segmentation Fault-^-^-^";
+		output.close();
+		exit(139);//System Error code
+	}
 }
 
 bool is_difficulty(string d){
@@ -124,6 +134,16 @@ bool is_dir(string d){
 	return (d=="fwd"||d=="left"||d=="right");	
 }
 
+DIRECTION to_dir(string d){
+	if(d=="fwd"){
+		return FWD;
+	} else if(d=="left"){
+		return LEFT;
+	} else if(d=="right"){
+		return RIGHT;
+	}
+}
+
 void do_command(vector<string> command_line){
 	if(command_line.size()==0){
 		output<<"No input was given"<<endl;
@@ -138,7 +158,7 @@ void do_command(vector<string> command_line){
 		}
 	} else if(command_line[0]==";"){
 		output<<"COMMENT: ";
-		printf<<endl;
+		printf("\n");
 		if(command_line.size()==1){
 			printf("Empty comment");
 			output<<"EMPTY COMMENT";
@@ -205,7 +225,7 @@ void do_command(vector<string> command_line){
 				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
-						new_game.update(t2, tc, command_line[1]);
+						new_game.update(t2, (int)tc, to_dir(command_line[1].c_str()));
 					} else{
 						output<<command_line[1]<<" is not a valid direction"<<endl;
 						error = 16;
@@ -339,6 +359,8 @@ int main() {
 				getline(&str, &buffer_size, input); 
 				string command(str);
 				printf("The given command is: %s",command.c_str()); //prints the command back to the user
+				signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
+				signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
 				handle_action(command.c_str(), true); /*/---Where-the-command-is-processed--/*/
 			}
 			fclose(input);
@@ -353,9 +375,9 @@ int main() {
 		while(1){
 			printf("Please enter a command:\n>");
 			string command;
-			signal(SIGINT, ctrl_c);
+			signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
+			signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
 			getline (cin,command);
-			signal(SIGINT, ctrl_c);
 			handle_action(command, false); /*/---Where-the-command-is-processed--/*/
 		}
 	}

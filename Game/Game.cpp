@@ -80,7 +80,7 @@ void Game::display_board(){
 	}	
 }
 
-int main(){
+/*int main(){
 	Game new_game;
 	new_game.display_board();
 	new_game.update(2, 'b', RIGHT);
@@ -94,4 +94,4 @@ int main(){
 	new_game.update(2, 'b', RIGHT);
 	new_game.display_board();
 	
-}
+}*/

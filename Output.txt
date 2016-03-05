@@ -9,8 +9,4 @@ Line number 3 was successful!
 Given input: ai-ai 192.168.1.1 8080 p@s5w0rd easy hard 
 Line number 4 was successful!
 Given input: e2 fwd 
-Line number 5 was successful!
-Given input: ; this is a comment 
-COMMENT: this is a comment 
-Line number 6 was successful!
-=-=-=-=-=-=-=EOF-=-=-=-=-=-=-=
+^-^-^-Segmentation Fault-^-^-^
