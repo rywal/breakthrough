@@ -9,11 +9,12 @@
 #include "Game.h"
 
 Game::Game(){
+	display=false;
 }
 
 bool Game::valid_move(int row, char column, DIRECTION d){
-		if (row<1 || row>8){ cout<<"Bad row\n"; return false;}
-		if (column<'a' || column >'h'){ cout<<"Bad column\n"; return false;}
+		if (row<1 || row>8){ cout<<row<<"HERE\n"; return false;}
+		if (column<'a' || column >'h'){ return false;}
 		
 		
 		if(current_state.get_turn()){	//I am assuming that the person is always white
@@ -58,17 +59,25 @@ State Game::update(char column, int row, DIRECTION d){
 				current_state.set_board(row,column-'a'+1, 'o');
 		} else {
 			if (d==FWD)
-				current_state.set_board(row-2,column-'a', 'o');
+				current_state.set_board(row-2,column-'a', 'x');
 			if (d==LEFT)
-				current_state.set_board(row-2,column-'a'+1, 'o');
+				current_state.set_board(row-2,column-'a'+1, 'x');
 			if (d==RIGHT)
-				current_state.set_board(row-2,column-'a'-1, 'o');
+				current_state.set_board(row-2,column-'a'-1, 'x');
 		}
+		if(display)
+			display_board();
 		current_state.switch_turn();
 	} else {
 		printf("That's an invalid move! Try again.\n");
 	}
 	return temp;
+}
+
+void Game::display_toggle(){
+	display=(!display);
+	if(display)
+		display_board();
 }
 
 void Game::display_board(){
@@ -92,6 +101,8 @@ void Game::save_state(){
 void Game::undo(){
 	current_state=previous_states[previous_states.size()-1];
 	previous_states.pop_back();
+	if(display)
+		display_board();
 }
 
 void Game::undo_to_person(){ 
@@ -99,19 +110,6 @@ void Game::undo_to_person(){
 	current_state=previous_states[previous_states.size()-2];
 	previous_states.pop_back();
 	previous_states.pop_back();
-}
-int main(){
-	Game new_game;
-	new_game.display_board();
-	new_game.update('b', 2, RIGHT);
-	new_game.display_board();
-	new_game.update('b', 7, FWD);
-	new_game.display_board();
-	new_game.update('b', 2, RIGHT);
-	new_game.display_board();
-	new_game.update('b', 0, RIGHT);
-	new_game.display_board();
-	new_game.update('c', 3, RIGHT);
-	new_game.display_board();
-	
+	if(display)
+		display_board();
 }

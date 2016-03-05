@@ -76,6 +76,8 @@ private:
 		
 	}
     
+    //Display Toggle
+    bool display;
 public:
     
     Game();
@@ -88,6 +90,7 @@ public:
 	void save_state();
 	void undo();
 	void undo_to_person();
+	void display_toggle();
 	State update(char column, int row, DIRECTION d);
     
 };
