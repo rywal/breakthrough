@@ -1,14 +1,12 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
-Given input: display 
+Given input: display 
 Line number 1 was successful!
-Given input: undo 
+Given input: undo 
 Line number 2 was successful!
-Given input: human-ai easy 
-easy is not a difficulty
-Line number 3 FAILED!
-Given input: ai-ai 192.168.1.1 8080 p@s5w0rd easy hard 
-Incorrect input for difficulty
-Line number 4 FAILED!
+Given input: human-ai easy 
+Line number 3 was successful!
+Given input: ai-ai 192.168.1.1 8080 p@s5w0rd easy hard 
+Line number 4 was successful!
 Given input: e2 fwd 
 Line number 5 was successful!
 =-=-=-=-=-=-=EOF-=-=-=-=-=-=-=

@@ -159,10 +159,10 @@ void do_command(vector<string> command_line){
 		}
 	} else if(command_line[0]=="human-ai"){
 		if(command_line.size()==2){
-			if(is_difficulty(command_line[1])){
+			if(is_difficulty(command_line[1].c_str())){
 				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 			} else{
-				output<<command_line[1]<<" is not a difficulty"<<endl;
+				output<<command_line[1].c_str()<<" is not a difficulty"<<endl;
 				error=4;
 			}
 		} else{
@@ -240,18 +240,25 @@ void handle_action(string command, bool is_file){
 		pch = strtok ((char*)command.c_str(), delimiters.c_str()); //tokenizes the command
 		//-----------------------------------------//
 	}
-	if(is_file){
-		string temp = pch;
-		temp.erase(std::remove(temp.begin(), temp.end(), ' '), temp.end());
-		temp.erase(std::remove(temp.begin(), temp.end(), '\n'), temp.end());
-	}
 	//------Continued-Lexer-for-both-inputs------//
-	
 	while (pch != NULL) {
 		string temp = pch;
+		if(is_file){ //GET RID OF GARBAGE AT END--------//
+			string temp2;
+			for(int i=0; (i+2)<temp.size();i++){ //This will copy all but the last two elements
+				temp2.push_back(temp[i]);
+			}
+			for(int g=(temp.size()-2); g<temp.size();g++){//If string has null at end, delete them
+				if(!isspace(temp[g])){
+					temp2.push_back(temp[g]);
+				}
+			}
+			temp=temp2.c_str();//Put new temp into old temp 
+		}//-----------GET RID OF GARBAGE AT END--------//
 		transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
 		command_line.push_back(temp); //put the token into a vector to make the command easy to parse
 		output<<temp<<" "; // For output file
+		temp.clear();
 		pch = strtok (NULL, delimiters.c_str());
 	}
 	output<<endl; //For output file
@@ -317,9 +324,21 @@ int main() {
 			while(!feof(input)){ //get a command from the file
 				getline(&str, &buffer_size, input); 
 				string command(str);
-				//command..erase(remove_if(command.begin(), command.end(), isspace), command.end());
-				//command.erase(std::remove(command.begin(), command.end(), ' '), command.end());
-				//command.erase(std::remove(command.begin(), command.end(), '\n'), command.end());
+				/*string temp;
+				int loop = 0;
+				for(int i=0;i<command.size(); i++){
+					loop = 0;
+					if(command[i]!='\r' && command[i]!='\n'){
+						if((i+1)>command.size()){//There's 2 elements more
+							if(isspace(command[i]) && isspace(command[i+1])){
+								loop = 1; //skip this element
+							}
+						}
+						if(loop==0){
+							temp.push_back(command[i]);//Get rid of garbage values
+						}
+					}
+				}*/
 				printf("The given command is: %s",command.c_str()); //prints the command back to the user
 				handle_action(command.c_str(), true); /*/---Where-the-command-is-processed--/*/
 			}
