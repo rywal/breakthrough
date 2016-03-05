@@ -225,26 +225,32 @@ void do_command(vector<string> command_line){
 				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
-						new_game.update(t2, (int)tc, to_dir(command_line[1].c_str()));
+						if(new_game.valid_move((int)t2, tc, to_dir(command_line[1].c_str()))){
+							new_game.update((int)t2, tc, to_dir(command_line[1].c_str()));
+						} else{
+							printf("%c%c is an invalid move\n", tc,t2);
+							output<<tc<<t2<<" is an invalid move"<<endl;
+							error = 16;
+						}
 					} else{
 						output<<command_line[1]<<" is not a valid direction"<<endl;
-						error = 16;
+						error = 17;
 					}
 				} else{
 					output<<t2<<" is not a valid row number"<<endl;
-					error = 17;
+					error = 18;
 				}
 			} else{
 				output<<tc<<" is not a valid column letter"<<endl;
-				error = 18;
+				error = 19;
 			}
 		} else{
 			output<<"Move had incorrect amount of arguments"<<endl;
-			error=19;
+			error=20;
 		}
 	} else{
 	output<<command_line[0].c_str()<<" is not a valid command"<<endl;
-	error=20;
+	error=21;
 	}
 }
 
