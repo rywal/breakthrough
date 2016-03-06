@@ -179,8 +179,13 @@ void do_command(vector<string> command_line){
 		output<<endl;
 		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
+<<<<<<< HEAD
 		if(command_line.size()==1){
 			new_game.display_toggle();
+=======
+		if(command_line.size()==1){
+			new_game.display_toggle();
+>>>>>>> 357448e9058f1335c2f8a4b247a70f083c2607d8
 		} else{
 			output<<"Display had too many arguments"<<endl;
 			error=2;
