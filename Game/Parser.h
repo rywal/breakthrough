@@ -187,7 +187,7 @@ void do_command(vector<string> command_line){
 		}
 	} else if(command_line[0]=="undo"){
 		if(command_line.size()==1){
-			new_game.undo_two_moves();
+			new_game.undo_two_turns();
 		} else{
 			output<<"Undo had too many arguments"<<endl;
 			error=3;
