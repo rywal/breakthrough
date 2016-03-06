@@ -1,7 +1,8 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
+Input from file started
 Given input: display 
 Command number 1 was successful!
-Given input: h2 fwd 
+Given input: human-ai easy 
 Command number 2 was successful!
 Given input: d2 fwd 
 Command number 3 was successful!
@@ -13,4 +14,19 @@ Command number 5 was successful!
 Given input: ai-ai 192.168.1.1 8080 p@s5w0rd easy hard 
 Command number 6 was successful!
 =-=-=-=-=-=-=EOF-=-=-=-=-=-=-=
-=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
+The file: Game/hello was not found
+Given input: file 
+PASSWORD: file
+Command number 7 was successful!
+Given input: display 
+Command number 8 was successful!
+Given input: e2 fwd 
+e2 is an invalid move
+Command number 9 FAILED!
+Given input: display 
+Command number 10 was successful!
+Given input: e2 fwd 
+e2 is an invalid move
+Command number 11 FAILED!
+Given input: exit 
+=-=-=-=-=-=-EXITED-=-=-=-=-=-=
