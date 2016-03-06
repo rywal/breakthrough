@@ -30,6 +30,51 @@ private:
     //
     //  This exists to easily allow reverting to a previous state, via an undo command
     std::vector< State > previous_states;
+	
+	bool termination_check(){
+		
+		//Checking for any pieces 
+		int end_this=0;
+		for(int i=0; i<8; i++){
+			for(int j=0; j<8; j++){
+				if (board[i][j]=='o'){
+					end_this=1;
+					break;
+				}
+			}
+		}
+		if(end_this=0){return false;}
+		//if(i==8&&j==8)
+		
+		for(int i=0; i<8; i++){
+			for(int j=0; j<8; j++){
+				if (board[i][j]=='x'){ 
+					end_this=1;
+					break;
+				}
+			}
+		}
+		if(end_this=0){return false;}
+
+		//Checking for x's on the bottom row
+		for(int j=0; j<8; j++){
+			if (board[0][j]=='x'){
+				end_this=1;
+				break;
+			}
+		}
+		if(end_this=0){return false;}
+		
+		//Checking o's on the top row
+		for(int j=0; j<8; j++){
+			if (board[7][j]=='o'){
+				end_this=1;
+				break;
+			}
+		} 
+		if(end_this=0){return false;}
+		
+	}
     
 public:
     
