@@ -3,8 +3,6 @@ Given input: display
 Command number 1 was successful!
 Given input: h2 fwd 
 Command number 2 was successful!
-<<<<<<< HEAD
-<<<<<<< HEAD
 Given input: d2 fwd 
 Command number 3 was successful!
 Given input: undo 
