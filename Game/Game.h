@@ -89,7 +89,7 @@ public:
 	int game_status(State);
 	void save_state();
 	void undo();
-	void undo_to_person();
+	void undo_two_turns();
 	void display_toggle();
 	State update(char column, int row, DIRECTION d);
     
