@@ -115,7 +115,7 @@ void Game::undo(){
 
 void Game::undo_two_turns(){ 
 //when playing an AI they may move to fast to press undo twice
-	if (current_state.get_num_moves()<1){
+	if (current_state.get_num_moves()<2){
 		cout<<"Not enough moves to undo\n";
 	}
 	else {
