@@ -180,14 +180,14 @@ void do_command(vector<string> command_line){
 		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
-			new_game.display_board();
+			new_game.display_toggle();
 		} else{
 			output<<"Display had too many arguments"<<endl;
 			error=2;
 		}
 	} else if(command_line[0]=="undo"){
 		if(command_line.size()==1){
-			/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+			new_game.undo();
 		} else{
 			output<<"Undo had too many arguments"<<endl;
 			error=3;
@@ -235,7 +235,7 @@ void do_command(vector<string> command_line){
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
 						if(new_game.valid_move((int)t2, tc, to_dir(command_line[1].c_str()))){
-							new_game.update((int)t2, tc, to_dir(command_line[1].c_str()));
+							new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
 						} else{
 							printf("%c%c is an invalid move\n", tc,t2);
 							output<<tc<<t2<<" is an invalid move"<<endl;
