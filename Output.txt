@@ -2,5 +2,16 @@
 Input from file started
 Given input: display 
 Command number 1 was successful!
+Given input: human-ai easy 
+Command number 2 was successful!
+Given input: d2 fwd 
+Command number 3 was successful!
 Given input: undo 
-^-^-^-Segmentation Fault-^-^-^
+Command number 4 was successful!
+Given input: ; this is a comment 
+COMMENT: this is a comment 
+Command number 5 was successful!
+Given input: ai-ai 192.168.1.1 8080 p@s5w0rd easy hard 
+Command number 6 was successful!
+=-=-=-=-=-=-=EOF-=-=-=-=-=-=-=
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
