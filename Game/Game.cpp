@@ -27,7 +27,7 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 				//if piece is in Column H, piece can't move right
 			if (column=='h' && d == RIGHT) return false;
 				//if there is a piece in front of it, it can't move forward
-			if (current_state.get_board()[row][column-'a']!='_') return false;
+			if (current_state.get_board()[row][column-'a']!='_' && d == FWD) return false;
 			return true;
 		}else {
 			//check if piece is black
@@ -40,7 +40,7 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 				//if piece is in Column A, piece can't move right
 			if (column=='a' && d == RIGHT) return false;	
 				//if there is a piece in front of it, it can't move forward
-			if (current_state.get_board()[row-2][column-'a']!='_') return false;
+			if (current_state.get_board()[row-2][column-'a']!='_' && d == FWD) return false;
 			return true;
 		}
 }
@@ -65,6 +65,7 @@ State Game::update(char column, int row, DIRECTION d){
 				current_state.set_board(row-2,column-'a'-1, 'x');
 		}
 		current_state.switch_turn();
+		current_state.set_status(termination_check());
 		if(display)
 			display_board();
 		save_state();
@@ -96,6 +97,53 @@ void Game::display_board(){
 	}	
 }
 
+bool Game::termination_check(){
+		
+	//Checking for any pieces 
+	int end_this=0;
+	for(int i=0; i<8; i++){
+		for(int j=0; j<8; j++){
+			if (current_state.get_board()[i][j]=='o'){
+				end_this=1;
+				break;
+			}
+		}
+	}
+	if(end_this=0){return false;}
+
+	end_this=0;
+	for(int i=0; i<8; i++){
+		for(int j=0; j<8; j++){
+			if (current_state.get_board()[i][j]=='x'){ 
+				end_this=1;
+				break;
+			}
+		}
+	}
+	if(end_this=0){return false;}
+
+	end_this=0;
+	//Checking for x's on the bottom row
+	for(int j=0; j<8; j++){
+		if (current_state.get_board()[0][j]=='x'){
+			end_this=1;
+			break;
+		}
+	}
+	if(end_this=0){return false;}
+	
+	end_this=0;
+	//Checking o's on the top row
+	for(int j=0; j<8; j++){
+		if (current_state.get_board()[7][j]=='o'){
+			end_this=1;
+			break;
+		}
+	} 
+	if(end_this=0){return false;}
+		
+}
+	
 void Game::save_state(){
 	previous_states.push_back(current_state);
 	//might include output to a file if we need it

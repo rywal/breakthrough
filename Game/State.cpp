@@ -46,6 +46,7 @@ vector<vector<char > > State::get_board(){return board;}
 void State::set_board(int i, int j, char a){ board[i][j]=a;}
 int State::get_num_moves(){return num_moves;}
 int State::get_status(){return status;}
+void State::set_status(bool s){status=s;}
 bool State::get_turn(){return person_is_player;}
 void State::set_turn(bool turn){person_is_player=turn;}
 void State::switch_turn(){person_is_player=(!person_is_player); num_moves++;}
