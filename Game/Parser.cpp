@@ -2,7 +2,7 @@
 
 
 int main() {
-	//------INCLUDE-WITH-ALL-MAINS-USED-------//
+	//------INCLUDE-WITH-ALL-MAINS-USED------//
 	output.open ("Output.txt");
 	output<<"=-=-=-=-=-=-BEGIN=-=-=-=-=-=-="<<endl;
 	buffer_size=0;
@@ -10,7 +10,7 @@ int main() {
 	line_number=1;
 	signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
 	signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
-	//------^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-------//
+	//------^-^-^-^-^-^-^-^-^-^-^-^-^-^-^------//
 	
 	//Example of a main-----------------------------------------------------//
 	while(true){
