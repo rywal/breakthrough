@@ -41,9 +41,13 @@ private:
     
     //  Status of game
     //
+<<<<<<< HEAD
     //  -1 for unfinished game
+=======
+    //  0 for unfinished game
+>>>>>>> 9fcc59a... fixed some minor changes
     //  1 for win (person_is_player holds the current winner)
-    int status;
+    bool status;
     
 public:
     

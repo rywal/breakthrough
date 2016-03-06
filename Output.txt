@@ -1,30 +1,25 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
-Given input: displa 
-displa is not a valid command
-Line number 1 FAILED!
+Input from file started
 Given input: display 
-Line number 2 was successful!
+Command number 1 was successful!
+Given input: undo 
+Command number 2 was successful!
+Given input: human-ai easy 
+Command number 3 was successful!
+Given input: ai-ai 192.168.1.1 8080 p@s5w0rd easy hard 
+Command number 4 was successful!
 Given input: d2 fwd 
-Line number 3 was successful!
+Command number 5 was successful!
+Given input: ; this is a comment 
+COMMENT: this is a comment 
+Command number 6 was successful!
+=-=-=-=-=-=-=EOF-=-=-=-=-=-=-=
+Given input: display 
+Command number 7 was successful!
+Given input: display 
+Command number 8 was successful!
 Given input: d7 fwd 
-Line number 4 was successful!
-Given input: d3 right 
-Line number 5 was successful!
-Given input: d6 fwd 
-Line number 6 was successful!
-Given input: e4 left 
-Line number 7 was successful!
+Command number 9 was successful!
 Given input: undo 
-Line number 8 was successful!
-Given input: undo 
-Line number 9 was successful!
-Given input: d6 left 
-Line number 10 was successful!
-Given input: undo 
-Line number 11 was successful!
-Given input: d6 left 
-Line number 12 was successful!
-Given input: e5 left 
-Line number 13 was successful!
-Given input: exit 
-=-=-=-=-=-=-EXITED-=-=-=-=-=-=
+Command number 10 was successful!
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=

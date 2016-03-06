@@ -102,17 +102,27 @@ void Game::save_state(){
 }
 
 void Game::undo(){
-	previous_states.pop_back();
-	current_state=previous_states[previous_states.size()-1];
-	if(display)
-		display_board();
+	if (current_state.get_num_moves()<1){
+		cout<<"No moves to undo\n";
+	}
+	else {
+		previous_states.pop_back();
+		current_state=previous_states[previous_states.size()-1];
+		if(display)
+			display_board();
+	}
 }
 
 void Game::undo_two_turns(){ 
 //when playing an AI they may move to fast to press undo twice
-	previous_states.pop_back();
-	previous_states.pop_back();
-	current_state=previous_states[previous_states.size()-1];
-	if(display)
-		display_board();
+	if (current_state.get_num_moves()<1){
+		cout<<"Not enough moves to undo\n";
+	}
+	else {
+		previous_states.pop_back();
+		previous_states.pop_back();
+		current_state=previous_states[previous_states.size()-1];
+		if(display)
+			display_board();
+	}
 }
