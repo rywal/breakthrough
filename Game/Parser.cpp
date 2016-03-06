@@ -178,7 +178,7 @@ void do_command(vector<string> command_line){
 		}
 	} else if(command_line[0]=="undo"){
 		if(command_line.size()==1){
-			new_game.undo();
+			new_game.undo_two_turns();
 		} else{
 			output<<"Undo had too many arguments"<<endl;
 			error=3;
@@ -225,7 +225,6 @@ void do_command(vector<string> command_line){
 				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
-						cout<<tc<<" : "<<t2<<" : "<<command_line[1]<<'\n';
 						new_game.update(tc, t2-48 , to_dir(command_line[1].c_str()));
 					} else{
 						output<<command_line[1]<<" is not a valid direction"<<endl;

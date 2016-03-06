@@ -30,7 +30,6 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 			if (current_state.get_board()[row][column-'a']!='_') return false;
 			return true;
 		}else {
-			cout<<"return black\n";
 			//check if piece is black
 			if (current_state.get_board()[row-1][column-'a']!='x') return false;
 			//check if the piece can move d
@@ -65,9 +64,9 @@ State Game::update(char column, int row, DIRECTION d){
 			if (d==RIGHT)
 				current_state.set_board(row-2,column-'a'-1, 'x');
 		}
+		current_state.switch_turn();
 		if(display)
 			display_board();
-		current_state.switch_turn();
 		save_state();
 	} else {
 		printf("That's an invalid move! Try again.\n");
@@ -82,6 +81,8 @@ void Game::display_toggle(){
 }
 
 void Game::display_board(){
+	(current_state.get_turn()) ? (cout<<"White's ") : (cout<<"Black's");
+	cout<<"turn\n";
 	cout<<";   ";
 	for (char i='A'; i<'I'; i++)
 		cout<<" "<<i;
@@ -97,6 +98,7 @@ void Game::display_board(){
 
 void Game::save_state(){
 	previous_states.push_back(current_state);
+	//might include output to a file if we need it
 }
 
 void Game::undo(){
@@ -106,7 +108,7 @@ void Game::undo(){
 		display_board();
 }
 
-void Game::undo_to_person(){ 
+void Game::undo_two_turns(){ 
 //when playing an AI they may move to fast to press undo twice
 	previous_states.pop_back();
 	previous_states.pop_back();
@@ -114,19 +116,3 @@ void Game::undo_to_person(){
 	if(display)
 		display_board();
 }
-
-/*int main(){
-	Game new_game;
-	new_game.display_board();
-	new_game.update('b', 2, RIGHT);
-	new_game.display_board();
-	new_game.update('b', 7, FWD);
-	new_game.display_board();
-	new_game.update('b', 2, RIGHT);
-	new_game.display_board();
-	new_game.update('b', 0, RIGHT);
-	new_game.display_board();
-	new_game.update('c', 3, RIGHT);
-	new_game.display_board();
-	
-}*/
