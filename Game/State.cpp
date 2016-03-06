@@ -25,7 +25,7 @@ State::State(){
 	}
 	person_is_player=true;
 	num_moves=0;
-	status=-1;
+	status=0;
 }	
 
 //this assumes that the state passed as an argument is a completely updated and defined state
@@ -46,5 +46,5 @@ int State::get_num_moves(){return num_moves;}
 int State::get_status(){return status;}
 bool State::get_turn(){return person_is_player;}
 void State::set_turn(bool turn){person_is_player=turn;}
-void State::switch_turn(){person_is_player=(!person_is_player);}
+void State::switch_turn(){person_is_player=(!person_is_player); num_moves++;}
 
