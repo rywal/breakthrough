@@ -234,7 +234,7 @@ void do_command(vector<string> command_line){
 				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
-						if(new_game.valid_move((int)t2, tc, to_dir(command_line[1].c_str()))){
+						if(new_game.valid_move(t2-48, tc, to_dir(command_line[1].c_str()))){
 							new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
 						} else{
 							printf("%c%c is an invalid move\n", tc,t2);
@@ -328,7 +328,7 @@ void handle_action(string command, int &ln, bool is_file){
 	ln=line_number;
 }
 
-void take_command(int &ln){
+void take_command(int &ln){ //Take input from command line
 	line_number=ln;
 	buffer_size=0;
 	delimiters = " \n";
@@ -340,7 +340,7 @@ void take_command(int &ln){
 	handle_action(command, ln, false); /*/---Where-the-command-is-processed--/*/
 }
 
-void parse_file(int &ln){
+void parse_file(int &ln){//Take input from file
 	line_number=ln;
 	buffer_size=0;
 	delimiters = " \n";
