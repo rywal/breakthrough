@@ -180,11 +180,7 @@ void do_command(vector<string> command_line){
 		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
-<<<<<<< HEAD
 			new_game.display_toggle();
-=======
-			new_game.toggle_display();
->>>>>>> 93d8455... Fixed merge conflict
 		} else{
 			output<<"Display had too many arguments"<<endl;
 			error=2;
@@ -245,7 +241,7 @@ void do_command(vector<string> command_line){
 >>>>>>> 93d8455... Fixed merge conflict
 							new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
 						} else{
-							printf("%c%c %s is an invalid move\n", tc,t2, comman_line[1]);
+							printf("%c%c %s is an invalid move\n", tc,t2, command_line[1].c_str());
 							output<<tc<<t2<<" is an invalid move"<<endl;
 							error = 16;
 						}
