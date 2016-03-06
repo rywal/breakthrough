@@ -1,7 +1,7 @@
 #include "Parser.h"
 
 int main() {
-	//---------THIS SHOULD BE INCLUDED WITH EVERY MAIN--//
+	//------INCLUDE-WITH-ALL-MAINS-USED------//
 	output.open ("Output.txt");
 	output<<"=-=-=-=-=-=-BEGIN=-=-=-=-=-=-="<<endl;
 	buffer_size=0;
