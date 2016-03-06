@@ -62,7 +62,8 @@ public:
     	
 	vector<vector<char> > get_board();  
 	int get_num_moves();
-	int get_status();  
+	int get_status();
+	void set_status(bool s);  
 	void set_board(int i, int j, char a);
 	bool get_turn();
 	void set_turn(bool turn);

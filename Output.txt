@@ -1,9 +1,9 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
-Input from file started
 Given input: display 
 Command number 1 was successful!
-Given input: human-ai easy 
+Given input: h2 fwd 
 Command number 2 was successful!
+<<<<<<< HEAD
 Given input: d2 fwd 
 Command number 3 was successful!
 Given input: undo 

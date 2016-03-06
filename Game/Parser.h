@@ -230,7 +230,7 @@ void do_command(vector<string> command_line){
 	} else if(command_line[0].size()==2){//Is this a MOVE?
 		if(command_line.size()==2){
 			char tc = command_line[0][0];//tc, standing for Temporary Char
-			if(tc=='a'||tc=='b'||tc=='c'||tc=='d'||tc=='e'||tc=='f'||tc=='g'){
+			if(tc=='a'||tc=='b'||tc=='c'||tc=='d'||tc=='e'||tc=='f'||tc=='g' || tc=='h'){
 				char t2 = command_line[0][1];//t2, standing for Temporary Char #2
 				if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
 					if(is_dir(command_line[1])){
