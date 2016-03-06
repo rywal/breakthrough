@@ -81,7 +81,7 @@ void Game::display_toggle(){
 }
 
 void Game::display_board(){
-	(current_state.get_turn()) ? (cout<<"White's ") : (cout<<"Black's");
+	(current_state.get_turn()) ? (cout<<"White's ") : (cout<<"Black's ");
 	cout<<"turn\n";
 	cout<<";   ";
 	for (char i='A'; i<'I'; i++)
