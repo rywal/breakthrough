@@ -237,7 +237,7 @@ void do_command(vector<string> command_line){
 						if(new_game.valid_move(t2-48, tc, to_dir(command_line[1].c_str()))){
 							new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
 						} else{
-							printf("%c%c is an invalid move\n", tc,t2);
+							printf("%c%c %s is an invalid move\n", tc,t2, comman_line[1]);
 							output<<tc<<t2<<" is an invalid move"<<endl;
 							error = 16;
 						}
