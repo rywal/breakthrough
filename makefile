@@ -17,7 +17,7 @@ game:
 	$(cc) -std=c++11 -g -o breakthrough Game/Game.cpp Game/State.cpp
 	
 parser:
-	$(cc) -std=c++11 -g -o par Game/Parser.cpp
+	$(cc) -std=c++11 -g -o par Game/Parser.cpp Game/Game.cpp Game/State.cpp
 
 clean:
 	rm -f *.o a.out breakthrough par

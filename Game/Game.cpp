@@ -9,9 +9,14 @@
 #include "Game.h"
 
 Game::Game(){
+	display=false;
 }
 
 bool Game::valid_move(int row, char column, DIRECTION d){
+		if (row<1 || row>8){ cout<<row<<"HERE\n"; return false;}
+		if (column<'a' || column >'h'){ return false;}
+		
+		
 		if(current_state.get_turn()){	//I am assuming that the person is always white
 			//check if piece is white
 			if (current_state.get_board()[row-1][column-'a']!='o') return false;
@@ -26,7 +31,7 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 			return true;
 		}else {
 			//check if piece is black
-			if (current_state.get_board()[row-1][column-'a']!='o') return false;
+			if (current_state.get_board()[row-1][column-'a']!='x') return false;
 			//check if the piece can move d
 			//things to consider:
 				//remember black is moving in the opposite direction
@@ -43,7 +48,7 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 State Game::update(char column, int row, DIRECTION d){
 	State temp;
 	if(valid_move(row, column, d)){
-	current_state.set_board(row-1,column-'a', '_');
+		current_state.set_board(row-1,column-'a', '_');
 		if(current_state.get_turn()){
 			if (d==FWD)
 				current_state.set_board(row,column-'a', 'o');
@@ -53,21 +58,32 @@ State Game::update(char column, int row, DIRECTION d){
 				current_state.set_board(row,column-'a'+1, 'o');
 		} else {
 			if (d==FWD)
-				current_state.set_board(row-2,column-'a', 'o');
+				current_state.set_board(row-2,column-'a', 'x');
 			if (d==LEFT)
-				current_state.set_board(row-2,column-'a'+1, 'o');
+				current_state.set_board(row-2,column-'a'+1, 'x');
 			if (d==RIGHT)
-				current_state.set_board(row-2,column-'a'-1, 'o');
+				current_state.set_board(row-2,column-'a'-1, 'x');
 		}
 		current_state.switch_turn();
+		if(display)
+			display_board();
+		save_state();
 	} else {
 		printf("That's an invalid move! Try again.\n");
 	}
 	return temp;
 }
 
+void Game::display_toggle(){
+	display=(!display);
+	if(display)
+		display_board();
+}
+
 void Game::display_board(){
-	cout<<"    ";
+	(current_state.get_turn()) ? (cout<<"White's ") : (cout<<"Black's ");
+	cout<<"turn\n";
+	cout<<";   ";
 	for (char i='A'; i<'I'; i++)
 		cout<<" "<<i;
 	cout<<'\n';
@@ -80,18 +96,33 @@ void Game::display_board(){
 	}	
 }
 
-int main(){
-	Game new_game;
-	new_game.display_board();
-	new_game.update(2, 'b', RIGHT);
-	new_game.display_board();
-	new_game.update(7, 'b', FWD);
-	new_game.display_board();
-	new_game.update(2, 'b', RIGHT);
-	new_game.display_board();
-	new_game.update(2, 'b', RIGHT);
-	new_game.display_board();
-	new_game.update(2, 'b', RIGHT);
-	new_game.display_board();
-	
+void Game::save_state(){
+	previous_states.push_back(current_state);
+	//might include output to a file if we need it
+}
+
+void Game::undo(){
+	if (current_state.get_num_moves()<1){
+		cout<<"No moves to undo\n";
+	}
+	else {
+		previous_states.pop_back();
+		current_state=previous_states[previous_states.size()-1];
+		if(display)
+			display_board();
+	}
+}
+
+void Game::undo_two_turns(){ 
+//when playing an AI they may move to fast to press undo twice
+	if (current_state.get_num_moves()<2){
+		cout<<"Not enough moves to undo\n";
+	}
+	else {
+		previous_states.pop_back();
+		previous_states.pop_back();
+		current_state=previous_states[previous_states.size()-1];
+		if(display)
+			display_board();
+	}
 }

@@ -76,6 +76,8 @@ private:
 		
 	}
     
+    //Display Toggle
+    bool display;
 public:
     
     Game();
@@ -85,7 +87,10 @@ public:
 	bool valid_move(int row, char column, DIRECTION d);
     void display_board();
 	int game_status(State);
-
+	void save_state();
+	void undo();
+	void undo_two_turns();
+	void display_toggle();
 	State update(char column, int row, DIRECTION d);
     
 };

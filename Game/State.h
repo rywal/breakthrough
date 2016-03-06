@@ -41,9 +41,9 @@ private:
     
     //  Status of game
     //
-    //  -1 for unfinished game
+    //  0 for unfinished game
     //  1 for win (person_is_player holds the current winner)
-    int status;
+    bool status;
     
 public:
     
@@ -51,16 +51,19 @@ public:
     State();
     
     //  Copy Constructor
-    State(State *s);
-    
+    State(State* s);
+
     //  Destructor
     ~State(){}
-    
-	vector<vector<char> > get_board();    
+    	
+	vector<vector<char> > get_board();  
+	int get_num_moves();
+	int get_status();  
 	void set_board(int i, int j, char a);
 	bool get_turn();
 	void set_turn(bool turn);
 	void switch_turn();
 };
+
 
 #endif /* State_h */
