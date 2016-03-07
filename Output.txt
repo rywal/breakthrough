@@ -1,73 +1,14 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
-<<<<<<< Updated upstream
-The current file is: Game/Parser.h
-=======
->>>>>>> Stashed changes
+The current file is: Game/Parser.cpp
 Given input: display 
 Command number 1 was successful!
-Given input: d2 up 
-up is not a valid direction
-Command number 2 FAILED!
+Given input: human-ai easy 
+Command number 2 was successful!
 Given input: display 
 Command number 3 was successful!
-<<<<<<< Updated upstream
-Given input: d7 fwd 
-Command number 4 was successful!
-=======
-Given input: d2 fwd 
-Command number 4 was successful!
 Given input: display 
-Command number 5 was successful!
-Given input: d2 fwd 
-d2 is an invalid move
-Command number 6 FAILED!
-Given input: d7 fwd 
-Command number 7 was successful!
-Given input: d2 fwd 
-d2 is an invalid move
-Command number 8 FAILED!
-Given input: d3 fwd 
-Command number 9 was successful!
-Given input: d6 right 
-Command number 10 was successful!
-Given input: d4 left 
-Command number 11 was successful!
-Given input: undo 
-Command number 12 was successful!
-Given input: d6 fwd 
-Command number 13 was successful!
-Given input: d5 fwd 
-d5 is an invalid move
-Command number 14 FAILED!
-Given input: d4 right 
-Command number 15 was successful!
-Given input: d5 fwd 
-Command number 16 was successful!
-Given input: e5 fwd 
-Command number 17 was successful!
-Given input: d8 fwd 
-Command number 18 was successful!
+Command number 4 was successful!
 Given input: a2 fwd 
-Command number 19 was successful!
-Given input: d7 right 
-Command number 20 was successful!
-Given input: e6 left 
-Command number 21 was successful!
-Given input: 3 fwd 
-3 is not a valid command
-Command number 22 FAILED!
-Given input: a7 fwd 
-Command number 23 was successful!
-Given input: d7 fwd 
-Command number 24 was successful!
-Given input: a6 fwd 
-Command number 25 was successful!
-Given input: quit 
-PASSWORD: quit
-Command number 26 was successful!
-Given input: q 
-PASSWORD: q
-Command number 27 was successful!
->>>>>>> Stashed changes
+Command number 5 was successful!
 Given input: exit 
 =-=-=-=-=-=-EXITED-=-=-=-=-=-=

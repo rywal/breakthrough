@@ -1,6 +1,6 @@
 # makefile
 # added capability to use makefile in various environments without modifications
-SRCS=Game/Game.cpp Game/State.cpp
+SRCS=Game/Game.cpp Game/State.cpp Game/AI.cpp
 MAIN1=Game/Server.cpp
 MAIN2=Game/Parser.cpp
 CFLAGS=-std=c++11 -g -o

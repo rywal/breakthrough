@@ -199,6 +199,7 @@ void do_command(vector<string> command_line){
 		if(command_line.size()==2){
 			if(is_difficulty(command_line[1].c_str())){
 				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
+                new_game.set_game_type(HA, EASY);
 			} else{
 				output<<command_line[1].c_str()<<" is not a difficulty"<<endl;
 				error=4;
@@ -212,6 +213,7 @@ void do_command(vector<string> command_line){
 			if(is_server(command_line[1])){
 				if(is_port(command_line[2])){
 					if(is_difficulty(command_line[4])&& is_difficulty(command_line[5])){
+                        new_game.set_game_type(AA, EASY);
 						error=0;
 						/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 					} else{

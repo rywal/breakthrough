@@ -6,6 +6,13 @@
 
 Game::Game(){
 	display=false;
+    game_type = HH;
+}
+
+void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
+    
+    game_type = g;
+    ai = AI(d);
 }
 
 bool Game::valid_move(int row, char column, DIRECTION d){
@@ -65,6 +72,17 @@ State Game::update(char column, int row, DIRECTION d){
 		if(display)
 			display_board();
 		save_state();
+        
+        // If game type involves an AI, let it make it's move
+        if (game_type != HH) {
+            if( ai.make_move( this ) ){
+                current_state.switch_turn();
+                current_state.set_status(termination_check());
+                if(display)
+                    display_board();
+                save_state();
+            }
+        }
 	} else {
 		printf("That's an invalid move! Try again.\n");
 	}

@@ -9,6 +9,9 @@
 
 #include <stdio.h>
 #include "State.h"
+#include "AI.h"
+
+class AI;
 
 //  Possible moves from each piece
 //
@@ -17,6 +20,13 @@
 //    LEFT/RIGHT are assumed to be with respect to the game board(Column A will always be "most left", Column H will always be "most right")
 enum DIRECTION { LEFT, FWD, RIGHT };
 
+//  Type of game
+//
+//  HH = Human-Human
+//  HA = Human-AI
+//  AA = AI-AI
+enum GAMETYPE { HH, HA, AA };
+
 class Game {
 
 private:
@@ -24,23 +34,27 @@ private:
     //  Holds the current state of the game
     State current_state;
     
-    //0 for white, 1 for black;
-    
     //  Vector of all previous game states
     //
     //  This exists to easily allow reverting to a previous state, via an undo command
     std::vector< State > previous_states;
 	
-	
-    
     //Display Toggle
     bool display;
+    
+    AI ai;
+    
 public:
     
+    // Holds the current type of game
+    GAMETYPE game_type;
+    
+    // Constructors and Destructor
     Game();
     Game(const Game &g);
     ~Game(){}
     
+    void set_game_type(GAMETYPE g, DIFFICULTY d);
 	bool valid_move(int row, char column, DIRECTION d);
     void display_board();
     bool termination_check();
