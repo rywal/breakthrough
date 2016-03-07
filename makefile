@@ -6,7 +6,7 @@ MAIN2=Game/Parser.cpp
 CFLAGS=-std=c++11 -g -o
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
-    cc = clang++
+    cc = clang++ -I/usr/local/boost
 else ifeq ($(UNAME), Darwin)
     cc = g++
 else
