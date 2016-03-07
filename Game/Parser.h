@@ -336,7 +336,7 @@ void def_vars(){//Defines variables for nicer Main()
 	delimiters = " \n";
 	output.open ("Output.txt");
 	output<<"=-=-=-=-=-=-BEGIN=-=-=-=-=-=-="<<endl;
-	sprintf(temp_buffer, "The current file is: %s", __FILE__);
+	output<< temp_buffer << endl;
 	line_number=1;
 }
 

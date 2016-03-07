@@ -2,8 +2,8 @@
 
 int main(){
 	//------INCLUDE-WITH-ALL-MAINS-USED------//
+	sprintf(temp_buffer, "The current file is: %s", __FILE__);//For use for OUTPUT.txt
 	def_vars();//Defines variables for nicer Main()
-	output<< temp_buffer << endl;
 	signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
 	signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
 	//------^-^-^-^AT-BEGINING-^-^-^-^-----//
