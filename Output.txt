@@ -1,32 +1,6 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
-Input from file started
-Given input: display 
-Command number 1 was successful!
-Given input: human-ai easy 
-Command number 2 was successful!
-Given input: d2 fwd 
-Command number 3 was successful!
-Given input: undo 
-Command number 4 was successful!
-Given input: ; this is a comment 
-COMMENT: this is a comment 
-Command number 5 was successful!
-Given input: ai-ai 192.168.1.1 8080 p@s5w0rd easy hard 
-Command number 6 was successful!
-=-=-=-=-=-=-=EOF-=-=-=-=-=-=-=
-The file: Game/hello was not found
-Given input: file 
-PASSWORD: file
-Command number 7 was successful!
-Given input: display 
-Command number 8 was successful!
-Given input: e2 fwd 
-e2 is an invalid move
-Command number 9 FAILED!
-Given input: display 
-Command number 10 was successful!
-Given input: e2 fwd 
-e2 is an invalid move
-Command number 11 FAILED!
-Given input: exit 
-=-=-=-=-=-=-EXITED-=-=-=-=-=-=
+The current file is: Game/Server.cpp
+Given input: hello world 
+hello is not a valid command
+Command number 1 FAILED!
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=

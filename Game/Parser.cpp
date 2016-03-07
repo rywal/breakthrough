@@ -5,14 +5,17 @@ int main() {
 	//------INCLUDE-WITH-ALL-MAINS-USED------//
 	output.open ("Output.txt");
 	output<<"=-=-=-=-=-=-BEGIN=-=-=-=-=-=-="<<endl;
+	sprintf(temp_buffer, "The current file is: %s", __FILE__);
+	output<< temp_buffer << endl;
 	buffer_size=0;
 	delimiters = " \n";
 	line_number=1;
 	signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
 	signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
-	//------^-^-^-^-^-^-^-^-^-^-^-^-^-^-^------//
+	//------^-^-^-^AT-BEGINING-^-^-^-^-----//
 	
 	//Example of a main-----------------------------------------------------//
+	string f_or_h;
 	while(true){
 		while(1){
 		printf("file[f] or hand[h]?\n>");//Giving better testing handles
@@ -34,7 +37,9 @@ int main() {
 			}
 		}
 	}
+	//------INCLUDE-WITH-ALL-MAINS-USED------//
 	output<<"=-=-=-=-=-=-EXITED-=-=-=-=-=-=";
 	output.close();
+	//------^-^-^-^-^-AT-END-^-^-^-^-^------//
     return 0;
 }

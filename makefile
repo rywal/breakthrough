@@ -1,5 +1,9 @@
 # makefile
 # added capability to use makefile in various environments without modifications
+SRCS=Game/Game.cpp Game/State.cpp
+MAIN1=Game/Server.cpp
+MAIN2=Game/Parser.cpp
+CFLAGS=-std=c++11 -g -o
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
     cc = clang++
@@ -9,15 +13,15 @@ else
     cc = g++-4.7
 endif
 
-.PHONY: all game clean
+.PHONY: all game parser clean
 
 all: game parser
 
 game:
-	$(cc) -std=c++11 -g -o breakthrough Game/Game.cpp Game/State.cpp
+	$(cc) $(CFLAGS) breakthrough $(MAIN1) $(SRCS)
 	
 parser:
-	$(cc) -std=c++11 -g -o par Game/Parser.cpp Game/Game.cpp Game/State.cpp
+	$(cc) $(CFLAGS) par $(MAIN2) $(SRCS)
 
 clean:
-	rm -f *.o a.out breakthrough par
+	rm -f *.o breakthrough par

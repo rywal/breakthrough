@@ -15,16 +15,19 @@
 using namespace std;
 
 //------GLOBAL-VARIABLE------//
-ofstream output;
+//locally global variables
 int error; //Give error message for debugging/output
+vector<string> command_line;
+//Defined in sub-files
+ofstream output;
+Game new_game;
+//For use in sub-files
+char* str;
+char* pch;
 int line_number;
 string delimiters;
 size_t buffer_size;
-char* str;
-char* pch;
-string f_or_h;
-vector<string> command_line;
-Game new_game;
+char temp_buffer[50];
 //---------------------------//
 
 void  ctrl_c(int signo){//This is to protect formatting of output
