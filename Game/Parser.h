@@ -331,6 +331,15 @@ void handle_action(string command, int &ln, bool is_file){
 	ln=line_number;
 }
 
+void def_vars(){//Defines variables for nicer Main()
+	buffer_size=0;
+	delimiters = " \n";
+	output.open ("Output.txt");
+	output<<"=-=-=-=-=-=-BEGIN=-=-=-=-=-=-="<<endl;
+	sprintf(temp_buffer, "The current file is: %s", __FILE__);
+	line_number=1;
+}
+
 void take_command(int &ln){ //Take input from command line
 	line_number=ln;
 	buffer_size=0;
