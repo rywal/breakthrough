@@ -85,9 +85,9 @@ vector< pair<string, DIRECTION> > AI::possible_moves(State state) {
     cout << "finding moves...2\n";
     vector< pair<string, DIRECTION> > moves;
     
-    for () {
-        state.get_board()[row][column];
-    }
+//    for () {
+//        state.get_board()[row][column];
+//    }
     pair<string, DIRECTION> move = make_pair("a2", FWD);
     
     moves.push_back(move);
