@@ -1,15 +1,4 @@
-#include <algorithm>
-#include <boost/regex.hpp>
-#include <cctype>
-#include <cstring>
-#include <fstream>
-#include <iostream>
-#include <regex>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <vector>
+#include "globals.h"
 #include "Game.h"
 
 using namespace std;

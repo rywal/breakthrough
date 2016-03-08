@@ -3,6 +3,8 @@
 //
 
 #include "Game.h"
+#include "State.h"
+#include "AI.h"
 
 Game::Game(){
 	display=false;
@@ -12,7 +14,8 @@ Game::Game(){
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
     
     game_type = g;
-    ai = AI(d);
+    delete[] ai;
+    ai = new AI(d);
 }
 
 bool Game::valid_move(int row, char column, DIRECTION d){
@@ -30,7 +33,17 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 				//if piece is in Column H, piece can't move right
 			if (column=='h' && d == RIGHT) return false;
 				//if there is a piece in front of it, it can't move forward
-			if (current_state.get_board()[row][column-'a']!='_' && d == FWD) return false;
+            if (current_state.get_board()[row][column-'a']!='_' && d == FWD) return false;
+            // Check if can move left
+            if ( (column-'a'-1) >= 0 && d == LEFT)
+                if (current_state.get_board()[row][column-'a'-1] == 'o')
+                    return false;
+            
+            // Check if can move right
+            if ( (column+1) <= 'h' && d == RIGHT)
+                if (current_state.get_board()[row][column-'a'+1] == 'o')
+                    return false;
+            
 			return true;
 		}else {
 			//check if piece is black
@@ -44,6 +57,17 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 			if (column=='a' && d == RIGHT) return false;	
 				//if there is a piece in front of it, it can't move forward
 			if (current_state.get_board()[row-2][column-'a']!='_' && d == FWD) return false;
+            
+            // Check if can move left
+            if ( (column-'a'-1) >= 0 && d == LEFT)
+                if (current_state.get_board()[row-1][column-'a'-1] == 'x')
+                    return false;
+            
+            // Check if can move right
+            if ( (column+1) <= 'h' && d == RIGHT)
+                if (current_state.get_board()[row-1][column-'a'+1]=='x')
+                    return false;
+            
 			return true;
 		}
 }
@@ -74,8 +98,8 @@ State Game::update(char column, int row, DIRECTION d){
 		save_state();
         
         // If game type involves an AI, let it make it's move
-        if (game_type != HH) {
-            if( ai.make_move( this ) ){
+        if (game_type != HH && !current_state.get_turn()) {
+            if( ai->make_move( this ) ){
                 current_state.switch_turn();
                 current_state.set_status(termination_check());
                 if(display)

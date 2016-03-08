@@ -8,31 +8,15 @@
 #define Game_h
 
 #include <stdio.h>
+#include "globals.h"
 #include "State.h"
 #include "AI.h"
 
 class AI;
 
-//  Possible moves from each piece
-//
-//  Here, FORWARD direction is assumed to be the direction a piece can legally advance in
-//  Here, LEFT/RIGHT is assumed to be FORWARD one place and LEFT/RIGHT one place
-//    LEFT/RIGHT are assumed to be with respect to the game board(Column A will always be "most left", Column H will always be "most right")
-enum DIRECTION { LEFT, FWD, RIGHT };
-
-//  Type of game
-//
-//  HH = Human-Human
-//  HA = Human-AI
-//  AA = AI-AI
-enum GAMETYPE { HH, HA, AA };
-
 class Game {
 
 private:
-    
-    //  Holds the current state of the game
-    State current_state;
     
     //  Vector of all previous game states
     //
@@ -42,9 +26,14 @@ private:
     //Display Toggle
     bool display;
     
-    AI ai;
+    AI *ai;
     
 public:
+    
+    //  Holds the current state of the game
+    State current_state;
+    
+    
     
     // Holds the current type of game
     GAMETYPE game_type;

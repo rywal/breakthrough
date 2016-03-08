@@ -30,13 +30,14 @@ State::State(){
 
 //this assumes that the state passed as an argument is a completely updated and defined state
 State::State(State* s){
-	
+	cout << "Copying state\n";
 	for(int i=0; i<8; i++)
 		for(int j=0; j<8; j++)
 					board[i][j]=s->get_board()[i][j];
 	
 	num_moves=s->get_num_moves();
-	status=s->get_status();
+    status=s->get_status();
+    cout << "DONE copying state\n";
 }
 
 

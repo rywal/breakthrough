@@ -5,21 +5,17 @@
 //
 
 
-#include <stdio.h>
-#include "State.h"
-#include "Game.h"
-
 #ifndef AI_h
 #define AI_h
 
-// Holds the difficulty of the current AI
-//
-//   EASY will implement a semi-random algorithm
-//   MEDIUM will implement limited depth min-max algorithm
-//   HARD will implement alpha-beta pruning algorithm
-enum DIFFICULTY { EASY, MEDIUM, HARD };
+#include <stdio.h>
+#include "globals.h"
+#include "Game.h"
 
 class Game;
+class State;
+
+using namespace std;
 
 class AI {
     
@@ -34,6 +30,8 @@ public:
     AI(const AI &ai);
     ~AI();
     
+    void set_difficulty(DIFFICULTY d) { difficulty_level = d; }
+    
     //  Makes a move based on the game sent to it
     //
     //  Return value is based on ability to make a move(see algorithms)
@@ -44,6 +42,9 @@ public:
     //  Returns TRUE  if a move was found and made
     //          FALSE if a move could not be made
     bool choose_random(Game* game);
+    
+    //  Find all moves that can be made with a state
+    vector< pair<string, DIRECTION> > possible_moves(State state);
 };
 
 #endif /* AI_h */

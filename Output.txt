@@ -4,11 +4,9 @@ Given input: display
 Command number 1 was successful!
 Given input: human-ai easy 
 Command number 2 was successful!
-Given input: display 
+Given input: b2 fwd 
 Command number 3 was successful!
-Given input: display 
+Given input: d1 right 
 Command number 4 was successful!
-Given input: a2 fwd 
-Command number 5 was successful!
 Given input: exit 
 =-=-=-=-=-=-EXITED-=-=-=-=-=-=
