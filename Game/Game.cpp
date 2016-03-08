@@ -99,13 +99,13 @@ State Game::update(char column, int row, DIRECTION d){
         
         // If game type involves an AI, let it make it's move
         if (game_type != HH && !current_state.get_turn()) {
-            if( ai->make_move( this ) ){
-                current_state.switch_turn();
-                current_state.set_status(termination_check());
-                if(display)
-                    display_board();
-                save_state();
-            }
+            ai->make_move( this );
+//                current_state.switch_turn();
+//                current_state.set_status(termination_check());
+//                if(display)
+//                    display_board();
+//                save_state();
+//            }
         }
 	} else {
 		printf("That's an invalid move! Try again.\n");
@@ -120,7 +120,10 @@ void Game::display_toggle(){
 }
 
 void Game::display_board(){
-	(current_state.get_turn()) ? (cout<<"White's ") : (cout<<"Black's ");
+    if (!display) {
+        return;
+    }
+	(current_state.get_turn()) ? (cout<<"; White's ") : (cout<<"; Black's ");
 	cout<<"turn\n";
 	cout<<";   ";
 	for (char i='A'; i<'I'; i++)

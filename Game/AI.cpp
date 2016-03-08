@@ -10,6 +10,7 @@
 #include <utility> // used for pair
 #include <vector>
 #include <string>
+#include <boost/lexical_cast.hpp>
 
 using namespace std;
 
@@ -55,7 +56,7 @@ bool AI::choose_random(Game* game) {
     printf("; Choosing a random move based on easy difficulty level\n");
     
     // Find all possible moves
-    vector< pair<string, DIRECTION> > all_possible_moves = possible_moves(game->current_state);
+    vector< pair<string, DIRECTION> > all_possible_moves = possible_moves(game, game->current_state);
 
     if (all_possible_moves.size() == 0)
         return false;
@@ -64,33 +65,57 @@ bool AI::choose_random(Game* game) {
     srand (time(NULL));
     int random_move = rand() % all_possible_moves.size();
     
-    cout << "Making move with random index: " << random_move << "\n";
+//    cout << "Making move with random index: " << random_move << "\n";
     
     // Make a move using the random number
+    string text_move = all_possible_moves[random_move].first;
+    transform(text_move.begin(), text_move.end(), text_move.begin(), ::toupper);
+    cout << text_move << " ";
+    switch (all_possible_moves[random_move].second) {
+        case FWD:
+            cout << "FWD\n";
+            break;
+            
+        case LEFT:
+            cout << "LEFT\n";
+            break;
+            
+        case RIGHT:
+            cout << "RIGHT\n";
+            break;
+            
+        default:
+            break;
+    }
     
-    cout << "1: " << all_possible_moves[random_move].first[0] << "\n";
-    cout << "2: " << (all_possible_moves[random_move].first[1] - '0') << "\n";
-    cout << "3: " << all_possible_moves[random_move].second << "\n";
-    game->update(all_possible_moves[random_move].first[0],
-                (all_possible_moves[random_move].first[1] - '0'),
-                all_possible_moves[random_move].second);
+    game->update( all_possible_moves[random_move].first[0],
+                  (all_possible_moves[random_move].first[1] - '0'),
+                  all_possible_moves[random_move].second );
     
     return true;
 }
 
-vector< pair<string, DIRECTION> > AI::possible_moves(State state) {
-    cout << "finding moves...1\n";
+vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
+//    cout << "finding moves...1\n";
     // Figure out which player we are finding moves for
     char game_piece = state.get_turn() ? 'o' : 'x';
-    cout << "finding moves...2\n";
+//    cout << "finding moves...2\n";
     vector< pair<string, DIRECTION> > moves;
     
-//    for () {
-//        state.get_board()[row][column];
-//    }
-    pair<string, DIRECTION> move = make_pair("a2", FWD);
+    for (int row = 1; row <= 8; row++) {
+        for (char col = 'a'; col <= 'h'; col++) {
+            if(state.get_board()[row-1][col - 'a'] == game_piece) {
+                for (auto d : {FWD, LEFT, RIGHT}) {
+                    if ( game->valid_move(row, col, d) ) {
+                        string position = boost::lexical_cast<string>(col) + to_string(row);
+                        pair<string, DIRECTION> move = make_pair(position, d);
+                        moves.push_back( move );
+                    }
+                }
+            }
+        }
+    }
     
-    moves.push_back(move);
-    cout << "finding moves...3\n";
+//    cout << "finding moves...3\n";
     return moves;
 }

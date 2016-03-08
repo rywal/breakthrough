@@ -4,9 +4,47 @@ Given input: display
 Command number 1 was successful!
 Given input: human-ai easy 
 Command number 2 was successful!
-Given input: b2 fwd 
+Given input: d2 fwd 
 Command number 3 was successful!
-Given input: d1 right 
+Given input: e2 fwd 
 Command number 4 was successful!
+Given input: f2 fwd 
+Command number 5 was successful!
+Given input: g2 fwd 
+Command number 6 was successful!
+Given input: h2 fwd 
+Command number 7 was successful!
+Given input: c2 fwd 
+Command number 8 was successful!
+Given input: b2 fwd 
+Command number 9 was successful!
+Given input: a2 fwd 
+Command number 10 was successful!
+Given input: a2 fwd 
+a2 is an invalid move
+Command number 11 FAILED!
+Given input: a3 fwd 
+Command number 12 was successful!
+Given input: a4 fwd 
+Command number 13 was successful!
+Given input: a5 fwd 
+Command number 14 was successful!
+Given input: a6 fwd 
+Command number 15 was successful!
+Given input: a7 right 
+Command number 16 was successful!
+Given input: e3 right 
+Command number 17 was successful!
+Given input: f4 fwd 
+Command number 18 was successful!
+Given input: d4 fwd 
+d4 is an invalid move
+Command number 19 FAILED!
+Given input: d3 fwd 
+Command number 20 was successful!
+Given input: f3 fwd 
+Command number 21 was successful!
+Given input: h3 fwd 
+Command number 22 was successful!
 Given input: exit 
 =-=-=-=-=-=-EXITED-=-=-=-=-=-=

@@ -44,7 +44,7 @@ public:
     bool choose_random(Game* game);
     
     //  Find all moves that can be made with a state
-    vector< pair<string, DIRECTION> > possible_moves(State state);
+    vector< pair<string, DIRECTION> > possible_moves(Game* game, State state);
 };
 
 #endif /* AI_h */
