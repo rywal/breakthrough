@@ -17,6 +17,7 @@ int line_number;
 string delimiters;
 size_t buffer_size;
 char temp_buffer[50];
+char out_buffer[50];
 //---------------------------//
 
 void  ctrl_c(int signo){//This is to protect formatting of output
@@ -34,6 +35,12 @@ void  ctrl_c(int signo){//This is to protect formatting of output
 		output.close();
 		exit(139);//System Error code
 	}
+}
+
+void output_function(int err){
+	printf("%s", out_buffer);
+	output<<out_buffer<<endl;
+	error=err;
 }
 
 bool is_difficulty(string d){
@@ -61,14 +68,14 @@ bool is_ip(string s){
 	char *ptr;
 	for(int i = 0; i<ips.size();i++){
 		if(atoi(ips[i].c_str())==0 && ips[i].c_str()!="0"){ //NOT AN INTEGER
-			output<<"In an IP check: " << ips[i].c_str()<<" is not an Integer"<<endl;
-			error = 7;
+			sprintf(out_buffer, "In an IP check: %s is not an Integer", ips[i].c_str());
+			output_function(7);
 			return false;
 		} else if(atoi(ips[i].c_str())<=255){ //An IP address must not go beyond 255
 			//Do nothing
 		} else{
-			output<<"IP is out of range"<<endl;
-			error = 8;
+			sprintf(out_buffer, "IP is out of range");
+			output_function(8);
 			return false;
 		}
 	}
@@ -77,14 +84,14 @@ bool is_ip(string s){
 
 bool is_hostname(string h){
 	if(h.size()>=49){
-		output<<"Hostname cannot exceed 49 characters"<<endl;
-		error = 9;
+		sprintf(out_buffer, "Hostname cannot exceed 49 characters");
+		output_function(9);
 		return false;
 	}
 	for(int i=0; i<h.size();i++){
 		if(!isalnum(h[i])&&(h[i]!='-')){
-			output<<h[i]<<" is an invalid character for a hostname"<<endl;
-			error = 10;
+			sprintf(out_buffer, "%c  is an invalid character for a hostname",h[i]);
+			output_function(10);
 			return false;
 		}
 	}
@@ -98,7 +105,8 @@ bool is_server(string s){
 		return true;
 	} else{
 		if(error=6){ //Prevent false negatives in Output.txt
-			output<<"IP address did not have correct amount of sets of numbers"<<endl;
+			sprintf(out_buffer, "IP address did not have correct amount of sets of numbers");
+			output_function(6);
 		}
 		//Error is given by is_ip/is_hostname
 		return false;
@@ -108,16 +116,16 @@ bool is_server(string s){
 bool is_port(string p){
 	for(int i=0; i<p.size();i++){
 		if(!isdigit(p[i])){
-			output<<p[i]<<" is not a valid character in a port"<<endl;
-			error = 11;
+			sprintf(out_buffer, "%c is not a valid character in a port",p[i]);
+			output_function(11);
 			return false;
 		}
 	}
 	if(atoi(p.c_str())>0){
 		return true;
 	} else{
-		output<<"A port must be a postive integer."<<endl;
-		error = 12;
+		sprintf(out_buffer, "A port must be a postive integer.");
+		output_function(12);
 		return false;
 	}
 }
@@ -138,16 +146,16 @@ DIRECTION to_dir(string d){
 
 void do_command(vector<string> command_line){
 	if(command_line.size()==0){
-		error=22;
-		output<<"No input was given"<<endl;
+		sprintf(out_buffer, "No input was given");
+		output_function(22);
 	} else if(command_line[0]=="exit"){//Checking for "EXIT" command - Preventing SegFault
 		if(command_line.size()==1){
 			output<<"=-=-=-=-=-=-EXITED-=-=-=-=-=-=";
 			output.close();
 			exit(0);
 		} else{
-			output<<"Exit had too many arguments"<<endl;
-			error=1;
+			sprintf(out_buffer, "Exit had too many arguments");
+			output_function(1);
 		}
 	} else if(command_line[0]==";"){
 		output<<"COMMENT: ";
@@ -156,12 +164,10 @@ void do_command(vector<string> command_line){
 		single_string.push_back(';');
 		single_string.push_back(' ');
 		if(command_line.size()==1){
-			printf("Empty comment");
 			output<<"EMPTY COMMENT";
 		}
 		for(int i=1; i<command_line.size(); i++){
 			output<<command_line[i].c_str()<<" ";
-			//printf("%s ", command_line[i].c_str());
 			for(int g=0;g<command_line[i].size(); g++){
 				single_string.push_back(command_line[i][g]);
 			}
@@ -169,20 +175,19 @@ void do_command(vector<string> command_line){
 		}
 		cout<<endl<<single_string<<endl;
 		output<<endl;
-		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	} else if(command_line[0]=="display"){
 		if(command_line.size()==1){
 			new_game.display_toggle();
 		} else{
-			output<<"Display had too many arguments"<<endl;
-			error=2;
+			sprintf(out_buffer, "Display had too many arguments");
+			output_function(2);
 		}
 	} else if(command_line[0]=="undo"){
 		if(command_line.size()==1){
 			new_game.undo_two_turns();
 		} else{
-			output<<"Undo had too many arguments"<<endl;
-			error=3;
+			sprintf(out_buffer, "Undo had too many arguments");
+			output_function(3);
 		}
 	} else if(command_line[0]=="human-ai"){
 		if(command_line.size()==2){
@@ -190,12 +195,12 @@ void do_command(vector<string> command_line){
 				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
                 new_game.set_game_type(HA, EASY);
 			} else{
-				output<<command_line[1].c_str()<<" is not a difficulty"<<endl;
-				error=4;
+				sprintf(out_buffer, "%s  is not a difficulty", command_line[1].c_str());
+				output_function(4);
 			}
 		} else{
-			output<<"Human-AI had incorrect amount of arguments"<<endl;
-			error=5;
+			sprintf(out_buffer, "Human-AI had incorrect amount of arguments");
+			output_function(5);
 		}	
 	} else if(command_line[0]=="ai-ai"){
 		if(command_line.size()==6){
@@ -206,20 +211,21 @@ void do_command(vector<string> command_line){
 						error=0;
 						/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 					} else{
-						output<<"Incorrect input for difficulty"<<endl;
-						error=13;
+						sprintf(out_buffer, "Incorrect input for difficulty");
+						output_function(13);
 					}
 				} else{
-					output<<command_line[2]<<" is not a port"<<endl;
-					error=14;
+					sprintf(out_buffer, "%s is not a port", command_line[2].c_str());
+					output_function(14);
 				}
 			} else{
 				output<<command_line[1]<<" is not a server"<<endl;
+				printf("%s is not a server", command_line[1].c_str());
 				//Error given in is_server
 			}
 		} else{
-			output<<"AI-AI had incorrect amount of arguments"<<endl;
-			error=15;
+			sprintf(out_buffer, "AI-AI had incorrect amount of arguments");
+			output_function(15);
 		}
 	} else if(command_line[0].size()==2){//Is this a MOVE?
 		if(command_line.size()==2){
@@ -231,32 +237,31 @@ void do_command(vector<string> command_line){
 						if(new_game.valid_move(t2-48, tc, to_dir(command_line[1].c_str()))){
 							new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
 						} else{
-							printf("%c%c %s is an invalid move\n", tc,t2, command_line[1].c_str());
-							output<<tc<<t2<<" is an invalid move"<<endl;
-							error = 16;
+							sprintf(out_buffer, "%c%c %s is an invalid move\n", tc,t2, command_line[1].c_str());
+							output_function(16);
 						}
 					} else{
-						output<<command_line[1]<<" is not a valid direction"<<endl;
-						error = 17;
+						sprintf(out_buffer, "%s is not a valid direction", command_line[1].c_str());
+						output_function(17);
 					}
 				} else{
-					output<<t2<<" is not a valid row number"<<endl;
-					error = 18;
+					sprintf(out_buffer, "%c  is not a valid row number", t2);
+					output_function(18);
 				}
 			} else{
-				output<<tc<<" is not a valid column letter"<<endl;
-				error = 19;
+				sprintf(out_buffer, "%c  is not a valid column letter", tc);
+				output_function(19);
 			}
 		} else{
-			output<<"Move had incorrect amount of arguments"<<endl;
-			error=20;
+			sprintf(out_buffer, "Move had incorrect amount of arguments");
+			output_function(20);
 		}
 	}  else if(command_line.size()==1){//Is this a MOVE?
 		output<<"PASSWORD: "<<command_line[0]<<endl;
 		/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
 	}else{
-		output<<command_line[0].c_str()<<" is not a valid command"<<endl;
-		error=21;
+		sprintf(out_buffer, "%s is not a valid command", command_line[0].c_str());
+		output_function(21);
 	}
 }
 
@@ -314,6 +319,9 @@ void handle_action(string command, int &ln, bool is_file){
 		output<<"Command number "<<line_number<<" was successful!"<<endl; //Prints status to Output file
 	} else {
 		output<<"Command number "<<line_number<<" FAILED!"<<endl; //Prints status to Output file
+		if(error!=0){
+			printf("\nNot valid. ERROR %d", error);
+		}
 	}
 	//prepare for next command
 	command_line.clear();
