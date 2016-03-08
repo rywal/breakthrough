@@ -52,6 +52,8 @@ public:
 	void undo();
 	void undo_two_turns();
 	void display_toggle();
+	void white_v();
+	void black_v();
 	State update(char column, int row, DIRECTION d);
     
 };

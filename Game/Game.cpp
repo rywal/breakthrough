@@ -33,7 +33,9 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 				//if piece is in Column H, piece can't move right
 			if (column=='h' && d == RIGHT) return false;
 				//if there is a piece in front of it, it can't move forward
-            if (current_state.get_board()[row][column-'a']!='_' && d == FWD) return false;
+            if (d == LEFT && current_state.get_board()[row+1][column-'a'-1]=='o' ) return false;
+			if (d == RIGHT && current_state.get_board()[row+1][column-'a'+1]=='o' ) return false;
+			if (current_state.get_board()[row][column-'a']!='_' && d == FWD) return false;
             // Check if can move left
             if ( (column-'a'-1) >= 0 && d == LEFT)
                 if (current_state.get_board()[row][column-'a'-1] == 'o')
@@ -56,6 +58,10 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 				//if piece is in Column A, piece can't move right
 			if (column=='a' && d == RIGHT) return false;	
 				//if there is a piece in front of it, it can't move forward
+			if (d == LEFT && current_state.get_board()[row-1][column-'a'+1]=='x' ) return false;
+			
+			if (d == RIGHT && current_state.get_board()[row-1][column-'a'-1]=='x' ) return false;
+			
 			if (current_state.get_board()[row-2][column-'a']!='_' && d == FWD) return false;
             
             // Check if can move left
@@ -93,6 +99,7 @@ State Game::update(char column, int row, DIRECTION d){
 		}
 		current_state.switch_turn();
 		current_state.set_status(termination_check());
+		
 		if(display)
 			display_board();
 		save_state();
@@ -123,20 +130,35 @@ void Game::display_board(){
     if (!display) {
         return;
     }
-	(current_state.get_turn()) ? (cout<<"; White's ") : (cout<<"; Black's ");
-	cout<<"turn\n";
-	cout<<";   ";
-	for (char i='A'; i<'I'; i++)
-		cout<<" "<<i;
-	cout<<'\n';
-	for (int i=7; i>-1; i--){
-		cout<<"; "<<i+1<<" ";
-		for(int j=0; j<8; j++){
-			cout<<'|'<<current_state.get_board()[i][j];
+	if(current_state.get_status()==0){
+		(current_state.get_turn()) ? (cout<<"; White's ") : (cout<<"; Black's ");
+		cout<<"turn\n";
+		cout<<";   ";
+		for (char i='A'; i<'I'; i++)
+			cout<<" "<<i;
+		cout<<'\n';
+		for (int i=7; i>-1; i--){
+			cout<<"; "<<i+1<<" ";
+			for(int j=0; j<8; j++){
+				cout<<'|'<<current_state.get_board()[i][j];
+			}
+			cout<<"|\n";	
+		}	
+	} else {
+		(!current_state.get_turn()) ? (white_v()) : (black_v());
+			cout<<";   ";
+		for (char i='A'; i<'I'; i++)
+			cout<<" "<<i;
+		cout<<'\n';
+		for (int i=7; i>-1; i--){
+			cout<<"; "<<i+1<<" ";
+			for(int j=0; j<8; j++){
+				cout<<'|'<<current_state.get_board()[i][j];
+			}
+			cout<<"|\n";	
 		}
-		cout<<"|\n";	
-	}	
-}
+	}
+}	
 
 bool Game::termination_check(){
 		
@@ -185,6 +207,44 @@ bool Game::termination_check(){
 		
 }
 	
+void Game::white_v(){
+	current_state.set_board(5,1, 'W');
+	current_state.set_board(5,2, 'H');
+	current_state.set_board(5,3, 'I');
+	current_state.set_board(5,4, 'T');
+	current_state.set_board(5,5, 'E');
+	current_state.set_board(4,2, 'I');
+	current_state.set_board(4,3, 'S');
+	current_state.set_board(3,2, 'T');
+	current_state.set_board(3,3, 'H');
+	current_state.set_board(3,4, 'E');
+	current_state.set_board(2,1, 'W');
+	current_state.set_board(2,2, 'I');
+	current_state.set_board(2,3, 'N');
+	current_state.set_board(2,4, 'N');
+	current_state.set_board(2,5, 'E');
+	current_state.set_board(2,6, 'R');
+}	
+
+void Game::black_v(){
+	current_state.set_board(6,1, 'B');
+	current_state.set_board(6,2, 'L');
+	current_state.set_board(6,3, 'A');
+	current_state.set_board(6,4, 'C');
+	current_state.set_board(6,5, 'K');
+	current_state.set_board(5,2, 'I');
+	current_state.set_board(5,3, 'S');
+	current_state.set_board(4,2, 'T');
+	current_state.set_board(4,3, 'H');
+	current_state.set_board(4,4, 'E');
+	current_state.set_board(3,1, 'W');
+	current_state.set_board(3,2, 'I');
+	current_state.set_board(3,3, 'N');
+	current_state.set_board(3,4, 'N');
+	current_state.set_board(3,5, 'E');
+	current_state.set_board(3,6, 'R');
+}
+
 void Game::save_state(){
 	previous_states.push_back(current_state);
 	//might include output to a file if we need it
