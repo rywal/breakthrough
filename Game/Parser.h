@@ -37,10 +37,14 @@ void  ctrl_c(int signo){//This is to protect formatting of output
 	}
 }
 
-void output_function(int err){
+void output_function(int err){//To be used inside the Parser.h only
 	printf("%s", out_buffer);
 	output<<out_buffer<<endl;
 	error=err;
+}
+
+void outside_output(string s){//To be possibly used outside Parser.h
+	output<<s<<endl;
 }
 
 bool is_difficulty(string d){
