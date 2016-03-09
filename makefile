@@ -1,8 +1,8 @@
 # makefile
 # added capability to use makefile in various environments without modifications
 SRCS=Game/Game.cpp Game/State.cpp Game/AI.cpp
-MAIN1=Game/Server.cpp
-MAIN2=Game/Parser.cpp
+MAIN1=Game/Client.cpp
+MAIN2=Game/Server.cpp
 CFLAGS=-std=c++11 -g -o
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
@@ -13,15 +13,15 @@ else
     cc = g++-4.7
 endif
 
-.PHONY: all game parser clean
+.PHONY: all client server clean
 
-all: game parser
+all: client server
 
-game:
-	$(cc) $(CFLAGS) breakthrough $(MAIN1) $(SRCS)
+client:
+	$(cc) $(CFLAGS) client $(MAIN1) $(SRCS)
 	
-parser:
-	$(cc) $(CFLAGS) par $(MAIN2) $(SRCS)
+server:
+	$(cc) $(CFLAGS) server $(MAIN2) $(SRCS)
 
 clean:
 	rm -f *.o breakthrough par
