@@ -1,3 +1,15 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
+<<<<<<< HEAD
 The current file is: Game/Server.cpp
 display exit =-=-=-=-=-=-EXITED-=-=-=-=-=-=
+=======
+The current file is: Game/Client.cpp
+Given input: hm-ai 
+PASSWORD: hm-ai
+Command number 1 was successful!
+Given input: human-ai easy 
+Command number 2 was successful!
+Given input: display 
+Command number 3 was successful!
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
+>>>>>>> 6e1aae4a67000fd947413f638dbd4636305bcf55
