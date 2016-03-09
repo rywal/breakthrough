@@ -3,21 +3,60 @@
 //
 //  Socket portions used from http://www.linuxhowtos.org/C_C++/socket.htm
 //
-
 #include "globals.h"
 #include "Game.h"
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
 
-// Established used variables
+#define BUFFER_SIZE 1024
+
+// Socket variables
 int sockfd, newsockfd, portno;
 socklen_t clilen;
-char buffer[256];
+char buffer[BUFFER_SIZE];
 struct sockaddr_in serv_addr, cli_addr;
 int n;
 Game new_game;
+string correct_password = "breakthrough";
+
+// Globals from parser.h
+int error = 0;
+char out_buffer[50];
+ofstream output;
+int line_number = 1;
+size_t buffer_size;
+char temp_buffer[50];
+
+
+void  ctrl_c(int signo){//This is to protect formatting of output
+    if (newsockfd) {
+        shutdown(newsockfd, 2);
+    }
+    
+    if (sockfd) {
+        shutdown(sockfd, 2);
+    }
+    if (signo == SIGINT){
+        output<<"=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=";
+        output.close();
+        exit(0);
+    } else if(signo == SIGSEGV){
+        if(error==0){
+            printf("\n\nThere has been a Segmentation Fault with unknown error");
+        }else{
+            printf("\n\nThere has been a Segmentation Fault. The error code is: %d", error);
+        }
+        output<<"^-^-^-Segmentation Fault-^-^-^";
+        output.close();
+        exit(139);//System Error code
+    }
+}
+
+
+// Prints error message buffer
+void output_function(int err){
+    printf("%s", out_buffer);
+    output<<out_buffer<<endl;
+    error=err;
+}
 
 
 // Display errors from socket programming
@@ -29,8 +68,8 @@ void socket_error(const char *msg)
 
 
 // Output to socket
-bool socket_output(char* out){
-    if(write(newsockfd, out, out.length()) == -1){
+bool socket_output(const char* out){
+    if(write(newsockfd, out, strlen(out)) == -1){
         socket_error("ERROR: Unable to output to socket");
         return false;
     }
@@ -69,12 +108,14 @@ bool is_ip(string s){
         if(atoi(ips[i].c_str())==0 && ips[i].c_str()!="0"){ //NOT AN INTEGER
             sprintf(out_buffer, "In an IP check: %s is not an Integer", ips[i].c_str());
             output_function(7);
+            socket_output("; IP address given is not an integer\n");
             return false;
         } else if(atoi(ips[i].c_str())<=255){ //An IP address must not go beyond 255
             //Do nothing
         } else{
             sprintf(out_buffer, "IP is out of range");
             output_function(8);
+            socket_output("; IP address given is out of range\n");
             return false;
         }
     }
@@ -87,12 +128,14 @@ bool is_hostname(string h){
     if(h.size()>=49){
         sprintf(out_buffer, "Hostname cannot exceed 49 characters");
         output_function(9);
+        socket_output("; Hostname cannot exceed 49 characters\n");
         return false;
     }
     for(int i=0; i<h.size();i++){
         if(!isalnum(h[i])&&(h[i]!='-')){
             sprintf(out_buffer, "%c  is an invalid character for a hostname",h[i]);
             output_function(10);
+            socket_output("; Invalid character given in hostname\n");
             return false;
         }
     }
@@ -109,6 +152,7 @@ bool is_server(string s){
         if(error=6){ //Prevent false negatives in Output.txt
             sprintf(out_buffer, "IP address did not have correct amount of sets of numbers");
             output_function(6);
+            socket_output("; IP address did not have correct format\n");
         }
         //Error is given by is_ip/is_hostname
         return false;
@@ -122,6 +166,7 @@ bool is_port(string p){
         if(!isdigit(p[i])){
             sprintf(out_buffer, "%c is not a valid character in a port",p[i]);
             output_function(11);
+            socket_output("; Invalid character given in port number\n");
             return false;
         }
     }
@@ -130,6 +175,7 @@ bool is_port(string p){
     } else{
         sprintf(out_buffer, "A port must be a postive integer.");
         output_function(12);
+        socket_output("; Port number must be positive\n");
         return false;
     }
 }
@@ -156,6 +202,8 @@ DIRECTION to_dir(string d){
 // Take a command and direct it to the correct location
 void do_command(vector<string> command_line){
     if(command_line.size()==0){
+        socket_output("No input was given\n");
+        
         sprintf(out_buffer, "No input was given");
         output_function(22);
     } else if(command_line[0]=="exit"){//Checking for "EXIT" command - Preventing SegFault
@@ -164,6 +212,7 @@ void do_command(vector<string> command_line){
             output.close();
             exit(0);
         } else{
+            socket_output("; Exit had too many arguments");
             sprintf(out_buffer, "Exit had too many arguments");
             output_function(1);
         }
@@ -189,6 +238,7 @@ void do_command(vector<string> command_line){
         if(command_line.size()==1){
             new_game.display_toggle();
         } else{
+            socket_output("; Display had too many arguments\n");
             sprintf(out_buffer, "Display had too many arguments");
             output_function(2);
         }
@@ -196,6 +246,7 @@ void do_command(vector<string> command_line){
         if(command_line.size()==1){
             new_game.undo_two_turns();
         } else{
+            socket_output("Undo had too many arguments\n");
             sprintf(out_buffer, "Undo had too many arguments");
             output_function(3);
         }
@@ -247,29 +298,32 @@ void do_command(vector<string> command_line){
                         if(new_game.valid_move(t2-48, tc, to_dir(command_line[1].c_str()))){
                             new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
                         } else{
+                            socket_output("; Invalid move\n");
                             sprintf(out_buffer, "%c%c %s is an invalid move\n", tc,t2, command_line[1].c_str());
                             output_function(16);
                         }
                     } else{
+                        socket_output("; Invalid direction\n");
                         sprintf(out_buffer, "%s is not a valid direction", command_line[1].c_str());
                         output_function(17);
                     }
                 } else{
+                    socket_output("; Invalid row number");
                     sprintf(out_buffer, "%c  is not a valid row number", t2);
                     output_function(18);
                 }
             } else{
+                socket_output("; Invalid column letter");
                 sprintf(out_buffer, "%c  is not a valid column letter", tc);
                 output_function(19);
             }
         } else{
+            socket_output("Move command had incorrect number of arguments");
             sprintf(out_buffer, "Move had incorrect amount of arguments");
             output_function(20);
         }
-    }  else if(command_line.size()==1){//Is this a MOVE?
-        output<<"PASSWORD: "<<command_line[0]<<endl;
-        /*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
     }else{
+        socket_output("Not a valid move\n");
         sprintf(out_buffer, "%s is not a valid command", command_line[0].c_str());
         output_function(21);
     }
@@ -278,8 +332,12 @@ void do_command(vector<string> command_line){
 
 int main(){
 	//------INCLUDE-WITH-ALL-MAINS-USED------//
-	sprintf(temp_buffer, "The current file is: %s", __FILE__);//For use for OUTPUT.txt
-	def_vars();//Defines variables for nicer Main()
+    sprintf(temp_buffer, "The current file is: %s", __FILE__);//For use for OUTPUT.txt
+    buffer_size=0;
+    output.open ("Output.txt");
+    output<<"=-=-=-=-=-=-BEGIN=-=-=-=-=-=-="<<endl;
+    output<< temp_buffer << endl;
+    line_number=1;
 	signal(SIGINT, ctrl_c); //Catch Ctrl+C (For output format)
 	signal(SIGSEGV, ctrl_c);//Catch SegFaults (For output format)
 	//------^-^-^-^AT-BEGINING-^-^-^-^-----//
@@ -300,44 +358,72 @@ int main(){
              sizeof(serv_addr)) < 0)
         socket_error("ERROR on binding");
     
+    printf("Server started on port 5155\n");
+    
     // Wait for a client to connect; accept when they do
     listen(sockfd,5);
     clilen = sizeof(cli_addr);
-    newsockfd = accept(sockfd,
-                       (struct sockaddr *) &cli_addr,
-                       &clilen);
-    if (newsockfd < 0)
-        socket_error("ERROR on accept");
-    
-    // Read/Write with client
-    string welcome = "PASSWORD";
-    n = write(newsockfd, welcome.c_str(), welcome.length());
-    if (n < 0) socket_error("ERROR writing to socket");
-    
-    bzero(buffer,256);
-    
-    n = read(newsockfd,buffer,255);
-    if (n < 0) socket_error("ERROR reading from socket");
-    printf("Here is the message: %s\n",buffer);
-    n = write(newsockfd,"I got your message",18);
-    
-    if (n < 0) socket_error("ERROR writing to socket");
-    
-    // Close socket when finished
-    close(newsockfd);
-    close(sockfd);
-    
+    while(1) {
+        newsockfd = accept(sockfd,
+                           (struct sockaddr *) &cli_addr,
+                           &clilen);
+        if (newsockfd < 0)
+            socket_error("ERROR on accept");
+        
+        new_game = Game(newsockfd);
+        
+        socket_output("PASSWORD\n");
+        
+        bzero(buffer,BUFFER_SIZE);
+        
+        n = read(newsockfd,buffer,BUFFER_SIZE-1);
+        if (n < 0) socket_error("ERROR reading from socket");
+        
+        string password = string(buffer);
+        if (password.compare(0, correct_password.size() , correct_password) != 0) {
+            socket_output("Incorrect password\n");
+            shutdown(newsockfd, 2);
+            continue;
+        }
+        
+        socket_output("WELCOME\n");
+        
+        //----------Example-use-of-parser----------//
+        while(1){
+            bzero(buffer,BUFFER_SIZE);
+            n = read(newsockfd,buffer,BUFFER_SIZE-1);
+            string command = string(buffer);
+            command = command.substr(0, command.length() - 2);
+            cout << "Command given: " << command << " of size: " << command.length() << endl;
+            string delimiters = " \n";
+            
+            vector<string> command_line;
+            char* pch;
+            pch = strtok ((char*)command.c_str(), delimiters.c_str()); //tokenizes the command
+            
+            //------Continued-Lexer-for-both-inputs------//
+            while (pch != NULL) {
+                string temp = pch;
+                transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
+                command_line.push_back(temp); //put the token into a vector to make the command easy to parse
+                output<<temp<<" "; // For output file
+                temp.clear();
+                pch = strtok (NULL, delimiters.c_str());
+            }
+            
+            do_command(command_line);
+        }
+        //----------------------------------------//
+        printf("Here is the message: %s\n",buffer);
+        n = write(newsockfd,"I got your message",18);
+        
+        if (n < 0) socket_error("ERROR writing to socket");
+        
+        // Close socket when finished
+        shutdown(newsockfd, 2);
+    }
+    shutdown(sockfd, 2);
     // End socket programming
-    
-    
-	//----------Example-use-of-parser----------//
-//	while(1){
-//		take_command(line_number);
-//	}
-	//----------------------------------------//
-	
-	
-	
 	
 	
 	//------INCLUDE-WITH-ALL-MAINS-USED------//

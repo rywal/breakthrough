@@ -18,6 +18,10 @@
 #include <string>
 #include <vector>
 #include <utility> // used for pair
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
 
 
 //  Possible moves from each piece

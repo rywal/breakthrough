@@ -25,6 +25,8 @@ private:
 	
     //Display Toggle
     bool display;
+    bool output_to_socket;
+    int socketfd;
     
     AI *ai;
     
@@ -41,6 +43,7 @@ public:
     // Constructors and Destructor
     Game();
     Game(const Game &g);
+    Game(int newsockfd);
     ~Game(){}
     
     void set_game_type(GAMETYPE g, DIFFICULTY d);

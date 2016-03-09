@@ -24,4 +24,4 @@ server:
 	$(cc) $(CFLAGS) server $(MAIN2) $(SRCS)
 
 clean:
-	rm -f *.o breakthrough par
+	rm -r *.o *.dSYM client server

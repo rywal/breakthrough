@@ -5,10 +5,20 @@
 #include "Game.h"
 #include "State.h"
 #include "AI.h"
+#include <string>
+
+#define BUFFER_SIZE 1024
 
 Game::Game(){
 	display=false;
+    output_to_socket = false;
     game_type = HH;
+}
+
+Game::Game(int newsockfd) {
+    output_to_socket = true;
+    socketfd = newsockfd;
+    write(socketfd, "new\n", sizeof("new\n"));
 }
 
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
@@ -115,7 +125,12 @@ State Game::update(char column, int row, DIRECTION d){
 //            }
         }
 	} else {
-		printf("That's an invalid move! Try again.\n");
+        if (output_to_socket) {
+            string e = "; Invalid move\n";
+            write(socketfd, e.c_str(), sizeof(e));
+        } else {
+			printf("That's an invalid move! Try again.\n");
+        }
 	}
 	return temp;
 }
@@ -131,32 +146,53 @@ void Game::display_board(){
         return;
     }
 	if(current_state.get_status()==0){
-		(current_state.get_turn()) ? (cout<<"; White's ") : (cout<<"; Black's ");
-		cout<<"turn\n";
-		cout<<";   ";
+        if (output_to_socket) {
+            string t = current_state.get_turn() ? "; White's " : "; Black's ";
+            t += "turn\n";
+            write(socketfd, t.c_str(), sizeof(t));
+        } else {
+			(current_state.get_turn()) ? (cout<<"; White's ") : (cout<<"; Black's ");
+			cout<<"turn\n";
+        }
+        
+        string b = ";   ";
 		for (char i='A'; i<'I'; i++)
-			cout<<" "<<i;
-		cout<<'\n';
+			b += " " + string(1, i);
+        b += "\n";
 		for (int i=7; i>-1; i--){
-			cout<<"; "<<i+1<<" ";
+			b += "; " + to_string( (i+1) ) + " ";
 			for(int j=0; j<8; j++){
-				cout<<'|'<<current_state.get_board()[i][j];
-			}
-			cout<<"|\n";	
-		}	
+				b += string(1, '|') + string(1, current_state.get_board()[i][j]);
+            }
+			b += "|\n";
+        }
+        
+        if (output_to_socket) {
+            cout << "Attempting to write something with size " << sizeof(b) << endl;
+            write(socketfd, b.c_str(), b.length());
+        } else {
+            cout << b;
+        }
 	} else {
 		(!current_state.get_turn()) ? (white_v()) : (black_v());
-			cout<<";   ";
-		for (char i='A'; i<'I'; i++)
-			cout<<" "<<i;
-		cout<<'\n';
-		for (int i=7; i>-1; i--){
-			cout<<"; "<<i+1<<" ";
-			for(int j=0; j<8; j++){
-				cout<<'|'<<current_state.get_board()[i][j];
-			}
-			cout<<"|\n";	
-		}
+        string b = ";   ";
+        for (char i='A'; i<'I'; i++)
+            b += " " + string(1, i);
+        b += "\n";
+        for (int i=7; i>-1; i--){
+            b += "; " + to_string( (i+1) ) + " ";
+            for(int j=0; j<8; j++){
+                b += string(1, '|') + string(1, current_state.get_board()[i][j]);
+            }
+            b += "|\n";
+        }
+        
+        if (output_to_socket) {
+            write(socketfd, b.c_str(), sizeof(b));
+        } else {
+            cout << b;
+        }
+
 	}
 }	
 
@@ -252,7 +288,12 @@ void Game::save_state(){
 
 void Game::undo(){
 	if (current_state.get_num_moves()<1){
-		cout<<"No moves to undo\n";
+        if (output_to_socket) {
+            string m = "; No moves to undo\n";
+            write(socketfd, m.c_str(), sizeof(m));
+        } else {
+			cout<<"No moves to undo\n";
+        }
 	}
 	else {
         current_state=previous_states[previous_states.size()-1];
@@ -265,7 +306,12 @@ void Game::undo(){
 void Game::undo_two_turns(){ 
 //when playing an AI they may move too fast to press undo twice
 	if (current_state.get_num_moves()<2){
-		cout<<"Not enough moves to undo\n";
+        if (output_to_socket) {
+            string m = "; Not enough moves to undo\n";
+            write(socketfd, m.c_str(), sizeof(m));
+        } else {
+            cout<<"Not enough moves to undo\n";
+        }
 	}
 	else {
 		previous_states.pop_back();
