@@ -2,10 +2,55 @@
 The current file is: Game/Client.cpp
 Given input: display 
 Command number 1 was successful!
-Given input: human-human 
-PASSWORD: human-human
-Command number 2 was successful!
 Given input: b2 fwd 
+Command number 2 was successful!
+Given input: b7 fwd 
 Command number 3 was successful!
+Given input: b3 right 
+Command number 4 was successful!
+Given input: a7 fwd 
+Command number 5 was successful!
+Given input: c4 fwd 
+Command number 6 was successful!
+Given input: b6 right 
+b6 right is an invalid move
+
+Command number 7 FAILED!
+Given input: b6 left 
+b6 left is an invalid move
+
+Command number 8 FAILED!
+Given input: c5 left 
+c5 left is an invalid move
+
+Command number 9 FAILED!
+Given input: 
+No input was given
+Command number 10 FAILED!
+Given input: e2 fwd 
+e2 fwd is an invalid move
+
+Command number 11 FAILED!
+Given input: e7 fwd 
+Command number 12 was successful!
+Given input: c5 left 
+Command number 13 was successful!
+Given input: e6 right 
+Command number 14 was successful!
+Given input: human-ai easy 
+Command number 15 was successful!
+Given input: d2 fwd 
+Command number 16 was successful!
+Given input: d3 left 
+Command number 17 was successful!
+Given input: c4 right 
+Command number 18 was successful!
+Given input: d5 right 
+Command number 19 was successful!
+Given input: e6 left 
+Command number 20 was successful!
+Given input: exiy 
+PASSWORD: exiy
+Command number 21 was successful!
 Given input: exit 
 =-=-=-=-=-=-EXITED-=-=-=-=-=-=
