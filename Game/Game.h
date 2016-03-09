@@ -47,6 +47,8 @@ public:
 	bool valid_move(int row, char column, DIRECTION d);
     void display_board();
     bool termination_check();
+    bool game_over();
+    string who_won();
 	int game_status(State);
 	void save_state();
 	void undo();

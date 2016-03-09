@@ -9,6 +9,7 @@
 Game::Game(){
 	display=false;
     game_type = HH;
+    save_state();
 }
 
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
@@ -206,6 +207,12 @@ bool Game::termination_check(){
 	if(end_this=0){return false;}
 		
 }
+string Game::who_won(){
+	string out;
+	(!current_state.get_turn()) ? (out="; White ") : (out="; Black ");
+	out+="is the winner!";
+	return out;
+}
 	
 void Game::white_v(){
 	current_state.set_board(5,1, 'W');
@@ -261,6 +268,9 @@ void Game::undo(){
 			display_board();
 	}
 }
+bool Game::game_over(){
+	return current_state.get_status();
+}
 
 void Game::undo_two_turns(){ 
 //when playing an AI they may move too fast to press undo twice
@@ -268,9 +278,13 @@ void Game::undo_two_turns(){
 		cout<<"Not enough moves to undo\n";
 	}
 	else {
+		cout<<"1\n";
 		previous_states.pop_back();
+		cout<<"1\n";
 		previous_states.pop_back();
+		cout<<"1\n";
 		current_state=previous_states[previous_states.size()-1];
+		cout<<"1\n";
 		if(display)
 			display_board();
 	}
