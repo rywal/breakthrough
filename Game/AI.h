@@ -22,11 +22,13 @@ class AI {
 private:
     
     DIFFICULTY difficulty_level;
+    int socketfd;
     
 public:
     
     AI();
     AI(DIFFICULTY d);
+    AI(DIFFICULTY d, int s);
     AI(const AI &ai);
     ~AI();
     

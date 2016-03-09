@@ -19,14 +19,17 @@ Game::Game(){
 Game::Game(int newsockfd) {
     output_to_socket = true;
     socketfd = newsockfd;
-    write(socketfd, "new\n", sizeof("new\n"));
 }
 
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
     
     game_type = g;
     delete[] ai;
-    ai = new AI(d);
+    if (g == HH) {
+        ai = new AI(d);
+    } else {
+        ai = new AI(d, socketfd);
+    }
 }
 
 bool Game::valid_move(int row, char column, DIRECTION d){
@@ -150,7 +153,7 @@ void Game::display_board(){
         if (output_to_socket) {
             string t = current_state.get_turn() ? "; White's " : "; Black's ";
             t += "turn\n";
-            write(socketfd, t.c_str(), sizeof(t));
+            write(socketfd, t.c_str(), t.length());
         } else {
 			(current_state.get_turn()) ? (cout<<"; White's ") : (cout<<"; Black's ");
 			cout<<"turn\n";

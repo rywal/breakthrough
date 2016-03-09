@@ -194,6 +194,10 @@ void do_command(vector<string> command_line){
 			output_function(3);
 		}
 	} else if(command_line[0]=="human-ai"){
+        sprintf(out_buffer, "%s  to use AI related game types, please run 'server'\n", command_line[1].c_str());
+        output_function(4);
+        exit(0);
+        
 		if(command_line.size()==2){
 			if(is_difficulty(command_line[1].c_str())){
 				/*-------------------------NEED-TO-BE-DEFINED----------------------------------------*/
@@ -207,6 +211,9 @@ void do_command(vector<string> command_line){
 			output_function(5);
 		}	
 	} else if(command_line[0]=="ai-ai"){
+        sprintf(out_buffer, "%s  to use AI related game types, please run 'server'\n", command_line[1].c_str());
+        output_function(4);
+        exit(0);
 		if(command_line.size()==6){
 			if(is_server(command_line[1])){
 				if(is_port(command_line[2])){

@@ -24,6 +24,12 @@ AI::AI(DIFFICULTY d) {
     printf("; AI difficulty level changed\n");
 }
 
+AI::AI(DIFFICULTY d, int s) {
+    difficulty_level = d;
+    socketfd = s;
+    printf("; AI difficulty level changed\n");
+}
+
 AI::AI(const AI &ai) {
 
 }
@@ -70,22 +76,29 @@ bool AI::choose_random(Game* game) {
     // Make a move using the random number
     string text_move = all_possible_moves[random_move].first;
     transform(text_move.begin(), text_move.end(), text_move.begin(), ::toupper);
-    cout << text_move << " ";
+    
+    string move_output = text_move + " ";
     switch (all_possible_moves[random_move].second) {
         case FWD:
-            cout << "FWD\n";
+            move_output += "FWD\n";
             break;
             
         case LEFT:
-            cout << "LEFT\n";
+            move_output += "LEFT\n";
             break;
             
         case RIGHT:
-            cout << "RIGHT\n";
+            move_output += "RIGHT\n";
             break;
             
         default:
             break;
+    }
+    
+    if (socketfd) {
+        write(socketfd, move_output.c_str(), move_output.length());
+    } else {
+        cout << move_output;
     }
     
     game->update( all_possible_moves[random_move].first[0],
