@@ -148,6 +148,7 @@ void Game::display_board(){
     if (!display) {
         return;
     }
+    
 	if(current_state.get_status()==0){
         if (output_to_socket) {
             string t = current_state.get_turn() ? "; White's " : "; Black's ";
@@ -171,7 +172,7 @@ void Game::display_board(){
         }
         
         if (output_to_socket) {
-//            cout << "Attempting to write something with size " << sizeof(b) << endl;
+            cout << "Attempting to write something with size " << sizeof(b) << endl;
             write(socketfd, b.c_str(), b.length());
         } else {
             cout << b;
