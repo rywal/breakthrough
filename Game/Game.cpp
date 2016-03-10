@@ -27,7 +27,7 @@ Game::Game(int newsockfd) {
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
     
     game_type = g;
-    delete[] ai;
+//    delete[] ai;
     if (g == HH) {
         ai = new AI(d);
     } else {
