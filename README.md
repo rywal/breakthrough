@@ -10,7 +10,7 @@
 * To run the game executable, use `./breakthrough`
 
 ###Server Password###
-* Use password 'breakthrough' to connect to server
+* Use password `breakthrough` to connect to server
 
 ***
 
