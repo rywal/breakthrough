@@ -35,8 +35,6 @@ public:
     //  Holds the current state of the game
     State current_state;
     
-    
-    
     // Holds the current type of game
     GAMETYPE game_type;
     

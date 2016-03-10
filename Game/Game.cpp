@@ -191,7 +191,7 @@ void Game::display_board(){
         }
         
         if (output_to_socket) {
-            write(socketfd, b.c_str(), sizeof(b));
+            write(socketfd, b.c_str(), b.length());
         } else {
             cout << b;
         }
@@ -236,11 +236,11 @@ bool Game::termination_check(){
 string Game::who_won(){
 	string out;
 	(!current_state.get_turn()) ? (out="; White ") : (out="; Black ");
-	out+="is the winner!";
+	out+="is the winner!\n";
     
     if (current_state.get_status() == true) {
         if (output_to_socket) {
-            write(socketfd, out.c_str(), sizeof(out));
+            write(socketfd, out.c_str(), out.length());
         } else {
             printf(out.c_str());
         }

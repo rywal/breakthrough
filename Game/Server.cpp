@@ -337,6 +337,9 @@ bool do_command(vector<string> command_line){
     }
     
     if (new_game.game_over()) {
+        string winner = new_game.who_won();
+        sprintf(out_buffer, "%s", winner.c_Str());
+        output_function(0);
         return false;
     }
     
