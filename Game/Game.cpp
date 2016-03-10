@@ -40,7 +40,7 @@ bool Game::valid_move(int row, char column, DIRECTION d){
         return false;
     }
     
-    if (row <= 1 || row >= 8){ return false;}
+    if (row < 1 || row > 8){ return false;}
     if (column <'a' || column >'h'){ return false;}
     
     
@@ -295,7 +295,7 @@ void Game::save_state(){
 }
 
 void Game::undo(){
-	if (current_state.get_num_moves()<1){
+	if (current_state.get_num_moves()<2){
         if (output_to_socket) {
             string m = "; No moves to undo\n";
             write(socketfd, m.c_str(), m.length());
