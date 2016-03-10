@@ -1,3 +1,5 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
+display human-ai easy g2 right h3 fwd h4 fwd h5 fwd h6 left g7 right h8 fwd h8 fwd is an invalid move
+
 exit =-=-=-=-=-=-EXITED-=-=-=-=-=-=

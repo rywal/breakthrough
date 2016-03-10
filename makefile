@@ -13,15 +13,15 @@ else
     cc = g++-4.7
 endif
 
-.PHONY: all client server clean
+.PHONY: all client breakthrough clean
 
-all: client server
+all: client breakthrough
 
 client:
 	$(cc) $(CFLAGS) client $(MAIN1) $(SRCS)
 	
-server:
-	$(cc) $(CFLAGS) server $(MAIN2) $(SRCS)
+breakthrough:
+	$(cc) $(CFLAGS) breakthrough $(MAIN2) $(SRCS)
 
 clean:
-	rm -r *.o *.dSYM client server
+	rm -r *.o *.dSYM client breakthrough
