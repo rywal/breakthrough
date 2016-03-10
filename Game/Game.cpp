@@ -21,6 +21,7 @@ Game::Game(int newsockfd) {
     display=false;
     output_to_socket = true;
     socketfd = newsockfd;
+    save_state();
     ai = new AI();
 }
 
@@ -78,9 +79,9 @@ bool Game::valid_move(int row, char column, DIRECTION d){
             //if piece is in Column A, piece can't move right
         if (column=='a' && d == RIGHT) return false;	
             //if there is a piece in front of it, it can't move forward
-        if (d == LEFT && current_state.get_board()[row-1][column-'a'+1]=='x' ) return false;
+        if (d == LEFT && current_state.get_board()[row-2][column-'a'+1]=='x' ) return false;
         
-        if (d == RIGHT && current_state.get_board()[row-1][column-'a'-1]=='x' ) return false;
+        if (d == RIGHT && current_state.get_board()[row-2][column-'a'-1]=='x' ) return false;
         
         if (current_state.get_board()[row-2][column-'a'] != '_' && d == FWD) return false;
         
