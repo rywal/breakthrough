@@ -197,48 +197,35 @@ void Game::display_board(){
 bool Game::termination_check(){
 		
 	//Checking for any pieces 
-	int end_this = 0;
+	int white_count = 0;
+	int black_count = 0;
 	for(int i=0; i<8; i++){
 		for(int j=0; j<8; j++){
 			if (current_state.get_board()[i][j]=='o'){
-				end_this = 1;
-				return true;
+				white_count = 1;
 			}
-		}
-	}
-	//if(end_this == 0){return false;}
-
-	end_this = 0;
-	for(int i=0; i<8; i++){
-		for(int j=0; j<8; j++){
 			if (current_state.get_board()[i][j]=='x'){ 
-				end_this=1;
-				return true;
+				black_count=1;
 			}
 		}
 	}
-	//if(end_this == 0){return false;}
+	if(black_count == 0 || white_count == 0){return true;}
 
-	end_this=0;
+
 	//Checking for x's on the bottom row
 	for(int j=0; j<8; j++){
 		if (current_state.get_board()[0][j]=='x'){
-			end_this=1;
 			return true;
 		}
 	}
-	//if(end_this == 0){return false;}
 	
-	end_this=0;
-	//Checking o's on the top row
 	for(int j=0; j<8; j++){
 		if (current_state.get_board()[7][j]=='o'){
-			end_this=1;
 			return true;
 		}
 	} 
-	//if(end_this == 0){return false;}
-		
+	
+	return false;
 }
 
 string Game::who_won(){

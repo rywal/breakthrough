@@ -2,31 +2,28 @@
 The current file is: Game/Client.cpp
 Given input: display 
 Command number 1 was successful!
-Given input: d2 fwd 
+Given input: e2 fwd 
 Command number 2 was successful!
 Given input: h7 fwd 
 Command number 3 was successful!
-Given input: d3 fwd 
+Given input: e3 fwd 
 Command number 4 was successful!
 Given input: h6 fwd 
 Command number 5 was successful!
-Given input: d4 fwd 
+Given input: e4 fwd 
 Command number 6 was successful!
 Given input: h5 fwd 
 Command number 7 was successful!
-Given input: d5 fwd 
+Given input: e5 fwd 
 Command number 8 was successful!
 Given input: h4 fwd 
 Command number 9 was successful!
-Given input: d6 right 
+Given input: e6 right 
 Command number 10 was successful!
 Given input: h3 right 
 Command number 11 was successful!
-Given input: e7 right 
+Given input: f7 right 
 Command number 12 was successful!
 Given input: g2 right 
 Command number 13 was successful!
-Given input: 
-No input was given
-Command number 14 FAILED!
 =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=

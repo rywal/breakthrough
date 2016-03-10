@@ -209,7 +209,7 @@ bool do_command(vector<string> command_line){
     } else if(command_line[0]=="exit"){//Checking for "EXIT" command - Preventing SegFault
         if(command_line.size()==1){
             socket_output("OK\n");
-            output<<"=-=-=-=-=-=-EXITED-=-=-=-=-=-=";
+            output<<endl<<"=-=-=-=-=-=-EXITED-=-=-=-=-=-=";
             output.close();
             return false;
         } else{
