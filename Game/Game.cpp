@@ -33,8 +33,8 @@ void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
 }
 
 bool Game::valid_move(int row, char column, DIRECTION d){
-		if (row<1 || row>8){ cout<<row<<"HERE\n"; return false;}
-		if (column<'a' || column >'h'){ return false;}
+		if (row <= 1 || row >= 8){ return false;}
+		if (column <'a' || column >'h'){ return false;}
 		
 		
 		if(current_state.get_turn()){	//I am assuming that the person is always white
@@ -47,8 +47,8 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 				//if piece is in Column H, piece can't move right
 			if (column=='h' && d == RIGHT) return false;
 				//if there is a piece in front of it, it can't move forward
-            if (d == LEFT && current_state.get_board()[row+1][column-'a'-1]=='o' ) return false;
-			if (d == RIGHT && current_state.get_board()[row+1][column-'a'+1]=='o' ) return false;
+            if (d == LEFT && current_state.get_board()[row][column-'a'-1]=='o' ) return false;
+			if (d == RIGHT && current_state.get_board()[row][column-'a'+1]=='o' ) return false;
 			if (current_state.get_board()[row][column-'a']!='_' && d == FWD) return false;
             // Check if can move left
             if ( (column-'a'-1) >= 0 && d == LEFT)
@@ -76,16 +76,16 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 			
 			if (d == RIGHT && current_state.get_board()[row-1][column-'a'-1]=='x' ) return false;
 			
-			if (current_state.get_board()[row-2][column-'a']!='_' && d == FWD) return false;
+			if (current_state.get_board()[row-2][column-'a'] != '_' && d == FWD) return false;
             
             // Check if can move left
-            if ( (column-'a'-1) >= 0 && d == LEFT)
-                if (current_state.get_board()[row-1][column-'a'-1] == 'x')
+            if ( (column-'a'+1) >= 0 && d == LEFT && row > 1)
+                if (current_state.get_board()[row-2][column-'a'+1] == 'x')
                     return false;
             
             // Check if can move right
             if ( (column+1) <= 'h' && d == RIGHT)
-                if (current_state.get_board()[row-1][column-'a'+1]=='x')
+                if (current_state.get_board()[row-2][column-'a'-1]=='x')
                     return false;
             
 			return true;
@@ -121,12 +121,6 @@ State Game::update(char column, int row, DIRECTION d){
         // If game type involves an AI, let it make it's move
         if (game_type != HH && !current_state.get_turn()) {
             ai->make_move( this );
-//                current_state.switch_turn();
-//                current_state.set_status(termination_check());
-//                if(display)
-//                    display_board();
-//                save_state();
-//            }
         }
 	} else {
         if (output_to_socket) {
@@ -172,7 +166,7 @@ void Game::display_board(){
         }
         
         if (output_to_socket) {
-            cout << "Attempting to write something with size " << sizeof(b) << endl;
+//            cout << "Attempting to write something with size " << sizeof(b) << endl;
             write(socketfd, b.c_str(), b.length());
         } else {
             cout << b;
@@ -294,7 +288,6 @@ void Game::black_v(){
 
 void Game::save_state(){
 	previous_states.push_back(current_state);
-	//might include output to a file if we need it
 }
 
 void Game::undo(){

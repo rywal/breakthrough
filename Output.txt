@@ -1,4 +1,5 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
+<<<<<<< HEAD
 The current file is: Game/Client.cpp
 Given input: display 
 Command number 1 was successful!
@@ -28,3 +29,9 @@ Given input: h5 fwd
 Command number 12 was successful!
 Given input: d7 right 
 ^-^-^-Segmentation Fault-^-^-^
+=======
+The current file is: Game/Server.cpp
+display human-ai easy g2 right h3 fwd h4 fwd h5 fwd h6 left g7 right h8 fwd h8 fwd is an invalid move
+
+exit =-=-=-=-=-=-EXITED-=-=-=-=-=-=
+>>>>>>> ed8dfba6f748b827ab5150c5f174d056bedde70a
