@@ -1,3 +1,30 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
-The current file is: Game/Server.cpp
-exit =-=-=-=-=-=-EXITED-=-=-=-=-=-=
+The current file is: Game/Client.cpp
+Given input: display 
+Command number 1 was successful!
+Given input: e2 fwd 
+Command number 2 was successful!
+Given input: e3 fwd 
+e3 fwd is an invalid move
+
+Command number 3 FAILED!
+Given input: d7 fwd 
+Command number 4 was successful!
+Given input: e3 fwd 
+Command number 5 was successful!
+Given input: d6 fwd 
+Command number 6 was successful!
+Given input: e4 left 
+Command number 7 was successful!
+Given input: h7 fwd 
+Command number 8 was successful!
+Given input: d5 fwd 
+Command number 9 was successful!
+Given input: h6 fwd 
+Command number 10 was successful!
+Given input: d6 fwd 
+Command number 11 was successful!
+Given input: h5 fwd 
+Command number 12 was successful!
+Given input: d7 right 
+^-^-^-Segmentation Fault-^-^-^
