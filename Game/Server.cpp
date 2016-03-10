@@ -427,7 +427,7 @@ bool do_command(vector<string> command_line){
                 output_function(19);
             }
         } else{
-            socket_output("; Move command had incorrect number of arguments\nILLEGAL\n");
+//            socket_output("; Move command had incorrect number of arguments\nILLEGAL\n");
             sprintf(out_buffer, "Move had incorrect amount of arguments");
             output_function(20);
         }

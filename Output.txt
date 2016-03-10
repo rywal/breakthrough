@@ -1,3 +1,41 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
+ai-ai localhost 5150 breakthrough easy easy ok come o  is not a valid column letter
+ok f7 right Move had incorrect amount of arguments
+ok g7 right Move had incorrect amount of arguments
+ok c7 left Move had incorrect amount of arguments
+ok f8 left Move had incorrect amount of arguments
+ok a7 left Move had incorrect amount of arguments
+ok c8 fwd Move had incorrect amount of arguments
+ok g7 left Move had incorrect amount of arguments
+ok h6 fwd Move had incorrect amount of arguments
+ok e8 left Move had incorrect amount of arguments
+ok f6 left Move had incorrect amount of arguments
+ok g8 fwd Move had incorrect amount of arguments
+ok a8 fwd Move had incorrect amount of arguments
+ok g7 left Move had incorrect amount of arguments
+ok d7 right Move had incorrect amount of arguments
+ok c6 right Move had incorrect amount of arguments
+ok d6 right Move had incorrect amount of arguments
+ok f7 left Move had incorrect amount of arguments
+ok h5 right Move had incorrect amount of arguments
+ok e7 left Move had incorrect amount of arguments
+ok c7 left Move had incorrect amount of arguments
+ok e6 left Move had incorrect amount of arguments
+ok b7 right Move had incorrect amount of arguments
+ok a6 fwd t Move had incorrect amount of arguments
+ok b8 fwd t Move had incorrect amount of arguments
+ok b7 left Move had incorrect amount of arguments
+ok h6 fwd Move had incorrect amount of arguments
+ok a7 fwd Move had incorrect amount of arguments
+ok f6 right Move had incorrect amount of arguments
+ok f5 fwd t Move had incorrect amount of arguments
+ok e5 fwd t Move had incorrect amount of arguments
+ok g5 left Move had incorrect amount of arguments
+ok c5 left Move had incorrect amount of arguments
+ok h4 right Move had incorrect amount of arguments
+ok d6 right Move had incorrect amount of arguments
+ok d6 right Move had incorrect amount of arguments
+; White is the winner!
+
+; White is the winner!
