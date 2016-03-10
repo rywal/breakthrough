@@ -1,0 +1,6 @@
+=-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
+The current file is: Game/Server.cpp
+display d2 fwd human-ai easy No input was given
+d3 fwd d4 fwd d5 left c6 right d7 right ; White is the winner!
+
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=

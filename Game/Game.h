@@ -50,6 +50,7 @@ public:
     void display_board();
     bool termination_check();
     bool game_over();
+    bool get_display();
     string who_won();
 	int game_status(State);
 	void save_state();

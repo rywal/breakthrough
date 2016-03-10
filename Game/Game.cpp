@@ -21,6 +21,7 @@ Game::Game(int newsockfd) {
     display=false;
     output_to_socket = true;
     socketfd = newsockfd;
+    save_state();
     ai = new AI();
 }
 
@@ -39,7 +40,7 @@ bool Game::valid_move(int row, char column, DIRECTION d){
         return false;
     }
     
-    if (row <= 1 || row >= 8){ return false;}
+    if (row < 1 || row > 8){ return false;}
     if (column <'a' || column >'h'){ return false;}
     
     
@@ -271,22 +272,22 @@ void Game::white_v(){
 }	
 
 void Game::black_v(){
-	current_state.set_board(6,1, 'B');
-	current_state.set_board(6,2, 'L');
-	current_state.set_board(6,3, 'A');
-	current_state.set_board(6,4, 'C');
-	current_state.set_board(6,5, 'K');
-	current_state.set_board(5,2, 'I');
-	current_state.set_board(5,3, 'S');
-	current_state.set_board(4,2, 'T');
-	current_state.set_board(4,3, 'H');
-	current_state.set_board(4,4, 'E');
-	current_state.set_board(3,1, 'W');
-	current_state.set_board(3,2, 'I');
-	current_state.set_board(3,3, 'N');
-	current_state.set_board(3,4, 'N');
-	current_state.set_board(3,5, 'E');
-	current_state.set_board(3,6, 'R');
+	current_state.set_board(5,1, 'B');
+	current_state.set_board(5,2, 'L');
+	current_state.set_board(5,3, 'A');
+	current_state.set_board(5,4, 'C');
+	current_state.set_board(5,5, 'K');
+	current_state.set_board(4,2, 'I');
+	current_state.set_board(4,3, 'S');
+	current_state.set_board(3,2, 'T');
+	current_state.set_board(3,3, 'H');
+	current_state.set_board(3,4, 'E');
+	current_state.set_board(2,1, 'W');
+	current_state.set_board(2,2, 'I');
+	current_state.set_board(2,3, 'N');
+	current_state.set_board(2,4, 'N');
+	current_state.set_board(2,5, 'E');
+	current_state.set_board(2,6, 'R');
 }
 
 void Game::save_state(){
@@ -294,7 +295,7 @@ void Game::save_state(){
 }
 
 void Game::undo(){
-	if (current_state.get_num_moves()<1){
+	if (current_state.get_num_moves()<2){
         if (output_to_socket) {
             string m = "; No moves to undo\n";
             write(socketfd, m.c_str(), m.length());
@@ -314,4 +315,7 @@ void Game::undo(){
 }
 bool Game::game_over(){
 	return current_state.get_status();
+}
+bool Game::get_display(){
+	return display;
 }

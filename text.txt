@@ -1,0 +1,151 @@
+telnet localhost 5155
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+PASSWORD
+breakthrough
+WELCOME
+display
+OK
+; White's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|x|x|x|x|x|x|x|
+; 6 |_|_|_|_|_|_|_|_|
+; 5 |_|_|_|_|_|_|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|o|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+d2 fwd
+OK
+; Black's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|x|x|x|x|x|x|x|
+; 6 |_|_|_|_|_|_|_|_|
+; 5 |_|_|_|_|_|_|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|o|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+; White's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|x|x|x|x|x|x|_|
+; 6 |_|_|_|_|_|_|x|_|
+; 5 |_|_|_|_|_|_|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|o|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+human-ai easy
+
+OK
+; No input was given
+ILLEGAL
+d3 fwd
+OK
+; Black's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|x|x|x|x|x|x|_|
+; 6 |_|_|_|_|_|_|x|_|
+; 5 |_|_|_|_|_|_|_|_|
+; 4 |_|_|_|o|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+B7 LEFT
+; White's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|_|x|x|x|x|x|_|
+; 6 |_|_|x|_|_|_|x|_|
+; 5 |_|_|_|_|_|_|_|_|
+; 4 |_|_|_|o|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+d4 fwd
+OK
+; Black's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|_|x|x|x|x|x|_|
+; 6 |_|_|x|_|_|_|x|_|
+; 5 |_|_|_|o|_|_|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+D7 LEFT
+; White's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|_|x|_|x|x|x|_|
+; 6 |_|_|x|_|x|_|x|_|
+; 5 |_|_|_|o|_|_|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+d5 left
+OK
+; Black's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|_|x|_|x|x|x|_|
+; 6 |_|_|o|_|x|_|x|_|
+; 5 |_|_|_|_|_|_|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+G7 LEFT
+; White's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|_|x|_|x|x|_|_|
+; 6 |_|_|o|_|x|_|x|x|
+; 5 |_|_|_|_|_|_|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+c6 right
+OK
+; Black's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|_|x|o|x|x|_|_|
+; 6 |_|_|_|_|x|_|x|x|
+; 5 |_|_|_|_|_|_|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+G6 RIGHT
+; White's turn
+;    A B C D E F G H
+; 8 |x|x|x|x|x|x|x|x|
+; 7 |x|_|x|o|x|x|_|_|
+; 6 |_|_|_|_|x|_|_|x|
+; 5 |_|_|_|_|_|x|_|_|
+; 4 |_|_|_|_|_|_|_|_|
+; 3 |_|_|_|_|_|_|_|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+d7 right
+OK
+;    A B C D E F G H
+; 8 |x|x|x|x|o|x|x|x|
+; 7 |x|_|x|_|x|x|_|_|
+; 6 |_|W|H|I|T|E|_|x|
+; 5 |_|_|I|S|_|x|_|_|
+; 4 |_|_|T|H|E|_|_|_|
+; 3 |_|W|I|N|N|E|R|_|
+; 2 |o|o|o|_|o|o|o|o|
+; 1 |o|o|o|o|o|o|o|o|
+; White is the winner!
+Connection closed by foreign host.
