@@ -210,7 +210,7 @@ bool Game::termination_check(){
 				white_count = 1;
 			}
 			if (current_state.get_board()[i][j]=='x'){ 
-				black_count=1;
+				black_count = 1;
 			}
 		}
 	}
