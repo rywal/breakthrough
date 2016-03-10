@@ -175,7 +175,6 @@ void Game::display_board(){
         }
         
         if (output_to_socket) {
-            cout << "Attempting to write something with size " << sizeof(b) << endl;
             write(socketfd, b.c_str(), b.length());
         } else {
             cout << b;
