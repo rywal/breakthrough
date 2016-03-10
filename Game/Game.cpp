@@ -78,9 +78,9 @@ bool Game::valid_move(int row, char column, DIRECTION d){
             //if piece is in Column A, piece can't move right
         if (column=='a' && d == RIGHT) return false;	
             //if there is a piece in front of it, it can't move forward
-        if (d == LEFT && current_state.get_board()[row-1][column-'a'+1]=='x' ) return false;
+        if (d == LEFT && current_state.get_board()[row-2][column-'a'+1]=='x' ) return false;
         
-        if (d == RIGHT && current_state.get_board()[row-1][column-'a'-1]=='x' ) return false;
+        if (d == RIGHT && current_state.get_board()[row-2][column-'a'-1]=='x' ) return false;
         
         if (current_state.get_board()[row-2][column-'a'] != '_' && d == FWD) return false;
         
@@ -147,11 +147,9 @@ void Game::display_toggle(){
 }
 
 void Game::display_board(){
-    cout << "Attempting to display..." << endl;
     if (!display) {
         return;
     }
-    cout << "Continuing to display..." << endl;
     
 	if(current_state.get_status()==0){
         if (output_to_socket) {
@@ -299,13 +297,15 @@ void Game::undo(){
 	if (current_state.get_num_moves()<1){
         if (output_to_socket) {
             string m = "; No moves to undo\n";
-            write(socketfd, m.c_str(), sizeof(m));
+            write(socketfd, m.c_str(), m.length());
         } else {
 			cout<<"No moves to undo\n";
         }
 	} else {
-        previous_states.pop_back();
-        previous_states.pop_back();
+        if (game_type != HH) {
+            previous_states.pop_back();
+            previous_states.pop_back();
+        }
         
         current_state = previous_states.back();
 		if(display)
