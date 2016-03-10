@@ -316,3 +316,6 @@ void Game::undo(){
 bool Game::game_over(){
 	return current_state.get_status();
 }
+bool Game::get_display(){
+	return display;
+}

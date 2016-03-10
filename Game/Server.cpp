@@ -308,6 +308,8 @@ bool do_command(vector<string> command_line){
                         } else{
                             socket_output("; Invalid move\nILLEGAL\n");
                             sprintf(out_buffer, "%c%c %s is an invalid move\n", tc,t2, command_line[1].c_str());
+                            if(new_game.get_display())
+								new_game.display_board();
                             output_function(16);
                         }
                     } else{
