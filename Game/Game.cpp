@@ -148,11 +148,9 @@ void Game::display_toggle(){
 }
 
 void Game::display_board(){
-    cout << "Attempting to display..." << endl;
     if (!display) {
         return;
     }
-    cout << "Continuing to display..." << endl;
     
 	if(current_state.get_status()==0){
         if (output_to_socket) {
@@ -300,13 +298,15 @@ void Game::undo(){
 	if (current_state.get_num_moves()<1){
         if (output_to_socket) {
             string m = "; No moves to undo\n";
-            write(socketfd, m.c_str(), sizeof(m));
+            write(socketfd, m.c_str(), m.length());
         } else {
 			cout<<"No moves to undo\n";
         }
 	} else {
-        previous_states.pop_back();
-        previous_states.pop_back();
+        if (game_type != HH) {
+            previous_states.pop_back();
+            previous_states.pop_back();
+        }
         
         current_state = previous_states.back();
 		if(display)
