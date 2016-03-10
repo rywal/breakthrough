@@ -20,6 +20,7 @@ Game::Game(){
 Game::Game(int newsockfd) {
     output_to_socket = true;
     socketfd = newsockfd;
+    ai = new AI();
 }
 
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
@@ -146,9 +147,11 @@ void Game::display_toggle(){
 }
 
 void Game::display_board(){
+    cout << "Attempting to display..." << endl;
     if (!display) {
         return;
     }
+    cout << "Continuing to display..." << endl;
     
 	if(current_state.get_status()==0){
         if (output_to_socket) {
