@@ -197,18 +197,18 @@ void Game::display_board(){
 bool Game::termination_check(){
 		
 	//Checking for any pieces 
-	int end_this=0;
+	int end_this = 0;
 	for(int i=0; i<8; i++){
 		for(int j=0; j<8; j++){
 			if (current_state.get_board()[i][j]=='o'){
-				end_this=1;
+				end_this = 1;
 				break;
 			}
 		}
 	}
-	if(end_this=0){return false;}
+	if(end_this == 0){return false;}
 
-	end_this=0;
+	end_this = 0;
 	for(int i=0; i<8; i++){
 		for(int j=0; j<8; j++){
 			if (current_state.get_board()[i][j]=='x'){ 
@@ -217,7 +217,7 @@ bool Game::termination_check(){
 			}
 		}
 	}
-	if(end_this=0){return false;}
+	if(end_this == 0){return false;}
 
 	end_this=0;
 	//Checking for x's on the bottom row
@@ -227,7 +227,7 @@ bool Game::termination_check(){
 			break;
 		}
 	}
-	if(end_this=0){return false;}
+	if(end_this == 0){return false;}
 	
 	end_this=0;
 	//Checking o's on the top row
@@ -237,9 +237,10 @@ bool Game::termination_check(){
 			break;
 		}
 	} 
-	if(end_this=0){return false;}
+	if(end_this == 0){return false;}
 		
 }
+
 string Game::who_won(){
 	string out;
 	(!current_state.get_turn()) ? (out="; White ") : (out="; Black ");

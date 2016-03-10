@@ -3,11 +3,14 @@
 
 ###Compile##
 
-* To compile the game, use `make game`
+* To compile the game, use `make breakthrough`
 
 ###Run###
 
 * To run the game executable, use `./breakthrough`
+
+###Server Password###
+* Use password 'breakthrough' to connect to server
 
 ***
 
