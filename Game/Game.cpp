@@ -304,12 +304,8 @@ void Game::undo(){
 			cout<<"No moves to undo\n";
         }
 	} else {
-        if (game_type == HH) {
-            previous_states.pop_back();
-        } else {
-            previous_states.pop_back();
-            previous_states.pop_back();
-        }
+        previous_states.pop_back();
+        previous_states.pop_back();
         
         current_state = previous_states.back();
 		if(display)
