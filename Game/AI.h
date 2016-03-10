@@ -37,13 +37,13 @@ public:
     //  Makes a move based on the game sent to it
     //
     //  Return value is based on ability to make a move(see algorithms)
-    bool make_move(Game* game);
+    string make_move(Game* game);
     
     //  Uses a random alorithm to find a move with "EASY" difficulty
     //
     //  Returns TRUE  if a move was found and made
     //          FALSE if a move could not be made
-    bool choose_random(Game* game);
+    string choose_random(Game* game);
     
     //  Find all moves that can be made with a state
     vector< pair<string, DIRECTION> > possible_moves(Game* game, State state);

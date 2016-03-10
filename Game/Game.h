@@ -28,9 +28,10 @@ private:
     bool output_to_socket;
     int socketfd;
     
-    AI *ai;
     
 public:
+    
+    AI *ai;
     
     //  Holds the current state of the game
     State current_state;

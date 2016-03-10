@@ -88,6 +88,18 @@ bool is_difficulty(string d){
 }
 
 
+// Take a string and output the difficulty
+DIFFICULTY to_diff(string d){
+    if(d=="easy"){
+        return EASY;
+    } else if(d=="medium"){
+        return MEDIUM;
+    } else if(d=="hard"){
+        return HARD;
+    }
+}
+
+
 // Check if a string matches the IPv4 format
 bool is_ip(string s){
     char* temp;
@@ -203,9 +215,7 @@ DIRECTION to_dir(string d){
 bool do_command(vector<string> command_line){
     if(command_line.size()==0){
         socket_output("; No input was given\nILLEGAL\n");
-        
-        sprintf(out_buffer, "No input was given");
-        output_function(22);
+        return true;
     } else if(command_line[0]=="exit"){//Checking for "EXIT" command - Preventing SegFault
         if(command_line.size()==1){
             socket_output("OK\n");
@@ -273,10 +283,100 @@ bool do_command(vector<string> command_line){
             if(is_server(command_line[1])){
                 if(is_port(command_line[2])){
                     if(is_difficulty(command_line[4])&& is_difficulty(command_line[5])){
-                        // TODO: Add client for this
-                        new_game.set_game_type(AA, EASY);
+                        // Setup our AI for the difficulty given
+                        new_game.set_game_type(HA, to_diff(command_line[4]) );
+                        
+                        // Setup the connection to other server
+                        int csockfd, cportno, cn;
+                        struct sockaddr_in cserv_addr;
+                        struct hostent *cserver;
+                        
+                        char cbuffer[BUFFER_SIZE];
+                        cportno = stoi(command_line[2]);
+                        csockfd = socket(AF_INET, SOCK_STREAM, 0);
+                        cserver = gethostbyname(command_line[1].c_str());
+                        if (cserver == NULL) {
+                            fprintf(stderr,"ERROR, no such host\n");
+                            return false;
+                        }
+                        bzero((char *) &cserv_addr, sizeof(cserv_addr));
+                        cserv_addr.sin_family = AF_INET;
+                        bcopy((char *)cserver->h_addr,
+                              (char *)&cserv_addr.sin_addr.s_addr,
+                              cserver->h_length);
+                        cserv_addr.sin_port = htons(cportno);
+                        
+                        // Attempt to connect to other server
+                        if (connect(csockfd,(struct sockaddr *) &cserv_addr,sizeof(cserv_addr)) < 0)
+                            socket_output("ERROR connecting");
+                        
+                        string from_opponent;
+                        
+                        // Read to see if they asked for password
+                        bzero(buffer,BUFFER_SIZE);
+                        read(csockfd,cbuffer,BUFFER_SIZE-1);
+                        from_opponent = string(cbuffer);
+                        if (from_opponent.compare("PASSWORD")) {
+                            string pass = command_line[3];
+                            write(csockfd,pass.c_str(),pass.length());
+                        } else {
+                            socket_output("; Unexpected output from server\n");
+                            socket_output(from_opponent.c_str());
+                            socket_output("; End output\n");
+                            return false;
+                        }
+                        
+                        // Read to see if they accepted password
+                        bzero(buffer,BUFFER_SIZE);
+                        read(csockfd,cbuffer,BUFFER_SIZE-1);
+                        from_opponent = string(cbuffer);
+                        if (from_opponent.compare("WELCOME")) {
+                            string opponent_game = "HUMAN-AI " + command_line[5];
+                            write(csockfd, opponent_game.c_str(), opponent_game.length());
+                        } else {
+                            socket_output("; Server did not accept the password given\n");
+                            return false;
+                        }
+                        
+                        string current_move = new_game.ai->make_move( &new_game );
+                        bool continue_playing = true;
+                        while (continue_playing) {
+                            write(csockfd, current_move.c_str(), current_move.length());
+                            
+                            bzero(buffer,BUFFER_SIZE);
+                            read(csockfd,cbuffer,BUFFER_SIZE-1);
+                            from_opponent = string(cbuffer);
+                            
+                            string cdelimiters = " \n";
+                            
+                            vector<string> ccommand_line;
+                            char* cpch;
+                            cpch = strtok ((char*)from_opponent.c_str(), cdelimiters.c_str()); //tokenizes the command
+                            
+                            //------Continued-Lexer-for-both-inputs------//
+                            while (cpch != NULL) {
+                                string temp = cpch;
+                                transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
+                                if (temp != "" && temp != " ") {
+//                                    cout << "Pushing: " << temp << "|\n";
+                                    ccommand_line.push_back(temp); //put the token into a vector to make the command easy to parse
+                                }
+                                output<<temp<<" "; // For output file
+                                temp.clear();
+                                cpch = strtok (NULL, cdelimiters.c_str());
+                            }
+                            
+                            continue_playing = do_command(ccommand_line);
+                            
+                            current_move = new_game.ai->make_move( &new_game );
+                        }
+                        
+                        close(csockfd);
+                        
+                        new_game.display_toggle();
+                        new_game.display_board();
+                        
                         error=0;
-                        socket_output("OK\n");
                     } else{
                         socket_output("; Invalid difficulty\nILLEGAL\n");
                         sprintf(out_buffer, "Incorrect input for difficulty");
@@ -326,12 +426,12 @@ bool do_command(vector<string> command_line){
                 output_function(19);
             }
         } else{
-            socket_output("Move command had incorrect number of arguments\nILLEGAL\n");
+            socket_output("; Move command had incorrect number of arguments\nILLEGAL\n");
             sprintf(out_buffer, "Move had incorrect amount of arguments");
             output_function(20);
         }
     }else{
-        socket_output("Not a valid move\nILLEGAL\n");
+        socket_output("; Not a valid move\nILLEGAL\n");
         sprintf(out_buffer, "%s is not a valid command", command_line[0].c_str());
         output_function(21);
     }
@@ -417,8 +517,10 @@ int main(int argc, char *argv[]){
             bzero(buffer,BUFFER_SIZE);
             n = read(newsockfd,buffer,BUFFER_SIZE-1);
             string command = string(buffer);
-            command = command.substr(0, command.length() - 2);
-            cout << "Command given: " << command << " of size: " << command.length() << endl;
+            if (!isalpha(command.back())) {
+                command = command.substr(0, command.length() - 2);
+            }
+//            cout << "Command given: " << command << " of size: " << command.length() << endl;
             string delimiters = " \n";
             
             vector<string> command_line;
@@ -429,7 +531,10 @@ int main(int argc, char *argv[]){
             while (pch != NULL) {
                 string temp = pch;
                 transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
-                command_line.push_back(temp); //put the token into a vector to make the command easy to parse
+                if (temp != "" && temp != " ") {
+                    cout << "Pushing: " << temp << "|\n";
+                    command_line.push_back(temp); //put the token into a vector to make the command easy to parse
+                }
                 output<<temp<<" "; // For output file
                 temp.clear();
                 pch = strtok (NULL, delimiters.c_str());

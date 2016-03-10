@@ -38,34 +38,29 @@ AI::~AI() {
 
 }
 
-bool AI::make_move(Game* game) {
+string AI::make_move(Game* game) {
     printf("; AI is currently choosing a move...\n");
     
 //    cout << game->game_type << " gt\n";
-    
     if (difficulty_level == EASY) {
-        choose_random( game );
-        return true;
-        
+        return choose_random( game );
     } else if(difficulty_level == MEDIUM) {
-        
-        return true;
+        return choose_random( game );
     } else if(difficulty_level == HARD) {
-        
-        return true;
+        return choose_random( game );
     }
     
-    return false;
+    return "";
 }
 
-bool AI::choose_random(Game* game) {
+string AI::choose_random(Game* game) {
     printf("; Choosing a random move based on easy difficulty level\n");
     
     // Find all possible moves
     vector< pair<string, DIRECTION> > all_possible_moves = possible_moves(game, game->current_state);
 
     if (all_possible_moves.size() == 0)
-        return false;
+        return "";
     
     // Randomly pick a possible move
     srand (time(NULL));
@@ -105,7 +100,7 @@ bool AI::choose_random(Game* game) {
                   (all_possible_moves[random_move].first[1] - '0'),
                   all_possible_moves[random_move].second );
     
-    return true;
+    return move_output;
 }
 
 vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
