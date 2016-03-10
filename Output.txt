@@ -1,6 +1,27 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-display d2 fwd human-ai easy No input was given
-d3 fwd d4 fwd d5 left c6 right d7 right ; White is the winner!
+ai-ai localhost 5150 breakthrough easy easy ok come o  is not a valid column letter
+ok f7 fwd Move had incorrect amount of arguments
+ok c7 left Move had incorrect amount of arguments
+ok d6 right Move had incorrect amount of arguments
+ok e7 fwd t Move had incorrect amount of arguments
+ok e6 left Move had incorrect amount of arguments
+ok f5 left Move had incorrect amount of arguments
+ok f6 right Move had incorrect amount of arguments
+ok h7 right Move had incorrect amount of arguments
+ok b7 fwd t Move had incorrect amount of arguments
+ok g8 right Move had incorrect amount of arguments
+ok a8 left Move had incorrect amount of arguments
+ok c5 left Move had incorrect amount of arguments
+ok g6 right Move had incorrect amount of arguments
+ok g4 right Move had incorrect amount of arguments
+ok f5 right Move had incorrect amount of arguments
+ok d4 right Move had incorrect amount of arguments
+ok e5 right Move had incorrect amount of arguments
+ok f3 right Move had incorrect amount of arguments
+ok e4 right Move had incorrect amount of arguments
+ok c3 right Move had incorrect amount of arguments
+; Black is the winner!
 
-=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
+; Black is the winner!
+

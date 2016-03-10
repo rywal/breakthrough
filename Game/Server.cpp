@@ -285,6 +285,7 @@ bool do_command(vector<string> command_line){
                     if(is_difficulty(command_line[4])&& is_difficulty(command_line[5])){
                         // Setup our AI for the difficulty given
                         new_game.set_game_type(HA, to_diff(command_line[4]) );
+                        new_game.display_toggle();
                         
                         // Setup the connection to other server
                         int csockfd, cportno, cn;
@@ -357,7 +358,7 @@ bool do_command(vector<string> command_line){
                             while (cpch != NULL) {
                                 string temp = cpch;
                                 transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
-                                if (temp != "" && temp != " ") {
+                                if (temp != "" && temp != " " && temp != "OK") {
 //                                    cout << "Pushing: " << temp << "|\n";
                                     ccommand_line.push_back(temp); //put the token into a vector to make the command easy to parse
                                 }
@@ -369,12 +370,10 @@ bool do_command(vector<string> command_line){
                             continue_playing = do_command(ccommand_line);
                             
                             current_move = new_game.ai->make_move( &new_game );
+                            cout << current_move << "\n";
                         }
                         
                         close(csockfd);
-                        
-                        new_game.display_toggle();
-                        new_game.display_board();
                         
                         error=0;
                     } else{
@@ -521,7 +520,10 @@ int main(int argc, char *argv[]){
             n = read(newsockfd,buffer,BUFFER_SIZE-1);
             string command = string(buffer);
             if (!isalpha(command.back())) {
-                command = command.substr(0, command.length() - 2);
+                command = command.substr(0, command.length() - 1);
+            }
+            if (!isalpha(command.back())) {
+                command = command.substr(0, command.length() - 1);
             }
 //            cout << "Command given: " << command << " of size: " << command.length() << endl;
             string delimiters = " \n";
@@ -535,7 +537,7 @@ int main(int argc, char *argv[]){
                 string temp = pch;
                 transform(temp.begin(), temp.end(), temp.begin(), ::tolower); //FORCE LOWERCASE
                 if (temp != "" && temp != " ") {
-                    cout << "Pushing: " << temp << "|\n";
+//                    cout << "Pushing: " << temp << "|\n";
                     command_line.push_back(temp); //put the token into a vector to make the command easy to parse
                 }
                 output<<temp<<" "; // For output file
