@@ -247,7 +247,7 @@ bool do_command(vector<string> command_line){
         }
     } else if(command_line[0]=="undo"){
         if(command_line.size()==1){
-            new_game.undo_two_turns();
+            new_game.undo();
         } else{
             socket_output("; Undo had too many arguments\nILLEGAL\n");
             sprintf(out_buffer, "Undo had too many arguments");

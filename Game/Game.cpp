@@ -27,7 +27,6 @@ Game::Game(int newsockfd) {
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
     
     game_type = g;
-//    delete[] ai;
     if (g == HH) {
         ai = new AI(d);
     } else {
@@ -304,37 +303,19 @@ void Game::undo(){
         } else {
 			cout<<"No moves to undo\n";
         }
-	}
-	else {
-        current_state=previous_states[previous_states.size()-1];
-        previous_states.pop_back();
+	} else {
+        if (game_type == HH) {
+            previous_states.pop_back();
+        } else {
+            previous_states.pop_back();
+            previous_states.pop_back();
+        }
+        
+        current_state = previous_states.back();
 		if(display)
 			display_board();
 	}
 }
 bool Game::game_over(){
 	return current_state.get_status();
-}
-
-void Game::undo_two_turns(){ 
-//when playing an AI they may move too fast to press undo twice
-	if (current_state.get_num_moves()<2){
-        if (output_to_socket) {
-            string m = "; Not enough moves to undo\n";
-            write(socketfd, m.c_str(), m.length());
-        } else {
-            cout<<"Not enough moves to undo\n";
-        }
-	}
-	else {
-		cout<<"1\n";
-		previous_states.pop_back();
-		cout<<"1\n";
-		previous_states.pop_back();
-		cout<<"1\n";
-		current_state=previous_states[previous_states.size()-1];
-		cout<<"1\n";
-		if(display)
-			display_board();
-	}
 }
