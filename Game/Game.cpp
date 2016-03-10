@@ -315,7 +315,7 @@ void Game::undo_two_turns(){
 	if (current_state.get_num_moves()<2){
         if (output_to_socket) {
             string m = "; Not enough moves to undo\n";
-            write(socketfd, m.c_str(), sizeof(m));
+            write(socketfd, m.c_str(), m.length());
         } else {
             cout<<"Not enough moves to undo\n";
         }
