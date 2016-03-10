@@ -14,6 +14,7 @@ Game::Game(){
     output_to_socket = false;
     game_type = HH;
     save_state();
+    ai = new AI();
 }
 
 Game::Game(int newsockfd) {
