@@ -24,11 +24,6 @@ Given input: h3 right
 Command number 11 was successful!
 Given input: f7 right 
 Command number 12 was successful!
-<<<<<<< HEAD
 Given input: g2 right 
 Command number 13 was successful!
 =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
-=======
-Given input: d7 right 
-^-^-^-Segmentation Fault-^-^-^
->>>>>>> dcf8d4956e2c48d7defba558dcb84d6392e756ba
