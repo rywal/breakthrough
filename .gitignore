@@ -9,6 +9,7 @@ a.out
 *.out
 *.tmp
 .idea
+.DS_Store
 breakthrough
 par
 server
