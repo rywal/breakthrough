@@ -133,7 +133,7 @@ State Game::update(char column, int row, DIRECTION d){
 	} else {
         if (output_to_socket) {
             
-            string e = "; Invalid move '" + string(1, column) + to_string(row) " " + d + "\n";
+            string e = "; Invalid move '" + string(1, column) + to_string(row) + " " + d + "\n";
             write(socketfd, e.c_str(), sizeof(e));
         } else {
 			printf("That's an invalid move! Try again.\n");
