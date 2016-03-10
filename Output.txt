@@ -1,37 +1,32 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
-<<<<<<< HEAD
 The current file is: Game/Client.cpp
 Given input: display 
 Command number 1 was successful!
-Given input: e2 fwd 
+Given input: d2 fwd 
 Command number 2 was successful!
-Given input: e3 fwd 
-e3 fwd is an invalid move
-
-Command number 3 FAILED!
-Given input: d7 fwd 
-Command number 4 was successful!
-Given input: e3 fwd 
-Command number 5 was successful!
-Given input: d6 fwd 
-Command number 6 was successful!
-Given input: e4 left 
-Command number 7 was successful!
 Given input: h7 fwd 
-Command number 8 was successful!
-Given input: d5 fwd 
-Command number 9 was successful!
+Command number 3 was successful!
+Given input: d3 fwd 
+Command number 4 was successful!
 Given input: h6 fwd 
-Command number 10 was successful!
-Given input: d6 fwd 
-Command number 11 was successful!
+Command number 5 was successful!
+Given input: d4 fwd 
+Command number 6 was successful!
 Given input: h5 fwd 
+Command number 7 was successful!
+Given input: d5 fwd 
+Command number 8 was successful!
+Given input: h4 fwd 
+Command number 9 was successful!
+Given input: d6 right 
+Command number 10 was successful!
+Given input: h3 right 
+Command number 11 was successful!
+Given input: e7 right 
 Command number 12 was successful!
-Given input: d7 right 
-^-^-^-Segmentation Fault-^-^-^
-=======
-The current file is: Game/Server.cpp
-display human-ai easy g2 right h3 fwd h4 fwd h5 fwd h6 left g7 right h8 fwd h8 fwd is an invalid move
-
-exit =-=-=-=-=-=-EXITED-=-=-=-=-=-=
->>>>>>> ed8dfba6f748b827ab5150c5f174d056bedde70a
+Given input: g2 right 
+Command number 13 was successful!
+Given input: 
+No input was given
+Command number 14 FAILED!
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
