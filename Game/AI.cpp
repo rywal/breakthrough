@@ -60,7 +60,7 @@ string AI::choose_random(Game* game) {
     vector< pair<string, DIRECTION> > all_possible_moves = possible_moves(game, game->current_state);
 
     if (all_possible_moves.size() == 0)
-        return "";
+        return "EXIT";
     
     // Randomly pick a possible move
     srand (time(NULL));

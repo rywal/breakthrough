@@ -1,7 +1,11 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-ai-ai localhost 5150 breakthrough easy easy ok ok h7 fwd ok g8 left ok g7 right ok f8 left ok g7 fwd ok e7 fwd ok e8 fwd ok d7 fwd ok d8 fwd ok c7 fwd ok c8 fwd ok a7 fwd ok c7 right ok b8 right ok d6 fwd ok c6 right ok e6 fwd ok f7 right ok g6 right ok d7 right ok f5 fwd ok e5 fwd ok f6 fwd ok d5 right ok h7 right ok h8 fwd ok a6 fwd ok f5 fwd ok ; white is the winner! COMMENT: white is the winner! 
-; White is the winner!
+ai-ai localhost 5150 breakthrough easy easy ok ok h7 fwd ok g8 left ok g7 right ok f8 left ok g7 fwd ok e7 fwd ok e8 fwd ok d7 fwd ok d8 fwd ok c7 fwd ok c8 fwd ok a7 fwd ok c7 right ok b8 right ok d6 fwd ok c6 right ok e6 fwd ok f7 right ok g6 right ok d7 right ok f5 human-ai medium g2 right c2 right f1 right e2 fwd d1 right a2 right g2 fwd f2 fwd b1 left g1 left b2 left h1 left d2 left c1 right b3 fwd c3 right d3 left d4 fwd d5 fwd c4 right d5 right d6 right d2 left e2 left b4 right d3 fwd ; Black is the winner!
 
-; White is the winner!
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-= left ok b6 right ok h7 right ok a7 fwd ok g6 right ok f5 fwd ok b7 fwd ok a5 fwd ok f7 left ok a8 left ok e7 fwd ok g8 right ok b7 left ok e8 fwd ok f4 right ok a4 left ok g6 right ok f8 right ok c8 fwd ok e3 fwd ok b3 left ok e2 left e2 left is an invalid move
 
+; Black is the winner!
+
+; Black is the winner!
+
+=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
