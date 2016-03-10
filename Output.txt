@@ -1,59 +1,6 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-ai-ai localhost 5150 breakthrough easy easy ok come o  is not a valid column letter
-ok f7 left Move had incorrect amount of arguments
-ok b7 right Move had incorrect amount of arguments
-ok g7 left Move had incorrect amount of arguments
-ok d7 fwd Move had incorrect amount of arguments
-ok a8 left Move had incorrect amount of arguments
-ok b7 fwd Move had incorrect amount of arguments
-ok e7 left Move had incorrect amount of arguments
-ok d6 left Move had incorrect amount of arguments
-ok g8 fwd Move had incorrect amount of arguments
-ok g6 right Move had incorrect amount of arguments
-ok f5 fwd t Move had incorrect amount of arguments
-ok g7 fwd t Move had incorrect amount of arguments
-ok c7 fwd t Move had incorrect amount of arguments
-ok g6 right Move had incorrect amount of arguments
-ok h6 fwd t Move had incorrect amount of arguments
-ok a6 left Move had incorrect amount of arguments
-ok a7 fwd Move had incorrect amount of arguments
-ok h7 fwd Move had incorrect amount of arguments
-ok h6 right Move had incorrect amount of arguments
-ok g5 right Move had incorrect amount of arguments
-ok f6 left Move had incorrect amount of arguments
-ok g5 left Move had incorrect amount of arguments
-ok h8 right Move had incorrect amount of arguments
-ok e5 right Move had incorrect amount of arguments
-ok b5 right Move had incorrect amount of arguments
-ok h5 right Move had incorrect amount of arguments
-ok c6 right Move had incorrect amount of arguments
-ok f8 right Move had incorrect amount of arguments
-ok g4 fwd t Move had incorrect amount of arguments
-ok d8 right Move had incorrect amount of arguments
-ok c7 fwd t Move had incorrect amount of arguments
-ok c8 right Move had incorrect amount of arguments
-ok b8 right Move had incorrect amount of arguments
-ok f4 fwd t Move had incorrect amount of arguments
-ok c6 left Move had incorrect amount of arguments
-ok a7 left Move had incorrect amount of arguments
-ok d5 left Move had incorrect amount of arguments
-ok g7 right Move had incorrect amount of arguments
-ok d4 left Move had incorrect amount of arguments
-ok h4 fwd Move had incorrect amount of arguments
-ok e7 right Move had incorrect amount of arguments
-ok h3 right Move had incorrect amount of arguments
-ok d6 fwd t Move had incorrect amount of arguments
-ok a4 left Move had incorrect amount of arguments
-ok f5 left Move had incorrect amount of arguments
-ok g4 fwd Move had incorrect amount of arguments
-ok e8 fwd Move had incorrect amount of arguments
-ok d5 fwd Move had incorrect amount of arguments
-ok b5 left Move had incorrect amount of arguments
-ok c4 fwd Move had incorrect amount of arguments
-ok e3 right Move had incorrect amount of arguments
-ok e4 fwd t Move had incorrect amount of arguments
-ok b3 left Move had incorrect amount of arguments
+ai-ai localhost 5150 breakthrough easy easy ok ok d7 fwd ok b7 right ok e7 fwd ok a7 left ok g7 fwd ok b6 right ok f7 fwd ok d8 fwd ok e8 fwd ok e6 right ok c7 fwd ok g6 right ok d5 right ok b8 right ok c6 fwd ok f8 left ok f5 right ok a6 left ok a8 left ok c5 left ok b5 right ok h7 fwd ok d6 fwd ok h6 right ok g5 fwd ok g4 right ok ; white is the winner! COMMENT: white is the winner! 
 ; White is the winner!
 
 ; White is the winner!
