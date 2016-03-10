@@ -180,7 +180,7 @@ void Game::display_board(){
             cout << b;
         }
 	} else {
-		(!current_state.get_turn()) ? (white_v()) : (black_v());
+//		(!current_state.get_turn()) ? (white_v()) : (black_v());
         string b = ";   ";
         for (char i='A'; i<'I'; i++)
             b += " " + string(1, i);
@@ -251,43 +251,43 @@ string Game::who_won(){
 	return out;
 }
 	
-void Game::white_v(){
-	current_state.set_board(5,1, 'W');
-	current_state.set_board(5,2, 'H');
-	current_state.set_board(5,3, 'I');
-	current_state.set_board(5,4, 'T');
-	current_state.set_board(5,5, 'E');
-	current_state.set_board(4,2, 'I');
-	current_state.set_board(4,3, 'S');
-	current_state.set_board(3,2, 'T');
-	current_state.set_board(3,3, 'H');
-	current_state.set_board(3,4, 'E');
-	current_state.set_board(2,1, 'W');
-	current_state.set_board(2,2, 'I');
-	current_state.set_board(2,3, 'N');
-	current_state.set_board(2,4, 'N');
-	current_state.set_board(2,5, 'E');
-	current_state.set_board(2,6, 'R');
-}	
-
-void Game::black_v(){
-	current_state.set_board(5,1, 'B');
-	current_state.set_board(5,2, 'L');
-	current_state.set_board(5,3, 'A');
-	current_state.set_board(5,4, 'C');
-	current_state.set_board(5,5, 'K');
-	current_state.set_board(4,2, 'I');
-	current_state.set_board(4,3, 'S');
-	current_state.set_board(3,2, 'T');
-	current_state.set_board(3,3, 'H');
-	current_state.set_board(3,4, 'E');
-	current_state.set_board(2,1, 'W');
-	current_state.set_board(2,2, 'I');
-	current_state.set_board(2,3, 'N');
-	current_state.set_board(2,4, 'N');
-	current_state.set_board(2,5, 'E');
-	current_state.set_board(2,6, 'R');
-}
+//void Game::white_v(){
+//	current_state.set_board(5,1, 'W');
+//	current_state.set_board(5,2, 'H');
+//	current_state.set_board(5,3, 'I');
+//	current_state.set_board(5,4, 'T');
+//	current_state.set_board(5,5, 'E');
+//	current_state.set_board(4,2, 'I');
+//	current_state.set_board(4,3, 'S');
+//	current_state.set_board(3,2, 'T');
+//	current_state.set_board(3,3, 'H');
+//	current_state.set_board(3,4, 'E');
+//	current_state.set_board(2,1, 'W');
+//	current_state.set_board(2,2, 'I');
+//	current_state.set_board(2,3, 'N');
+//	current_state.set_board(2,4, 'N');
+//	current_state.set_board(2,5, 'E');
+//	current_state.set_board(2,6, 'R');
+//}	
+//
+//void Game::black_v(){
+//	current_state.set_board(5,1, 'B');
+//	current_state.set_board(5,2, 'L');
+//	current_state.set_board(5,3, 'A');
+//	current_state.set_board(5,4, 'C');
+//	current_state.set_board(5,5, 'K');
+//	current_state.set_board(4,2, 'I');
+//	current_state.set_board(4,3, 'S');
+//	current_state.set_board(3,2, 'T');
+//	current_state.set_board(3,3, 'H');
+//	current_state.set_board(3,4, 'E');
+//	current_state.set_board(2,1, 'W');
+//	current_state.set_board(2,2, 'I');
+//	current_state.set_board(2,3, 'N');
+//	current_state.set_board(2,4, 'N');
+//	current_state.set_board(2,5, 'E');
+//	current_state.set_board(2,6, 'R');
+//}
 
 void Game::save_state(){
 	previous_states.push_back(current_state);
