@@ -314,7 +314,7 @@ bool do_command(vector<string> command_line){
                         string from_opponent;
                         
                         // Read to see if they asked for password
-                        bzero(buffer,BUFFER_SIZE);
+                        bzero(cbuffer,BUFFER_SIZE);
                         read(csockfd,cbuffer,BUFFER_SIZE-1);
                         from_opponent = string(cbuffer);
                         if (from_opponent.compare("PASSWORD")) {
@@ -328,7 +328,7 @@ bool do_command(vector<string> command_line){
                         }
                         
                         // Read to see if they accepted password
-                        bzero(buffer,BUFFER_SIZE);
+                        bzero(cbuffer,BUFFER_SIZE);
                         read(csockfd,cbuffer,BUFFER_SIZE-1);
                         from_opponent = string(cbuffer);
                         if (from_opponent.compare("WELCOME")) {
@@ -344,7 +344,7 @@ bool do_command(vector<string> command_line){
                         while (continue_playing) {
                             write(csockfd, current_move.c_str(), current_move.length());
                             
-                            bzero(buffer,BUFFER_SIZE);
+                            bzero(cbuffer,BUFFER_SIZE);
                             read(csockfd,cbuffer,BUFFER_SIZE-1);
                             from_opponent = string(cbuffer);
                             
@@ -428,8 +428,9 @@ bool do_command(vector<string> command_line){
             }
         } else{
 //            socket_output("; Move command had incorrect number of arguments\nILLEGAL\n");
-            sprintf(out_buffer, "Move had incorrect amount of arguments");
-            output_function(20);
+//            sprintf(out_buffer, "Move had incorrect amount of arguments");
+//            output_function(20);
+            return true;
         }
     }else{
         socket_output("; Not a valid move\nILLEGAL\n");
@@ -501,7 +502,7 @@ int main(int argc, char *argv[]){
         
         bzero(buffer,BUFFER_SIZE);
         
-        n = read(newsockfd,buffer,BUFFER_SIZE-1);
+        n = read(newsockfd, buffer, BUFFER_SIZE-1);
         if (n < 0) socket_error("ERROR reading from socket");
         
         string password = string(buffer);

@@ -92,6 +92,7 @@ string AI::choose_random(Game* game) {
     
     if (socketfd) {
         write(socketfd, move_output.c_str(), move_output.length());
+        cout << move_output;
     } else {
         cout << move_output;
     }
