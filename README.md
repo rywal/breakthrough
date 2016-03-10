@@ -7,7 +7,7 @@
 
 ###Run###
 
-* To run the game executable, use `./breakthrough`
+* To run the game executable, use `./game`
 
 ***
 
