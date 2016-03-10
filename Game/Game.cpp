@@ -33,63 +33,67 @@ void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
 }
 
 bool Game::valid_move(int row, char column, DIRECTION d){
-		if (row <= 1 || row >= 8){ return false;}
-		if (column <'a' || column >'h'){ return false;}
-		
-		
-		if(current_state.get_turn()){	//I am assuming that the person is always white
-			//check if piece is white
-			if (current_state.get_board()[row-1][column-'a']!='o') return false;
-			//check if the piece can move d
-			//things to consider:
-				//if piece is in Column A, piece can't move left
-			if (column=='a' && d == LEFT) return false;	
-				//if piece is in Column H, piece can't move right
-			if (column=='h' && d == RIGHT) return false;
-				//if there is a piece in front of it, it can't move forward
-            if (d == LEFT && current_state.get_board()[row][column-'a'-1]=='o' ) return false;
-			if (d == RIGHT && current_state.get_board()[row][column-'a'+1]=='o' ) return false;
-			if (current_state.get_board()[row][column-'a']!='_' && d == FWD) return false;
-            // Check if can move left
-            if ( (column-'a'-1) >= 0 && d == LEFT)
-                if (current_state.get_board()[row][column-'a'-1] == 'o')
-                    return false;
-            
-            // Check if can move right
-            if ( (column+1) <= 'h' && d == RIGHT)
-                if (current_state.get_board()[row][column-'a'+1] == 'o')
-                    return false;
-            
-			return true;
-		}else {
-			//check if piece is black
-			if (current_state.get_board()[row-1][column-'a']!='x') return false;
-			//check if the piece can move d
-			//things to consider:
-				//remember black is moving in the opposite direction
-				//if piece is in Column H, piece can't move left
-			if (column=='h' && d == LEFT) return false;	
-				//if piece is in Column A, piece can't move right
-			if (column=='a' && d == RIGHT) return false;	
-				//if there is a piece in front of it, it can't move forward
-			if (d == LEFT && current_state.get_board()[row-1][column-'a'+1]=='x' ) return false;
-			
-			if (d == RIGHT && current_state.get_board()[row-1][column-'a'-1]=='x' ) return false;
-			
-			if (current_state.get_board()[row-2][column-'a'] != '_' && d == FWD) return false;
-            
-            // Check if can move left
-            if ( (column-'a'+1) >= 0 && d == LEFT && row > 1)
-                if (current_state.get_board()[row-2][column-'a'+1] == 'x')
-                    return false;
-            
-            // Check if can move right
-            if ( (column+1) <= 'h' && d == RIGHT)
-                if (current_state.get_board()[row-2][column-'a'-1]=='x')
-                    return false;
-            
-			return true;
-		}
+    if (game_over()) {
+        return false;
+    }
+    
+    if (row <= 1 || row >= 8){ return false;}
+    if (column <'a' || column >'h'){ return false;}
+    
+    
+    if(current_state.get_turn()){	//I am assuming that the person is always white
+        //check if piece is white
+        if (current_state.get_board()[row-1][column-'a']!='o') return false;
+        //check if the piece can move d
+        //things to consider:
+            //if piece is in Column A, piece can't move left
+        if (column=='a' && d == LEFT) return false;	
+            //if piece is in Column H, piece can't move right
+        if (column=='h' && d == RIGHT) return false;
+            //if there is a piece in front of it, it can't move forward
+        if (d == LEFT && current_state.get_board()[row][column-'a'-1]=='o' ) return false;
+        if (d == RIGHT && current_state.get_board()[row][column-'a'+1]=='o' ) return false;
+        if (current_state.get_board()[row][column-'a']!='_' && d == FWD) return false;
+        // Check if can move left
+        if ( (column-'a'-1) >= 0 && d == LEFT)
+            if (current_state.get_board()[row][column-'a'-1] == 'o')
+                return false;
+        
+        // Check if can move right
+        if ( (column+1) <= 'h' && d == RIGHT)
+            if (current_state.get_board()[row][column-'a'+1] == 'o')
+                return false;
+        
+        return true;
+    }else {
+        //check if piece is black
+        if (current_state.get_board()[row-1][column-'a']!='x') return false;
+        //check if the piece can move d
+        //things to consider:
+            //remember black is moving in the opposite direction
+            //if piece is in Column H, piece can't move left
+        if (column=='h' && d == LEFT) return false;	
+            //if piece is in Column A, piece can't move right
+        if (column=='a' && d == RIGHT) return false;	
+            //if there is a piece in front of it, it can't move forward
+        if (d == LEFT && current_state.get_board()[row-1][column-'a'+1]=='x' ) return false;
+        
+        if (d == RIGHT && current_state.get_board()[row-1][column-'a'-1]=='x' ) return false;
+        
+        if (current_state.get_board()[row-2][column-'a'] != '_' && d == FWD) return false;
+        
+        // Check if can move left
+        if ( (column-'a'+1) >= 0 && d == LEFT && row > 1)
+            if (current_state.get_board()[row-2][column-'a'+1] == 'x')
+                return false;
+        
+        // Check if can move right
+        if ( (column+1) <= 'h' && d == RIGHT)
+            if (current_state.get_board()[row-2][column-'a'-1]=='x')
+                return false;
+        
+        return true;
+    }
 }
 
 State Game::update(char column, int row, DIRECTION d){
@@ -119,8 +123,9 @@ State Game::update(char column, int row, DIRECTION d){
 		save_state();
         
         // If game type involves an AI, let it make it's move
-        if (game_type != HH && !current_state.get_turn()) {
+        if (game_type != HH && !current_state.get_turn() && !game_over()) {
             ai->make_move( this );
+            current_state.set_status(termination_check());
         }
 	} else {
         if (output_to_socket) {
@@ -232,6 +237,14 @@ string Game::who_won(){
 	string out;
 	(!current_state.get_turn()) ? (out="; White ") : (out="; Black ");
 	out+="is the winner!";
+    
+    if (current_state.get_status() == true) {
+        if (output_to_socket) {
+            write(socketfd, out.c_str(), sizeof(out));
+        } else {
+            printf(out.c_str());
+        }
+    }
 	return out;
 }
 	

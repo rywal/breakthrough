@@ -336,6 +336,10 @@ bool do_command(vector<string> command_line){
         output_function(21);
     }
     
+    if (new_game.game_over()) {
+        return false;
+    }
+    
     return true;
 }
 
