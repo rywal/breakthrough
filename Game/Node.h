@@ -33,7 +33,7 @@ public:
     //  Destructor
     ~Node(){}
     	
-	void create_node_w_children(vector<State> children_states /*each state will be converted into a node*/, vector<long int> value, State* parent_node); //Get new_depth from parent's depth
+	void create_node_w_children(vector<State> children_states /*each state will be converted into a node*/, vector<long int> value, Node* parent_node); //Get new_depth from parent's depth
 	int get_depth(); //Basically "return depth;"
 	bool is_leaf(); //Basically "return (children.size()==0);"
 	bool is_root(); //Basically "return (!parent_node);" (or if parent_node==NULL)
