@@ -210,7 +210,6 @@ DIRECTION to_dir(string d){
     }
 }
 
-
 // Take a command and direct it to the correct location
 bool do_command(vector<string> command_line){
     if(command_line.size()==0){
@@ -402,12 +401,13 @@ bool do_command(vector<string> command_line){
                 if(t2=='1'||t2=='2'||t2=='3'||t2=='4'||t2=='5'||t2=='6'||t2=='7'||t2=='8'){
                     if(is_dir(command_line[1])){
                         if(new_game.valid_move(t2-48, tc, to_dir(command_line[1].c_str()))){
-                            if (game_type != AA) {
+                            if (new_game.game_type != AA) {
                                 socket_output("OK\n");
                             }
                             new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
                         } else{
-                            socket_output("; Invalid move" + string(1, tc) + to_string(t2) + " " + command_line[1].c_str() + "\nILLEGAL\n");
+							string temp = "; Invalid move" + string(1, tc) + to_string(t2) + " " + command_line[1].c_str() + "\nILLEGAL\n";
+                            socket_output(temp.c_str());
                             sprintf(out_buffer, "%c%c %s is an invalid move\n", tc,t2, command_line[1].c_str());
                             if(new_game.get_display())
 								new_game.display_board();

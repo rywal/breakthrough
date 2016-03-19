@@ -1,8 +1,3 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-human-ai easy g2 right e2 right h3 fwd d2 left c3 fwd f1 left f3 fwd g1 fwd b2 fwd e1 left c2 right f2 right h4 ai-ai localhost 5170 breakthrough easy easy ok ok g7 right ok f7 left ok d7 left ok f6 fwd ok d8 fwd =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=ft ok g8 right ok b8 left ok h7 fwd ok d6 right ok e6 right ok d5 left ok e7 fwd ok b7 right ok c7 fwd ok h8 fwd ok f7 fwd ok f8 left ok f6 right ok ; white is the winner! COMMENT: white is the winner! 
-; White is the winner!
-
-; White is the winner!
-
 =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=

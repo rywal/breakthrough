@@ -6,6 +6,7 @@
 #include "State.h"
 #include "AI.h"
 #include <string>
+#include <math.h>
 
 #define BUFFER_SIZE 1024
 
@@ -202,6 +203,67 @@ void Game::display_board(){
 
 	}
 }	
+
+//----------------------------Testing----------------------------//	
+
+void value_node_helper(State state_of_node,int i_begin, int i_end, int &value, int count){
+	int turn = state_of_node.get_turn() ? 1 : -1;
+	for (int i=i_begin; i>i_end; i--){
+		for(int j=0; j<8; j++){
+			if(count!=3 && state_of_node.get_board()[i][j]=='o'){//check for whites
+				value+=(turn)*pow(9.0,(i-2));
+			}
+			if(count!=1 && state_of_node.get_board()[i][j]=='x'){//check for blacks
+				value-=(turn)*pow(9.0,(5-i));
+			}
+		}
+	}
+}
+
+void value_node(State state_of_node,vector<long int> &values){
+	int value=0;
+	value_node_helper(state_of_node,7, 5, value, 1);
+	value_node_helper(state_of_node,5, 1, value, 2);
+	value_node_helper(state_of_node,1,-1, value, 3);
+	values.push_back(value);
+}
+
+void root_push_back_helper(State state_of_node,vector<State> &current_node_roots, vector<long int> &values, bool white/*or not*/, int i, int j, int count){
+	if((state_of_node.get_board()[i][j]=='o' && white)||(state_of_node.get_board()[i][j]=='x' && !white)){
+		char turn = white ? 'o' : 'x';
+		char n_turn = white ? 'x' : 'o';
+		int row = white ? i+1 : i-1;
+		int col = white ? j+count : j-count;
+		if((white&&i<7)||(!white&&i>0)){
+			if(state_of_node.get_board()[row][col]!=turn){
+				/*if(state_of_node.get_board()[row][col]==n_turn){
+					captures+=1;
+				}*/
+				State temp=state_of_node;
+				temp.set_board(i,j,'_');
+				temp.set_board(row,col,turn);
+				value_node(temp, values);
+				current_node_roots.push_back(temp);
+			}
+		}
+	}
+}
+
+vector<State> find_node_roots(State state_of_node){	
+	//---Possibly defined in an above---//
+	vector<State> current_node_roots;
+	vector<long int> values;
+	//----------------------------------//
+	
+	for (int i=7; i>-1; i--){
+		for(int j=0; j<8; j++){
+			for(int e=-1; e<2; e++){//-1 checks for left, 0 for fwd, 1 for right
+				root_push_back_helper(state_of_node,current_node_roots,values, state_of_node.get_turn(),i,j,e);
+			}
+		}
+    }
+}
+//----^------^-------^----^---Testing---^----^-------^------^----//		
 
 bool Game::termination_check(){
 		
