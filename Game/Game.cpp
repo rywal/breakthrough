@@ -207,7 +207,9 @@ void Game::display_board(){
 //----------------------------Testing----------------------------//	
 
 void value_node_helper(State state_of_node,int i_begin, int i_end, int &value, int count){
-	int turn = state_of_node.get_turn() ? 1 : -1;
+	//This does the heavy lifting for "value_node"
+	int turn = state_of_node.get_turn() ? 1 : -1; //If black's turn, swap the multiples
+	//Positive numbers means better for the current player, negative means worse
 	for (int i=i_begin; i>i_end; i--){
 		for(int j=0; j<8; j++){
 			if(count!=3 && state_of_node.get_board()[i][j]=='o'){//check for whites
@@ -221,6 +223,7 @@ void value_node_helper(State state_of_node,int i_begin, int i_end, int &value, i
 }
 
 void value_node(State state_of_node,vector<long int> &values){
+	//This gives value to each node state
 	int value=0;
 	value_node_helper(state_of_node,7, 5, value, 1);
 	value_node_helper(state_of_node,5, 1, value, 2);
@@ -228,7 +231,8 @@ void value_node(State state_of_node,vector<long int> &values){
 	values.push_back(value);
 }
 
-void root_push_back_helper(State state_of_node,vector<State> &current_node_roots, vector<long int> &values, bool white/*or not*/, int i, int j, int count){
+void save_root_states(State state_of_node,vector<State> &current_node_roots, vector<long int> &values, bool white/*or not*/, int i, int j, int count){
+	//This function saves the states of possible moves
 	if((state_of_node.get_board()[i][j]=='o' && white)||(state_of_node.get_board()[i][j]=='x' && !white)){
 		char turn = white ? 'o' : 'x';
 		char n_turn = white ? 'x' : 'o';
@@ -249,20 +253,26 @@ void root_push_back_helper(State state_of_node,vector<State> &current_node_roots
 	}
 }
 
-vector<State> find_node_roots(State state_of_node){	
-	//---Possibly defined in an above---//
+vector<State> find_node_roots(State state_of_node){	//Find the roots of ONLY the current node
+	//---Possibly defined in an above function??---//
 	vector<State> current_node_roots;
 	vector<long int> values;
-	//----------------------------------//
+	//---------------------------------------------//
 	
 	for (int i=7; i>-1; i--){
 		for(int j=0; j<8; j++){
 			for(int e=-1; e<2; e++){//-1 checks for left, 0 for fwd, 1 for right
-				root_push_back_helper(state_of_node,current_node_roots,values, state_of_node.get_turn(),i,j,e);
+				save_root_states(state_of_node,current_node_roots,values, state_of_node.get_turn(),i,j,e);
 			}
 		}
     }
+	return current_node_roots;
 }
+
+/*void evaluation_function(State state_of_node, int ){
+	//Still need to get (a number of depths) of the nodes of nodes to a depth
+}*/
+
 //----^------^-------^----^---Testing---^----^-------^------^----//		
 
 bool Game::termination_check(){
