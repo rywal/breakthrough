@@ -7,10 +7,7 @@
 #ifndef State_h
 #define State_h
 
-#include <iostream>
-#include <stdio.h>
-#include <vector>
-#include "globals.h"
+#include "Node.h"
 
 using namespace std;
 
@@ -18,10 +15,7 @@ class Tree {
 	
 private:
 
-vector<vector<State>> state_tree; //Not sure on the data type for this
-State* parent_node; //Not sure on the data type for this
-vector<State> children;
-vector<int> values;
+vector<Node> state_tree; //Not sure on the data type for this
 
     
 public:
@@ -32,8 +26,9 @@ public:
     //  Destructor
     ~Tree(){}
     	
-	vector<vector<State>> get_tree(); //Not sure on the data type for this
-	void add_node_w_children(vector<State> children, vector<int> value, State* parent_node);
+	vector<Node> get_tree(); //Not sure on the data type for this
+	void add_node_w_children(vector<State> children, vector<int> value, State* parent_node);//Or just Node??
+	void add_node_w_children(Node new_node);//Not sure which one should be implemented??
 	
 };
 
