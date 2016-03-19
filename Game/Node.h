@@ -18,10 +18,11 @@ class Node {
 	
 private:
 
-vector<State>* Node;
-Node* parent_node;
-vector<State> children; //Keeps track of each child Node/leaf
-vector<int> values; //Keeps track of each child's value
+State current_state;//The current node's state
+int current_value; //This holds the current value of the board
+Node* parent_node; //for ROOT this is NULL
+vector<Node*> children; //Keeps track of each child Node/leaf
+vector<long int*> values; //Keeps track of each child's value
 int depth; //Keeps track of how far down the Node is from the root (root being 0 depth deep)
     
 public:
@@ -32,9 +33,10 @@ public:
     //  Destructor
     ~Node(){}
     	
-	void create_node_w_children(vector<State> children, vector<int> value, State* parent_node); //Get new_depth from parent's depth
+	void create_node_w_children(vector<State> children_states /*each state will be converted into a node*/, vector<long int> value, State* parent_node); //Get new_depth from parent's depth
 	int get_depth(); //Basically "return depth;"
 	bool is_leaf(); //Basically "return (children.size()==0);"
+	bool is_root(); //Basically "return (!parent_node);" (or if parent_node==NULL)
 };
 
 
