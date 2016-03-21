@@ -1,7 +1,2 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-ai-ai localhost 5150 breakthrough easy easy ok ok h7 fwd ok g8 left ok g7 right ok f8 left ok g7 fwd ok e7 fwd ok e8 fwd ok d7 fwd ok d8 fwd ok c7 fwd ok c8 fwd ok a7 fwd ok c7 right ok b8 right ok d6 fwd ok c6 right ok e6 fwd ok f7 right ok g6 right ok d7 right ok f5 fwd ok e5 fwd ok f6 fwd ok d5 right ok h7 right ok h8 fwd ok a6 fwd ok f5 fwd ok ; white is the winner! COMMENT: white is the winner! 
-; White is the winner!
-
-; White is the winner!
-
