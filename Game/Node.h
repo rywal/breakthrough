@@ -19,7 +19,7 @@ class Node {
 	
 private:
 
-State current_state;//The current node's state
+vector<pair<string, DIRECTION>> move;//The move that is needed to make this State
 long int current_value; //This holds the current value of the board
 Node* parent_node; //for ROOT this is NULL
 vector<Node*> children; //Keeps track of each child Node/leaf

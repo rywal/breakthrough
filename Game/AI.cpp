@@ -166,10 +166,9 @@ void save_root_states(State state_of_node, vector<Node*>children_nodes, Node* pa
 		if((white&&i<7)||(!white&&i>0)){
 			if(state_of_node.get_board()[row][col]!=turn){
 				State temp=state_of_node;
-				long int value;
 				temp.set_board(i,j,'_');
 				temp.set_board(row,col,turn);
-				value=value_node(temp);
+				long int value=value_node(temp);
 				temp.switch_turn();
 				children_nodes.push_back(new Node(temp, value, parent, i, j, count));
 				//create node -> push_back into vector
@@ -212,8 +211,8 @@ vector<Node*> evaluation_function(vector<Node*> parents){
 }
 	
 
-Tree evaluation_function(State state_of_node, int depth ){
-	Node* parent_node= new Node(state_of_node, value_node(state_of_node));
+Tree evaluation_function(State current_state, int depth){
+	Node* parent_node= new Node(current_state, value_node(current_state));
 	vector<Node*> temp_vec= find_node_roots(parent_node);
 	for(int i=0; i<temp_vec.size(); i++){
 		parent_node->push_back(temp_vec[i]);
@@ -224,6 +223,8 @@ Tree evaluation_function(State state_of_node, int depth ){
 	for(int d=1; d<depth; d++){
 			depth_list.push_back(evaluation_function(depth_list[d-1]));
 	}
+	
+	return (Tree(current_state, depth, depth_list));
 	
 }
 
