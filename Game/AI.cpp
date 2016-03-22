@@ -108,15 +108,35 @@ string AI::choose_random(Game* game) {
 string AI::choose_min_max(Game* game) {
 	printf("; Choosing the maximum move based on medium difficulty level\n");
 	
+    // Check if game is over or depth level is met
+    
+    // Setup structures to find children moves and values
+    vector<int> children_values;
+    vector< pair<string, DIRECTION> > possible_moves = possible_moves(game, game.current_state);
+    pair<string, DIRECTION> best_move;
+    
+    // Quit if there are no possible moves to make
+    
+    // For each move available, find out the child moves available and their board values
+    //   If minimum, add the minimum value to children_values
+    //   If maximum, add the maximum value to children_values
+    
+    // For each child value, find the minimum or maximum value(based on if we are searching for min/max)
+    
+    // Once the best value is found, store the move as the best_move to make
+    
+    // update the game with the best move to make
+    game->update( best_move.first[0],
+                 (best_move.first[1] - '0'),
+                 best_move.second );
+
+    
 	Tree choices();
-	
-	
 }
+
 vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
-//    cout << "finding moves...1\n";
     // Figure out which player we are finding moves for
     char game_piece = state.get_turn() ? 'o' : 'x';
-//    cout << "finding moves...2\n";
     vector< pair<string, DIRECTION> > moves;
     
     for (int row = 1; row <= 8; row++) {
@@ -133,7 +153,6 @@ vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
         }
     }
     
-//    cout << "finding moves...3\n";
     return moves;
 }
 
@@ -146,10 +165,10 @@ long int value_node(State state_of_a_child){
 	for (int i=7; i>-1; i--){
 		for(int j=0; j<8; j++){
 			if(state_of_a_child.get_board()[i][j]=='o'){//check for whites
-				child_value+=pow(9.0,(i));
+				child_value += pow(9.0,(i));
 			}
 			if(state_of_a_child.get_board()[i][j]=='x'){//check for blacks
-				child_value-=pow(9.0,(7-i));
+				child_value -= pow(9.0,(7-i));
 			}
 		}
 	}
