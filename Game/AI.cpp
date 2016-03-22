@@ -146,10 +146,10 @@ long int value_node(State state_of_a_child){
 	for (int i=7; i>-1; i--){
 		for(int j=0; j<8; j++){
 			if(state_of_a_child.get_board()[i][j]=='o'){//check for whites
-				child_value+=pow(9.0,(i));
+				child_value += pow(9.0,(i));
 			}
 			if(state_of_a_child.get_board()[i][j]=='x'){//check for blacks
-				child_value-=pow(9.0,(7-i));
+				child_value -= pow(9.0,(7-i));
 			}
 		}
 	}
@@ -187,8 +187,11 @@ vector<Node*> find_node_roots(Node* parent){	//Find the roots of ONLY the curren
 	
 	for (int i=7; i>-1; i--){
 		for(int j=0; j<8; j++){
-			for(int e=-1; e<2; e++){//-1 checks for left, 0 for fwd, 1 for right
-				if(white&&j!=0&&e!=-1 || !white&&j!=7&&e!=-1 || white&&j!=7&&e!=1 || !white&&j!=0&&e!=1 ){
+			for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
+				if((white && j != 0 && e != -1) || (!white && j != 7 && e != -1)){
+					save_root_states(parent->get_state(), children_nodes, parent, white ,i,j,e);
+				}
+				if((white && j !=7 && e != 1) || (!white && j != 0 && e != 1)){
 					save_root_states(parent->get_state(), children_nodes, parent, white ,i,j,e);
 				}
 			}

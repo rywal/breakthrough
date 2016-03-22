@@ -1,16 +1,24 @@
 #include "Node.h"
 Node::Node(){}
-Node::Node(State cs, long int value, Node* pn){
-	current_state=cs;
+Node::Node(long int value, Node* pn){
+	pair<string, DIRECTION> move = std::make_pair ("START MOV", dir);
 	current_value=value;
 	parent_node=pn;
 }
 
-Node::Node(State cs, long int value, Node* pn, int i, int j, int count){
-	current_state=cs;
+Node::Node(long int value, Node* pn, int i, int j, int count){
 	current_value=value;
 	parent_node=pn;
-	int 
+	
+	DIRECTION dir;
+	if (count == -1){
+		dir == LEFT;
+	}else if (count == 0){
+		dir == FWD;
+	} else if (count == 1){
+		dir == RIGHT;
+	}
+	pair<string, DIRECTION> move = std::make_pair (to_string(i)+to_string(j), dir);
 	
 }
     
