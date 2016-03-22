@@ -18,12 +18,11 @@ Game::Game(){
     ai = new AI();
 }
 
-Game::Game(int newsockfd) {
-    display=false;
-    output_to_socket = true;
-    socketfd = newsockfd;
-    save_state();
-    ai = new AI();
+Game::Game(Game* g){
+    display = g->display;
+    output_to_socket = g->output_to_socket;
+    game_type = g->game_type;
+    ai = g->ai;
 }
 
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {

@@ -106,32 +106,55 @@ string AI::choose_random(Game* game) {
 }
 
 string AI::choose_min_max(Game* game) {
-	printf("; Choosing the maximum move based on medium difficulty level\n");
-	
-    // Check if game is over or depth level is met
+    printf("; Choosing the maximum move based on medium difficulty level\n");
     
-    // Setup structures to find children moves and values
-    vector<int> children_values;
-    vector< pair<string, DIRECTION> > possible_moves = possible_moves(game, game.current_state);
-    pair<string, DIRECTION> best_move;
+    // Create evaluation class instance with current game
+    Evaluation eval(game, true, 0, 2);
+    eval.find_max();
+    best_move = eval.best_move;
     
-    // Quit if there are no possible moves to make
+    if (best_move.first == "") {
+        printf("; No move found using minmax algorithm\n");
+        return "";
+    }
     
-    // For each move available, find out the child moves available and their board values
-    //   If minimum, add the minimum value to children_values
-    //   If maximum, add the maximum value to children_values
+    // Find string representation of best move to output to server/client
+    string text_move = best_move.first;
+    transform(text_move.begin(), text_move.end(), text_move.begin(), ::toupper);
     
-    // For each child value, find the minimum or maximum value(based on if we are searching for min/max)
+    string move_output = text_move + " ";
+    switch (best_move.second) {
+        case FWD:
+            move_output += "FWD\n";
+            break;
+            
+        case LEFT:
+            move_output += "LEFT\n";
+            break;
+            
+        case RIGHT:
+            move_output += "RIGHT\n";
+            break;
+            
+        default:
+            break;
+    }
     
-    // Once the best value is found, store the move as the best_move to make
-    
-    // update the game with the best move to make
-    game->update( best_move.first[0],
-                 (best_move.first[1] - '0'),
-                 best_move.second );
+    // Write string representation of the move to the correct place
+    if (socketfd) {
+        write(socketfd, move_output.c_str(), move_output.length());
+        cout << move_output;
+    } else {
+        cout << move_output;
+    }
 
     
-	Tree choices();
+    // Update the game with the best move to make
+    game->update( best_move.first[0],
+                 (best_move.first[1] - '0'),
+                  best_move.second );
+    
+    return move_output;
 }
 
 vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {

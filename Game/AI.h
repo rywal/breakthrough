@@ -12,6 +12,7 @@
 #include "globals.h"
 #include "Game.h"
 #include "Tree.h"
+#include "Evaluation.h"
 
 class Game;
 class State;
@@ -49,6 +50,7 @@ public:
     
     //  Find all moves that can be made with a state
     vector< pair<string, DIRECTION> > possible_moves(Game* game, State state);
+    pair<string, DIRECTION> best_move;
 };
 
 #endif /* AI_h */
