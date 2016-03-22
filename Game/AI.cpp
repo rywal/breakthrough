@@ -105,7 +105,7 @@ string AI::choose_random(Game* game) {
     return move_output;
 }
 
-string AI::choose_random(Game* game) {
+string AI::choose_min_max(Game* game) {
 	printf("; Choosing the maximum move based on medium difficulty level\n");
 	
 	Tree choices();
