@@ -262,20 +262,18 @@ vector<Node*> find_node_roots(Node new_node){	//Find the roots of ONLY the curre
 	return children_states;
 }
 
-/*Node* evaluation_function(State state_of_node, int ){
-	Node* parent_node= new Node(state_of_node, node_value_helper(state_of_node,5, 1, int value=0, 2), )
-/*Tree evaluation_function(State state_of_node, int depth_limit){
+Node* evaluation_function(State state_of_node, int depth ){
+	Node* parent_node= new Node(state_of_node, value_node(state_of_node))
 	vector<Node*> children_states = find_node_roots(state_of_node);
 	create new_tree ??
 	new_tree.create_node_w_children( children_states, values, Node* parent_node);
->>>>>>> aeb045455453b8c9d67c1c97452ca8c207587047
 	//Still need to get (a number of depths) of the nodes of nodes to a depth
-	vector<Node*>temp=fg
+	vector<Node*>temp;
 	
 	
 		}
 			
-}*/
+}
 
 //----^------^-------^----^---Testing---^----^-------^------^----//		
 
