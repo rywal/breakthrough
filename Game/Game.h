@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include "globals.h"
-#include "State.h"
+#include "Node.h"
 #include "AI.h"
 
 class AI;

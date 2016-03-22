@@ -4,13 +4,14 @@
 //  Represents a Node of a Tree of States for AI Algorithms
 //
 
-#ifndef State_h
-#define State_h
+#ifndef Node_h
+#define Node_h
 
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include "globals.h"
+#include "State.h"
 
 using namespace std;
 
@@ -33,13 +34,13 @@ public:
     //  Destructor
     ~Node(){}
     
-    void pushback(long	
+    void push_back(Node* child);	
 	void create_node_w_children(vector<State> children_states /*each state will be converted into a node*/, vector<long int> value, Node* parent_node); //Get new_depth from parent's depth
 	void create_root();
 	long int get_value();
+	State get_state();
 	int get_depth(); //Basically "return depth;"
 	bool is_leaf(); //Basically "return (children.size()==0);"
-	vector<long int> get_values(); //Basicaly "return values;"
 	//bool is_root(); //Basically "return (!parent_node);" (or if parent_node==NULL)  {Probably unnecessary}
 };
 

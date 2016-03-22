@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "globals.h"
 #include "Game.h"
+#include "Tree.h"
 
 class Game;
 class State;
