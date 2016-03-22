@@ -274,6 +274,7 @@ vector<Node*> evaluation_function(vector<Node*> parents){
 			parents[i]->push_back(children[j]);
 		}
 	}
+	return total_children;
 }
 	
 
