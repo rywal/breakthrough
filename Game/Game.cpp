@@ -264,6 +264,7 @@ vector<Node*> find_node_roots(Node* parent){	//Find the roots of ONLY the curren
     }
 	return children_nodes;
 }
+
 vector<Node*> evaluation_function(vector<Node*> parents){
 	vector<Node*> children;
 	vector<Node*> total_children;
@@ -283,9 +284,13 @@ Node* evaluation_function(State state_of_node, int depth ){
 	for(int i=0; i<temp_vec.size(); i++){
 		parent_node->push_back(temp_vec[i]);
 	}
-	for(int d=0; d<depth; d++){
-			temp_vec=evaluation_function(temp_vec);
-	}			
+	vector<vector<Node*>> depth_list;
+	depth_list.push_back(temp_vec);
+	
+	for(int d=1; d<depth; d++){
+			depth_list.push_back(evaluation_function(depth_list[d-1]));
+	}
+	
 }
 
 //----^------^-------^----^---Testing---^----^-------^------^----//		
