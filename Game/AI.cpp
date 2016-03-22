@@ -107,7 +107,9 @@ string AI::choose_random(Game* game) {
 string AI::choose_random(Game* game) {
 	printf("; Choosing the maximum move based on medium difficulty level\n");
 	
-	Tree choices (
+	Tree choices();
+	
+	
 }
 vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
 //    cout << "finding moves...1\n";

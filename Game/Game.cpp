@@ -238,7 +238,7 @@ void save_root_states(State state_of_node, vector<Node*>children_nodes, Node* pa
 				temp.set_board(row,col,turn);
 				value=value_node(temp);
 				temp.switch_turn();
-				children_nodes.push_back(new Node(temp, value, parent));
+				children_nodes.push_back(new Node(temp, value, parent, i, j, count));
 				//create node -> push_back into vector
 			}
 		}
@@ -285,7 +285,9 @@ Node* evaluation_function(State state_of_node, int depth ){
 	}
 	for(int d=0; d<depth; d++){
 			temp_vec=evaluation_function(temp_vec);
-	}			
+	}	
+	Tree new_tree(parent_node, parent_node->)
+	return parent_node;
 }
 
 //----^------^-------^----^---Testing---^----^-------^------^----//		

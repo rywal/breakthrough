@@ -6,6 +6,13 @@ Node::Node(State cs, long int value, Node* pn){
 	parent_node=pn;
 }
 
+Node::Node(State cs, long int value, Node* pn, int i, int j, int count){
+	current_state=cs;
+	current_value=value;
+	parent_node=pn;
+	int 
+	
+}
     
 void Node::push_back(Node* child){children.push_back(child);}	
 void Node::create_node_w_children(vector<State> children_states /*each state will be converted into a node*/, vector<long int> value, Node* parent_node){} //Get new_depth from parent's depth
