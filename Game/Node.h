@@ -41,6 +41,7 @@ public:
 	State get_state();
 	int get_depth(); //Basically "return depth;"
 	bool is_leaf(); //Basically "return (children.size()==0);"
+	vecotr<Node*> get_children();//Basically "return children;"
 	//bool is_root(); //Basically "return (!parent_node);" (or if parent_node==NULL)  {Probably unnecessary}
 };
 
