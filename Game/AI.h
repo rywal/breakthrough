@@ -45,6 +45,7 @@ public:
     //  Returns TRUE  if a move was found and made
     //          FALSE if a move could not be made
     string choose_random(Game* game);
+    string choose_min_max(Game* game);
     
     //  Find all moves that can be made with a state
     vector< pair<string, DIRECTION> > possible_moves(Game* game, State state);

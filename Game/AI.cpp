@@ -45,7 +45,7 @@ string AI::make_move(Game* game) {
     if (difficulty_level == EASY) {
         return choose_random( game );
     } else if(difficulty_level == MEDIUM) {
-        return choose_random( game );
+        return choose_min_max( game );
     } else if(difficulty_level == HARD) {
         return choose_random( game );
     }
@@ -104,6 +104,11 @@ string AI::choose_random(Game* game) {
     return move_output;
 }
 
+string AI::choose_random(Game* game) {
+	printf("; Choosing the maximum move based on medium difficulty level\n");
+	
+	Tree choices (
+}
 vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
 //    cout << "finding moves...1\n";
     // Figure out which player we are finding moves for
