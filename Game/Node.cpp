@@ -4,6 +4,7 @@ Node::Node(long int value, Node* pn){
 	pair<string, DIRECTION> move = std::make_pair ("START MOV", dir);
 	current_value=value;
 	parent_node=pn;
+	depth=0;
 }
 
 Node::Node(long int value, Node* pn, int i, int j, int count){

@@ -158,16 +158,16 @@ vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
 
 //----------------------------Testing----------------------------//	
 
-long int value_node(State state_of_a_child){
+long int value_node(vector<vector<char>> node_board){
 	//This gives child's value to each node state
 	//Positive numbers means better for the WHITE, negative is better for the BLACK
 	int child_value=0;	
 	for (int i=7; i>-1; i--){
 		for(int j=0; j<8; j++){
-			if(state_of_a_child.get_board()[i][j]=='o'){//check for whites
+			if(node_board[i][j]=='o'){//check for whites
 				child_value += pow(9.0,(i));
 			}
-			if(state_of_a_child.get_board()[i][j]=='x'){//check for blacks
+			if(node_board[i][j]=='x'){//check for blacks
 				child_value -= pow(9.0,(7-i));
 			}
 		}
@@ -175,51 +175,57 @@ long int value_node(State state_of_a_child){
 	return (child_value);
 }
 
-void save_root_states(State state_of_node, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count){
+/*State state_after_move(State state_of_node, int i, int j, int row, int col){
+		
+}*/
+
+void save_root_states(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth){
 	//This function saves the states of possible moves
-	if((state_of_node.get_board()[i][j]=='o' && white)||(state_of_node.get_board()[i][j]=='x' && !white)){
+	if((node_board[i][j]=='o' && white)||(node_board[i][j]=='x' && !white)){
 		char turn = white ? 'o' : 'x';
 		char n_turn = white ? 'x' : 'o';
 		int row = white ? i+1 : i-1;
 		int col = white ? j+count : j-count;
 		if((white&&i<7)||(!white&&i>0)){
-			if(state_of_node.get_board()[row][col]!=turn){
-				State temp=state_of_node;
-				temp.set_board(i,j,'_');
-				temp.set_board(row,col,turn);
-				long int value=value_node(temp);
-				temp.switch_turn();
-				children_nodes.push_back(new Node(temp, value, parent, i, j, count));
+			if(node_board[row][col]!=turn){
+				
+				node_board[i][j]='_';
+				node_board[row][col]=turn;
+				
+				Node new_node = new Node(value_node(node_board), parent, i, j, count);
+				new_node.set_children(find_node_roots(new_node, node_board, !white, max_depth));
+				
+				children_nodes.push_back(new_node);
 				//create node -> push_back into vector
 			}
 		}
 	}
 }
 
-vector<Node*> find_node_roots(Node* parent){	//Find the roots of ONLY the current node
+vector<Node*> find_node_roots(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth){	//Find the roots of ONLY the current node
 	//---Possibly defined in an above function??---//
 //	vector<State> children_states;
 //	vector<long int> values;
 	vector<Node*> children_nodes;
-	bool white = parent->get_state().get_turn();
 	//---------------------------------------------//
-	
-	for (int i=7; i>-1; i--){
-		for(int j=0; j<8; j++){
-			for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
-				if((white && j != 0 && e != -1) || (!white && j != 7 && e != -1)){
-					save_root_states(parent->get_state(), children_nodes, parent, white ,i,j,e);
-				}
-				if((white && j !=7 && e != 1) || (!white && j != 0 && e != 1)){
-					save_root_states(parent->get_state(), children_nodes, parent, white ,i,j,e);
+	if(parent.get_depth()>max_depth){
+		for (int i=7; i>-1; i--){
+			for(int j=0; j<8; j++){
+				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
+					if((white && j != 0 && e != -1) || (!white && j != 7 && e != -1)){
+						save_root_states(parent->get_state(), children_nodes, parent, white ,i,j,e, max_depth);
+					}
+					if((white && j !=7 && e != 1) || (!white && j != 0 && e != 1)){
+						save_root_states(parent->get_state(), children_nodes, parent, white ,i,j,e, max_depth);
+					}
 				}
 			}
 		}
-    }
+	}
 	return children_nodes;
 }
 
-vector<Node*> evaluation_function(vector<Node*> parents){
+vector<Node*> depth_lister(vector<Node*> parents, State current_state, int max_depth){
 	vector<Node*> children;
 	vector<Node*> total_children;
 	for(int i=0; i<parents.size(); i++){
@@ -234,8 +240,8 @@ vector<Node*> evaluation_function(vector<Node*> parents){
 	
 
 Tree evaluation_function(State current_state, int depth){
-	Node* parent_node= new Node(current_state, value_node(current_state));
-	vector<Node*> temp_vec= find_node_roots(parent_node);
+	Node* parent_node= new Node(value_node(current_state.get_board()), nullptr);
+	vector<Node*> temp_vec= find_node_roots(parent_node, current_state, current_state.get_turn(), depth);
 	for(int i=0; i<temp_vec.size(); i++){
 		parent_node->push_back(temp_vec[i]);
 	}
@@ -243,7 +249,7 @@ Tree evaluation_function(State current_state, int depth){
 	depth_list.push_back(temp_vec);
 	
 	for(int d=1; d<depth; d++){
-			depth_list.push_back(evaluation_function(depth_list[d-1]));
+			depth_list.push_back(evaluation_function(depth_list[d-1], current_state, depth));
 	}
 	
 	return (Tree(current_state, depth, depth_list));

@@ -29,7 +29,8 @@ public:
     
     //  Default Constructor
     Node();
-    Node(State cs, long int value, Node* pn=NULL); 
+    Node(long int value, Node* pn=NULL);
+	Node(long int value, Node* pn, int i, int j, int count){
 
     //  Destructor
     ~Node(){}
