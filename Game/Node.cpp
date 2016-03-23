@@ -21,6 +21,7 @@ Node::Node(long int value, Node* pn, int i, int j, int count){
 	}
 	pair<string, DIRECTION> move = std::make_pair (to_string(i)+to_string(j), dir);
 	
+	depth=pn.get_depth()+1;
 }
     
 //void Node::push_back(Node* child){children.push_back(child);}	
