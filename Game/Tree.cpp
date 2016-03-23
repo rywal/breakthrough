@@ -26,9 +26,7 @@ void Tree::display_tree(){
 	}
 }	
 Node* Tree::get_min_node(){
-	cout<<"Hello\n";
 	Node* min_node=depth_list[1][0][0];
-	cout<<"No issue\n";
 	int min=depth_list[1][0][0]->get_value();
 	for(int i=1; i<(max_depth+1); i++){
 		for(int j=0; j<depth_list[i].size(); i++){
@@ -40,7 +38,6 @@ Node* Tree::get_min_node(){
 			}
 		}		
 	}
-	cout<<"Finished\n";
 	return min_node;
 }
 

@@ -119,7 +119,6 @@ string AI::choose_min_max(Game* game) {
     printf("; Created a tree!\n");
    // new_tree.display_tree();
     pair<string, DIRECTION> best_move=new_tree.get_min_node()->get_first_move();
-    cout<<"Now we have a problem\n";
     // Find string representation of best move to output to server/client
     string text_move = best_move.first;
     transform(text_move.begin(), text_move.end(), text_move.begin(), ::toupper);
