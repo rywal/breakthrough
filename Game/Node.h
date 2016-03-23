@@ -39,7 +39,7 @@ public:
 	void set_children(vector<Node*> children_nodes);//Basically "children=children_nodes;"
 	long int get_value();
 	int get_depth();
-	vecotr<Node*> get_children();//Basically "return children;"
+	vector<Node*> get_children();//Basically "return children;"
 };
 
 

@@ -236,13 +236,13 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 			}
 		}
 	}
-	depth_list[parent.get_depth()+1].push_back(children_nodes);
+	depth_list[parent.get_depth()+1]=children_nodes);
 	return children_nodes;
 }
 
 Tree evaluation_function(State current_state, int max_depth){
 	
-	vector<vector<Node*>> depth_list;
+	vector<vector<vector<Node*>>> depth_list;
 	Node* parent_node= new Node(value_node(current_state.get_board()), nullptr);
 	parent_node.set_children(get_children(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, depth_list));
 	
