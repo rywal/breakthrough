@@ -108,15 +108,7 @@ string AI::choose_random(Game* game) {
 string AI::choose_min_max(Game* game) {
     printf("; Choosing the maximum move based on medium difficulty level\n");
     
-    // Create evaluation class instance with current game
-    Evaluation eval(game, true, 0, 2);
-    eval.find_max();
-    best_move = eval.best_move;
-    
-    if (best_move.first == "") {
-        printf("; No move found using minmax algorithm\n");
-        return "";
-    }
+    Tree 
     
     // Find string representation of best move to output to server/client
     string text_move = best_move.first;
@@ -198,7 +190,7 @@ long int value_node(vector<vector<char>> node_board){
 	return (child_value);
 }
 
-void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<Node*>> &depth_list){
+void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<vector<Node*>> &depth_list){
 	//This function saves the states of possible moves
 	if((node_board[i][j]=='o' && white)||(node_board[i][j]=='x' && !white)){
 		char turn = white ? 'o' : 'x';
@@ -219,7 +211,7 @@ void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes,
 	}
 }
 
-vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth, vector<vector<Node*>> &depth_list){	//Find the ??all?? roots of the current node
+vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth, vector<vector<vector<Node*>> &depth_list){	//Find the ??all?? roots of the current node
 	//This is recursively called to get the children vector
 	
 	vector<Node*> children_nodes;
@@ -236,7 +228,7 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 			}
 		}
 	}
-	depth_list[parent.get_depth()+1]=children_nodes);
+	depth_list[parent.get_depth()+1]=children_nodes;
 	return children_nodes;
 }
 

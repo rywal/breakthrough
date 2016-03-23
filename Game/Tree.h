@@ -24,16 +24,17 @@ public:
     
     //  Default Constructor
     Tree();
-    Tree(Node* root_node, int max_depth, vector<vector<Node*>> depth_list);
+    Tree(Node* rn, int md, vector<vector<vector<Node*>>> dlist);
 
     //  Destructor
     ~Tree(){}
     	
-	Node get_tree(); //Not sure on the data type for this
+	Node* get_tree(); //Not sure on the data type for this
 	void add_node_w_children(vector<State> children, vector<long int> value, Node* parent_node/*Or just Node??*/); //Add new_node to node_list
 	//void add_node_w_children(Node new_node);//Not sure which one should be implemented??
-	Node get_node(int depth/*SOMETHING ELSE IS NEEDED TOO*/);
+	Node* get_node(int depth/*SOMETHING ELSE IS NEEDED TOO*/);
 	vector<Node*> get_root_children(); //Basically "return root_node.get_children()"
+	Node* get_min_node();
 	
 };
 
