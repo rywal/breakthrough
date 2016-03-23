@@ -23,7 +23,7 @@ Node::Node(long int value, Node* pn, int i, int j, int count){
 	
 }
     
-void Node::push_back(Node* child){children.push_back(child);}	
+//void Node::push_back(Node* child){children.push_back(child);}	
 void Node::create_node_w_children(vector<State> children_states /*each state will be converted into a node*/, vector<long int> value, Node* parent_node){} //Get new_depth from parent's depth
 void Node::create_root(){}
 long int Node::get_value(){return current_value;}

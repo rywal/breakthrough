@@ -225,7 +225,7 @@ void save_root_states(vector<vector<char>> node_board, vector<Node*>children_nod
 	}
 }
 
-vector<Node*> find_node_roots(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth){	//Find the roots of ONLY the current node
+vector<Node*> find_node_roots(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth){	//Find the ??all?? roots of the current node
 	//---Possibly defined in an above function??---//
 //	vector<State> children_states;
 //	vector<long int> values;
@@ -236,10 +236,10 @@ vector<Node*> find_node_roots(Node* parent, vector<vector<char>> parent_board, b
 			for(int j=0; j<8; j++){
 				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
 					if((white && j != 0 && e != -1) || (!white && j != 7 && e != -1)){
-						save_root_states(parent->get_state(), children_nodes, parent, white ,i,j,e, max_depth);
+						save_root_states(parent_board, children_nodes, parent, white ,i,j,e, max_depth);
 					}
 					if((white && j !=7 && e != 1) || (!white && j != 0 && e != 1)){
-						save_root_states(parent->get_state(), children_nodes, parent, white ,i,j,e, max_depth);
+						save_root_states(parent_board, children_nodes, parent, white ,i,j,e, max_depth);
 					}
 				}
 			}
@@ -248,11 +248,11 @@ vector<Node*> find_node_roots(Node* parent, vector<vector<char>> parent_board, b
 	return children_nodes;
 }
 
-vector<Node*> depth_lister(vector<Node*> parents, State current_state, int max_depth){
+vector<Node*> children_at_depth(vector<Node*> parents, bool white, int max_depth){
 	vector<Node*> children;
 	vector<Node*> total_children;
 	for(int i=0; i<parents.size(); i++){
-		children= find_node_roots(parents[i]);
+		children= find_node_roots(parents[i], parents[i].get_node_board(), /*parent_boards[i] /*CURRENT BOARD!! ,*/ white, max_depth);
 		total_children.insert(total_children.end(), children.begin(), children.end());
 		for(int j=0; j<children.size(); j++){
 			parents[i]->push_back(children[j]);
@@ -260,23 +260,23 @@ vector<Node*> depth_lister(vector<Node*> parents, State current_state, int max_d
 	}
 	return total_children;
 }
-	
 
 Tree evaluation_function(State current_state, int depth){
 	Node* parent_node= new Node(value_node(current_state.get_board()), nullptr);
-	vector<Node*> temp_vec= find_node_roots(parent_node, current_state, current_state.get_turn(), depth);
-	for(int i=0; i<temp_vec.size(); i++){
-		parent_node->push_back(temp_vec[i]);
-	}
-	vector<vector<Node*>> depth_list;
-	depth_list.push_back(temp_vec);
+	//vector<Node*> depth_one_children= find_node_roots(parent_node, current_state.get_board(), current_state.get_turn(), depth);
+
+	parent_node.set_children(find_node_roots(parent_node, current_state.get_board(), current_state.get_turn(), depth));
 	
-	for(int d=1; d<depth; d++){
-			depth_list.push_back(evaluation_function(depth_list[d-1], current_state, depth));
-	}
+	//vector<vector<Node*>> depth_list;
+	//depth_list.push_back(depth_one_children);
+	
+	//for(int d=1; d<depth; d++){
+	//		depth_list.push_back(children_at_depth(depth_list[d-1], ((current_state.get_turn()+1)%2!=0) /*Alternate Turns for each depth*/, depth));
+	//}
+	
+	
 	
 	return (Tree(current_state, depth, depth_list));
-	
 }
 
 //----^------^-------^----^---Testing---^----^-------^------^----//	
