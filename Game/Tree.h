@@ -25,7 +25,6 @@ public:
     //  Default Constructor
     Tree();
     Tree(Node* rn, int md, vector<vector<vector<Node*>>> dlist);
-
     //  Destructor
     ~Tree(){}
     	
@@ -36,6 +35,7 @@ public:
 	vector<Node*> get_root_children(); //Basically "return root_node.get_children()"
 	Node* get_min_node();
 	Node* get_max_node();
+	void display_tree();
 	
 };
 

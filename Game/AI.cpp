@@ -53,11 +53,16 @@ string AI::make_move(Game* game) {
         return choose_random( game );
     }
     
-    return "";
+    return "; No move made";
 }
 
 string AI::choose_random(Game* game) {
     printf("; Choosing a random move based on easy difficulty level\n");
+    
+    if (game->game_over()) {
+        game->who_won();
+        return "; Game Over";
+    }
     
     // Find all possible moves
     vector< pair<string, DIRECTION> > all_possible_moves = possible_moves(game, game->current_state);
@@ -110,8 +115,11 @@ string AI::choose_random(Game* game) {
 string AI::choose_min_max(Game* game) {
     printf("; Choosing the maximum move based on medium difficulty level\n");
     
-    Tree new_tree=evaluation_function(game->current_state, 3);
+    Tree new_tree=evaluation_function(game->current_state, 1);
+    printf("; Created a tree!\n");
+    new_tree.display_tree();
     pair<string, DIRECTION> best_move=new_tree.get_min_node()->get_first_move();
+    cout<<"Now we have a problem\n";
     // Find string representation of best move to output to server/client
     string text_move = best_move.first;
     transform(text_move.begin(), text_move.end(), text_move.begin(), ::toupper);
@@ -194,6 +202,7 @@ long int value_node(vector<vector<char>> node_board){
 
 void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<vector<Node*>>> &depth_list){
 	//This function saves the states of possible moves
+	//cout<<"i="<<i<<" : j="<<j<<" : count="<<count<<'\n';
 	if((node_board[i][j]=='o' && white)||(node_board[i][j]=='x' && !white)){
 		char turn = white ? 'o' : 'x';
 		int row = white ? i+1 : i-1;
@@ -205,8 +214,9 @@ void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes,
 				node_board[row][col]=turn;
 				//--Create the new Node
 				Node* new_node = new Node(value_node(node_board), parent, i, j, count);
-				new_node->set_children(get_children(new_node, node_board, !white, max_depth, depth_list));
-				//--Push back the whole Node
+				if(new_node->get_depth()<max_depth){
+					new_node->set_children(get_children(new_node, node_board, !white, max_depth, depth_list));
+				}//--Push back the whole Node
 				children_nodes.push_back(new_node);
 			}
 		}
@@ -221,27 +231,44 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 		for (int i=7; i>-1; i--){
 			for(int j=0; j<8; j++){
 				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
-					if((white && j != 0 && e != -1) || (!white && j != 7 && e != -1)){
+					if(white &&  (!(j == 0 && e == -1) && !(j == 7 && e == 1))){
+					//	cout<<"white: "<<white<<'\n';
+						cout<<"i="<<i<<" : j="<<j<<" : e="<<e<<'\n';
 						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
-					}else if((white && j !=7 && e != 1) || (!white && j != 0 && e != 1)){ //For formating
+					}else if(!white && (!(j ==7 && e == -1) && !(j == 0 && e == 1))){ //For formating
+						cout<<"white: "<<white<<'\n';
+						cout<<"i="<<i<<" : j="<<j<<" : e="<<e<<'\n';
 						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
 					}
 				}
 			}
 		}
 	}
-	depth_list[parent->get_depth()+1].push_back(children_nodes);
+	if(parent->get_depth()!=max_depth){
+		cout<<"Parent depth: "<<parent->get_depth()<<" \n";
+		depth_list[parent->get_depth()+1].push_back(children_nodes);
+	}
 	return children_nodes;
 }
 
 Tree evaluation_function(State current_state, int max_depth){
 	
 	vector<vector<vector<Node*>>> depth_list;
+	vector<vector<Node*>> filler;
 	
+	for(int i=0; i<(max_depth+2); i++)
+		depth_list.push_back(filler);
 	Node* parent_node= new Node(value_node(current_state.get_board()), nullptr);
-	parent_node->set_children(get_children(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, depth_list));
+
+	vector<Node*>parent_vec;
+	parent_vec.push_back(parent_node);
 	
-	return (/*new??*/ Tree(parent_node, max_depth, depth_list));
+	depth_list[0].push_back(parent_vec);
+	parent_node->set_children(get_children(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, depth_list));
+
+	Tree tree(parent_node, max_depth, depth_list);
+	tree.display_tree();
+	return tree;
 }
 
 //----^------^-------^----^---Testing---^----^-------^------^----//	

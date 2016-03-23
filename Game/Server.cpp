@@ -266,18 +266,8 @@ bool do_command(vector<string> command_line){
         if(command_line.size()==2){
             if(is_difficulty(command_line[1].c_str())){
                 socket_output("OK\n");
-                socket_output(command_line[1].c_str());
-                if(command_line[1].c_str()=="easy"){
-                	socket_output(command_line[1].c_str());
-                    new_game.set_game_type(HA, EASY);
-				}
-                else if(command_line[1].c_str()=="medium"){
-                	new_game.set_game_type(HA, MEDIUM);
-				}
-                else if(command_line[1].c_str()=="hard"){
-                	new_game.set_game_type(HA, HARD);
-                }
-            } else{
+				new_game.set_game_type(HA, to_diff(command_line[1]));
+         } else{
                 socket_output("; Not a valid difficulty\nILLEGAL\n");
                 sprintf(out_buffer, "%s  is not a difficulty", command_line[1].c_str());
                 output_function(4);
@@ -377,6 +367,9 @@ bool do_command(vector<string> command_line){
                             }
                             
                             continue_playing = do_command(ccommand_line);
+                            if (new_game.game_over()) {
+                                break;
+                            }
                             
                             current_move = new_game.ai->make_move( &new_game );
                             cout << current_move << "\n";
@@ -484,7 +477,7 @@ int main(int argc, char *argv[]){
     if (argv[1]) {
         portno = atoi(argv[1]);
     } else {
-        portno = 5150;
+        portno = 5155;
     }
     
     serv_addr.sin_family = AF_INET;

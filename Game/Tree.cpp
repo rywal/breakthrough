@@ -13,10 +13,24 @@ Node* Tree::get_tree_root(){return root_node;}; //Not sure on the data type for 
 Node* Tree::get_node(int depth, int parent_index, int child_index){return depth_list[depth][parent_index][child_index];}
 vector<Node*> Tree::get_root_children(){return root_node->get_children();} //Basically "return root_node.get_children()"
 
+void Tree::display_tree(){
+	cout<<max_depth<<'\n';
+	for(int i=1; i<(max_depth+1); i++){
+		for(int j=0; j<depth_list[i].size(); i++){
+			for(int k=0; k<depth_list[i][j].size(); k++){
+				cout<<'x';
+			}
+			cout<<' ';
+		}
+		cout<<'\n';
+	}
+}	
 Node* Tree::get_min_node(){
+	cout<<"Hello\n";
 	Node* min_node=depth_list[1][0][0];
+	cout<<"No issue\n";
 	int min=depth_list[1][0][0]->get_value();
-	for(int i=1; i<max_depth; i++){
+	for(int i=1; i<(max_depth+1); i++){
 		for(int j=0; j<depth_list[i].size(); i++){
 			for(int k=0; k<depth_list[i][j].size(); k++){
 				if (min>depth_list[i][j][k]->get_value()){
@@ -26,13 +40,14 @@ Node* Tree::get_min_node(){
 			}
 		}		
 	}
+	cout<<"Finished\n";
 	return min_node;
 }
 
 Node* Tree::get_max_node(){
 	Node* max_node=depth_list[1][0][0];
 	int max=depth_list[1][0][0]->get_value();
-	for(int i=1; i<max_depth; i++){
+	for(int i=1; i<(max_depth+1); i++){
 		for(int j=0; j<depth_list[i].size(); i++){
 			for(int k=0; k<depth_list[i][j].size(); k++){
 				if (max<depth_list[i][j][k]->get_value()){
