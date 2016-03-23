@@ -182,7 +182,7 @@ vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
 //----------------------------Testing----------------------------//	
 
 long int value_node(vector<vector<char>> node_board){
-	//This gives child's value to each node state
+	//This gives child's value to each node
 	//Positive numbers means better for the WHITE, negative is better for the BLACK
 	int child_value=0;	
 	for (int i=7; i>-1; i--){
@@ -198,47 +198,38 @@ long int value_node(vector<vector<char>> node_board){
 	return (child_value);
 }
 
-/*State state_after_move(State state_of_node, int i, int j, int row, int col){
-		
-}*/
-
 void save_root_states(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth){
 	//This function saves the states of possible moves
 	if((node_board[i][j]=='o' && white)||(node_board[i][j]=='x' && !white)){
 		char turn = white ? 'o' : 'x';
-		char n_turn = white ? 'x' : 'o';
 		int row = white ? i+1 : i-1;
-		int col = white ? j+count : j-count;
+		int col = white ? j+count : j-count; //Direction will be the same for both turns
 		if((white&&i<7)||(!white&&i>0)){
 			if(node_board[row][col]!=turn){
-				
+				//--Change the new board
 				node_board[i][j]='_';
 				node_board[row][col]=turn;
-				
+				//--Create the new Node
 				Node new_node = new Node(value_node(node_board), parent, i, j, count);
 				new_node.set_children(find_node_roots(new_node, node_board, !white, max_depth));
-				
+				//--Push back the whole Node
 				children_nodes.push_back(new_node);
-				//create node -> push_back into vector
 			}
 		}
 	}
 }
 
 vector<Node*> find_node_roots(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth){	//Find the ??all?? roots of the current node
-	//---Possibly defined in an above function??---//
-//	vector<State> children_states;
-//	vector<long int> values;
+	//This is recursively called to 
+	
 	vector<Node*> children_nodes;
-	//---------------------------------------------//
 	if(parent.get_depth()>max_depth){
 		for (int i=7; i>-1; i--){
 			for(int j=0; j<8; j++){
 				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
 					if((white && j != 0 && e != -1) || (!white && j != 7 && e != -1)){
 						save_root_states(parent_board, children_nodes, parent, white ,i,j,e, max_depth);
-					}
-					if((white && j !=7 && e != 1) || (!white && j != 0 && e != 1)){
+					}else if((white && j !=7 && e != 1) || (!white && j != 0 && e != 1)){ //For formating
 						save_root_states(parent_board, children_nodes, parent, white ,i,j,e, max_depth);
 					}
 				}
@@ -252,7 +243,11 @@ vector<Node*> children_at_depth(vector<Node*> parents, bool white, int max_depth
 	vector<Node*> children;
 	vector<Node*> total_children;
 	for(int i=0; i<parents.size(); i++){
-		children= find_node_roots(parents[i], parents[i].get_node_board(), /*parent_boards[i] /*CURRENT BOARD!! ,*/ white, max_depth);
+		
+		//-------THIS LINE NO LONGER WORKS, find_node_roots now uses recursion--------//
+		children= find_node_roots(parents[i], parents[i].get_node_board() /*parent_boards[i] //CURRENT BOARD!! ,*/, white, max_depth);
+		//-------THIS LINE NO LONGER WORKS, find_node_roots now uses recursion--------//
+		
 		total_children.insert(total_children.end(), children.begin(), children.end());
 		for(int j=0; j<children.size(); j++){
 			parents[i]->push_back(children[j]);
@@ -261,7 +256,7 @@ vector<Node*> children_at_depth(vector<Node*> parents, bool white, int max_depth
 	return total_children;
 }
 
-Tree evaluation_function(State current_state, int depth){
+Tree evaluation_function(State current_state, int max_depth){
 	Node* parent_node= new Node(value_node(current_state.get_board()), nullptr);
 	//vector<Node*> depth_one_children= find_node_roots(parent_node, current_state.get_board(), current_state.get_turn(), depth);
 
@@ -274,9 +269,7 @@ Tree evaluation_function(State current_state, int depth){
 	//		depth_list.push_back(children_at_depth(depth_list[d-1], ((current_state.get_turn()+1)%2!=0) /*Alternate Turns for each depth*/, depth));
 	//}
 	
-	
-	
-	return (Tree(current_state, depth, depth_list));
+	return (/*new??*/ Tree(parent_node, max_depth/*, depth_list*/));
 }
 
 //----^------^-------^----^---Testing---^----^-------^------^----//	
