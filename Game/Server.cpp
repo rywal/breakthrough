@@ -266,7 +266,9 @@ bool do_command(vector<string> command_line){
         if(command_line.size()==2){
             if(is_difficulty(command_line[1].c_str())){
                 socket_output("OK\n");
+                socket_output(command_line[1].c_str());
                 if(command_line[1].c_str()=="easy"){
+                	socket_output(command_line[1].c_str());
                     new_game.set_game_type(HA, EASY);
 				}
                 else if(command_line[1].c_str()=="medium"){
@@ -482,7 +484,7 @@ int main(int argc, char *argv[]){
     if (argv[1]) {
         portno = atoi(argv[1]);
     } else {
-        portno = 5155;
+        portno = 5150;
     }
     
     serv_addr.sin_family = AF_INET;
