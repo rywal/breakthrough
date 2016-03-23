@@ -26,4 +26,17 @@ Node::Node(long int value, Node* pn, int i, int j, int count){
 void set_children(vector<Node*> children_nodes){children=children_nodes;}
 long int Node::get_value(){return current_value;}
 int Node::get_depth(){return depth;}
-vector<Node*> get_children(){return children;}
+vector<Node*> Node::get_children(){return children;}
+pair<string, DIRECTION> Node::get_move(){return move;}
+pair<string, DIRECTION> get_first_move(){
+	if(depth==0){
+		break;
+	}
+	else if(depth==1){
+		return move;
+	}
+	else{
+		return parent_node->get_first_move();
+	}
+}
+
