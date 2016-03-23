@@ -38,12 +38,12 @@ public:
     ~Node(){}
     
     //void push_back(Node* child);
-	void set_children(vector<Node*> children);
+	void set_children(vector<Node*> children_nodes);//Basically "children=children_nodes;"
 	void create_node_w_children(vector<State> children_states /*each state will be converted into a node*/, vector<long int> value, Node* parent_node); //Get new_depth from parent's depth
 	void create_root();
 	long int get_value();
 	State get_state();
-	int get_depth(); //Basically "return depth;"
+	int get_depth();
 	bool is_leaf(); //Basically "return (children.size()==0);"
 	vecotr<Node*> get_children();//Basically "return children;"
 	vector<vector<char>> get_node_board(); // Basically "return node_board;"
