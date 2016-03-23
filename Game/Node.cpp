@@ -1,7 +1,6 @@
 #include "Node.h"
 Node::Node(){}
 Node::Node(long int value, Node* pn){
-	pair<string, DIRECTION> move = std::make_pair ("START MOV", dir);
 	current_value=value;
 	parent_node=pn;
 	depth=0;
@@ -24,10 +23,7 @@ Node::Node(long int value, Node* pn, int i, int j, int count){
 	depth=pn.get_depth()+1;
 }
     
-//void Node::push_back(Node* child){children.push_back(child);}	
-void Node::create_node_w_children(vector<State> children_states /*each state will be converted into a node*/, vector<long int> value, Node* parent_node){} //Get new_depth from parent's depth
-void Node::create_root(){}
+void set_children(vector<Node*> children_nodes){children=children_nodes;}
 long int Node::get_value(){return current_value;}
-State Node::get_state(){return current_state;}
-int Node::get_depth(){return depth;} //Basically "return depth;"
-bool Node::is_leaf(){return children.size()==0;}//Basically "return (children.size()==0);"
+int Node::get_depth(){return depth;}
+vector<Node*> get_children(){return children;}

@@ -17,7 +17,7 @@ private:
 
 Node* root_node; //Not sure on the data type for this? (Also this should be the CURRENT STATE'S NODE)
 //vector<Node*> node_list; //Add for quick traversal?
-vector<vector<Node*>> depth_list; //To keep track of all children of a depth
+vector<vector<vector<Node*>>> depth_list; //To keep track of all children of a depth
 int max_depth;
     
 public:
