@@ -268,7 +268,7 @@ Tree evaluation_function(State current_state, int max_depth){
 	depth_list.push_back(depth_one_children);
 	
 	for(int d=1; d<depth; d++){
-			depth_list.push_back(children_at_depth(depth_list[d-1], ((current_state.get_turn()+1)%2!=0) /*Alternate Turns for each depth*/, depth));
+			depth_list.push_back(children_at_depth(depth_list[d-1], ((current_state.get_turn()+1)%2!=0) /*Alternate Turns for each depth*/, max_depth));
 	}
 	
 	return (/*new??*/ Tree(parent_node, max_depth/*, depth_list*/));
