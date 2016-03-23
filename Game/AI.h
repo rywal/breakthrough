@@ -12,7 +12,6 @@
 #include "globals.h"
 #include "Game.h"
 #include "Tree.h"
-#include "Evaluation.h"
 
 class Game;
 class State;

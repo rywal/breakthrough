@@ -1,3 +1,5 @@
+#include "Tree.h"
+
 Tree::Tree();
 Tree::Tree(Node* rn, int md, vector<vector<Node*>> dlist){
 	root_node=rn;

@@ -1,5 +1,7 @@
 #include "Node.h"
+
 Node::Node(){}
+
 Node::Node(long int value, Node* pn){
 	current_value=value;
 	parent_node=pn;
@@ -20,10 +22,10 @@ Node::Node(long int value, Node* pn, int i, int j, int count){
 	}
 	pair<string, DIRECTION> move = std::make_pair (to_string(i)+to_string(j), dir);
 	
-	depth=pn.get_depth()+1;
+	depth=pn->get_depth()+1;
 }
     
-void set_children(vector<Node*> children_nodes){children=children_nodes;}
+void Node::set_children(vector<Node*> children_nodes){children=children_nodes;}
 long int Node::get_value(){return current_value;}
 int Node::get_depth(){return depth;}
 vector<Node*> Node::get_children(){return children;}

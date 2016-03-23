@@ -4,8 +4,8 @@
 //  Represents the Tree of States for AI Algorithms
 //  Represented as a sort of linked list with vector traversal??
 
-#ifndef State_h
-#define State_h
+#ifndef Tree_h
+#define Tree_h
 
 #include "Node.h"
 

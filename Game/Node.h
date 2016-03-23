@@ -31,7 +31,7 @@ public:
     //  Default Constructor
     Node();
     Node(long int value, Node* pn=NULL);
-	Node(long int value, Node* pn, int i, int j, int count){
+	Node(long int value, Node* pn, int i, int j, int count);
 
     //  Destructor
     ~Node(){}

@@ -41,7 +41,7 @@ public:
     
     // Constructors and Destructor
     Game();
-    Game(const Game &g);
+    Game(Game *g);
     Game(int newsockfd);
     ~Game(){}
     

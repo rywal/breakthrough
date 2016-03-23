@@ -108,7 +108,6 @@ string AI::choose_random(Game* game) {
 string AI::choose_min_max(Game* game) {
     printf("; Choosing the maximum move based on medium difficulty level\n");
     
-    Tree 
     
     // Find string representation of best move to output to server/client
     string text_move = best_move.first;
@@ -172,7 +171,7 @@ vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
 }
 
 //----------------------------Testing----------------------------//	
-
+vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth, vector<vector<vector<Node*>>> &depth_list);
 long int value_node(vector<vector<char>> node_board){
 	//This gives child's value to each node
 	//Positive numbers means better for the WHITE, negative is better for the BLACK
@@ -190,7 +189,7 @@ long int value_node(vector<vector<char>> node_board){
 	return (child_value);
 }
 
-void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<vector<Node*>> &depth_list){
+void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<vector<Node*>>> &depth_list){
 	//This function saves the states of possible moves
 	if((node_board[i][j]=='o' && white)||(node_board[i][j]=='x' && !white)){
 		char turn = white ? 'o' : 'x';
@@ -202,8 +201,8 @@ void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes,
 				node_board[i][j]='_';
 				node_board[row][col]=turn;
 				//--Create the new Node
-				Node new_node = new Node(value_node(node_board), parent, i, j, count);
-				new_node.set_children(get_children(new_node, node_board, !white, max_depth, depth_list));
+				Node* new_node = new Node(value_node(node_board), parent, i, j, count);
+				new_node->set_children(get_children(new_node, node_board, !white, max_depth, depth_list));
 				//--Push back the whole Node
 				children_nodes.push_back(new_node);
 			}
@@ -211,11 +210,11 @@ void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes,
 	}
 }
 
-vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth, vector<vector<vector<Node*>> &depth_list){	//Find the ??all?? roots of the current node
+vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth, vector<vector<vector<Node*>>> &depth_list){	//Find the ??all?? roots of the current node
 	//This is recursively called to get the children vector
 	
 	vector<Node*> children_nodes;
-	if(parent.get_depth() < max_depth){
+	if(parent->get_depth() < max_depth){
 		for (int i=7; i>-1; i--){
 			for(int j=0; j<8; j++){
 				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
@@ -228,15 +227,16 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 			}
 		}
 	}
-	depth_list[parent.get_depth()+1]=children_nodes;
+	depth_list[parent->get_depth()+1].push_back(children_nodes);
 	return children_nodes;
 }
 
 Tree evaluation_function(State current_state, int max_depth){
 	
 	vector<vector<vector<Node*>>> depth_list;
+	
 	Node* parent_node= new Node(value_node(current_state.get_board()), nullptr);
-	parent_node.set_children(get_children(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, depth_list));
+	parent_node->set_children(get_children(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, depth_list));
 	
 	return (/*new??*/ Tree(parent_node, max_depth, depth_list));
 }
