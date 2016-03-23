@@ -35,6 +35,7 @@ public:
 	Node* get_node(int depth, int parent_index, int child_index);
 	vector<Node*> get_root_children(); //Basically "return root_node.get_children()"
 	Node* get_min_node();
+	Node* get_max_node();
 	
 };
 
