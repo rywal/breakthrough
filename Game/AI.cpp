@@ -200,7 +200,7 @@ long int value_node(vector<vector<char>> node_board){
 	return (child_value);
 }
 
-void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<vector<Node*>>> &depth_list){
+void save_children(vector<vector<char>> node_board, vector<Node*> &children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<vector<Node*>>> &depth_list){
 	//This function saves the states of possible moves
 	//cout<<"i="<<i<<" : j="<<j<<" : count="<<count<<'\n';
 	if((node_board[i][j]=='o' && white)||(node_board[i][j]=='x' && !white)){

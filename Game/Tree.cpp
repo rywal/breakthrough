@@ -15,7 +15,7 @@ vector<Node*> Tree::get_root_children(){return root_node->get_children();} //Bas
 
 void Tree::display_tree(){
 	cout<<max_depth<<'\n';
-	for(int i=1; i<(max_depth+1); i++){
+	for(int i=0; i<(max_depth+1); i++){
 		for(int j=0; j<depth_list[i].size(); i++){
 			for(int k=0; k<depth_list[i][j].size(); k++){
 				cout<<'x';
