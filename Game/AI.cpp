@@ -117,7 +117,7 @@ string AI::choose_min_max(Game* game) {
     
     Tree new_tree=evaluation_function(game->current_state, 1);
     printf("; Created a tree!\n");
-    new_tree.display_tree();
+   // new_tree.display_tree();
     pair<string, DIRECTION> best_move=new_tree.get_min_node()->get_first_move();
     cout<<"Now we have a problem\n";
     // Find string representation of best move to output to server/client
@@ -232,12 +232,8 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 			for(int j=0; j<8; j++){
 				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
 					if(white &&  (!(j == 0 && e == -1) && !(j == 7 && e == 1))){
-					//	cout<<"white: "<<white<<'\n';
-						cout<<"i="<<i<<" : j="<<j<<" : e="<<e<<'\n';
 						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
 					}else if(!white && (!(j ==7 && e == -1) && !(j == 0 && e == 1))){ //For formating
-						cout<<"white: "<<white<<'\n';
-						cout<<"i="<<i<<" : j="<<j<<" : e="<<e<<'\n';
 						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
 					}
 				}
@@ -267,7 +263,7 @@ Tree evaluation_function(State current_state, int max_depth){
 	parent_node->set_children(get_children(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, depth_list));
 
 	Tree tree(parent_node, max_depth, depth_list);
-	tree.display_tree();
+	//tree.display_tree();
 	return tree;
 }
 
