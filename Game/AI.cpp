@@ -198,7 +198,7 @@ long int value_node(vector<vector<char>> node_board){
 	return (child_value);
 }
 
-void save_root_states(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<Node*>> &depth_list){
+void save_children(vector<vector<char>> node_board, vector<Node*>children_nodes, Node* parent, bool white/*or not*/, int i, int j, int count, int max_depth, vector<vector<Node*>> &depth_list){
 	//This function saves the states of possible moves
 	if((node_board[i][j]=='o' && white)||(node_board[i][j]=='x' && !white)){
 		char turn = white ? 'o' : 'x';
@@ -211,8 +211,7 @@ void save_root_states(vector<vector<char>> node_board, vector<Node*>children_nod
 				node_board[row][col]=turn;
 				//--Create the new Node
 				Node new_node = new Node(value_node(node_board), parent, i, j, count);
-				new_node.set_children(find_node_roots(new_node, node_board, !white, max_depth, depth_list));
-				
+				new_node.set_children(get_children(new_node, node_board, !white, max_depth, depth_list));
 				//--Push back the whole Node
 				children_nodes.push_back(new_node);
 			}
@@ -220,8 +219,8 @@ void save_root_states(vector<vector<char>> node_board, vector<Node*>children_nod
 	}
 }
 
-vector<Node*> find_node_roots(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth, vector<vector<Node*>> &depth_list){	//Find the ??all?? roots of the current node
-	//This is recursively called to 
+vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool white, int max_depth, vector<vector<Node*>> &depth_list){	//Find the ??all?? roots of the current node
+	//This is recursively called to get the children vector
 	
 	vector<Node*> children_nodes;
 	if(parent.get_depth() < max_depth){
@@ -229,9 +228,9 @@ vector<Node*> find_node_roots(Node* parent, vector<vector<char>> parent_board, b
 			for(int j=0; j<8; j++){
 				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
 					if((white && j != 0 && e != -1) || (!white && j != 7 && e != -1)){
-						save_root_states(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
+						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
 					}else if((white && j !=7 && e != 1) || (!white && j != 0 && e != 1)){ //For formating
-						save_root_states(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
+						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
 					}
 				}
 			}
@@ -245,10 +244,9 @@ Tree evaluation_function(State current_state, int max_depth){
 	
 	vector<vector<Node*>> depth_list;
 	Node* parent_node= new Node(value_node(current_state.get_board()), nullptr);
-	parent_node.set_children(find_node_roots(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, depth_list));
+	parent_node.set_children(get_children(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, depth_list));
 	
-	
-	return (/*new??*/ Tree(parent_node, max_depth/*, depth_list*/));
+	return (/*new??*/ Tree(parent_node, max_depth, depth_list));
 }
 
 //----^------^-------^----^---Testing---^----^-------^------^----//	
