@@ -266,7 +266,7 @@ bool do_command(vector<string> command_line){
         if(command_line.size()==2){
             if(is_difficulty(command_line[1].c_str())){
                 socket_output("OK\n");
-                new_game.set_game_type(HA, EASY);
+                new_game.set_game_type(HA, to_diff(command_line[1]));
             } else{
                 socket_output("; Not a valid difficulty\nILLEGAL\n");
                 sprintf(out_buffer, "%s  is not a difficulty", command_line[1].c_str());
@@ -367,6 +367,9 @@ bool do_command(vector<string> command_line){
                             }
                             
                             continue_playing = do_command(ccommand_line);
+                            if (new_game.game_over()) {
+                                break;
+                            }
                             
                             current_move = new_game.ai->make_move( &new_game );
                             cout << current_move << "\n";

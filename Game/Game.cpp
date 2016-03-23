@@ -110,6 +110,10 @@ bool Game::valid_move(int row, char column, DIRECTION d){
 
 State Game::update(char column, int row, DIRECTION d){
 	State temp;
+    if (game_over()) {
+        return temp;
+    }
+    
 	if(valid_move(row, column, d)){
 		current_state.set_board(row-1,column-'a', '_');
 		if(current_state.get_turn()){
@@ -233,12 +237,14 @@ bool Game::termination_check(){
 	//Checking for x's on the bottom row
 	for(int j=0; j<8; j++){
 		if (current_state.get_board()[0][j]=='x'){
+            who_won();
 			return true;
 		}
 	}
 	
 	for(int j=0; j<8; j++){
-		if (current_state.get_board()[7][j]=='o'){
+        if (current_state.get_board()[7][j]=='o'){
+            who_won();
 			return true;
 		}
 	} 

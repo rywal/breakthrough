@@ -51,11 +51,16 @@ string AI::make_move(Game* game) {
         return choose_random( game );
     }
     
-    return "";
+    return "; No move made";
 }
 
 string AI::choose_random(Game* game) {
     printf("; Choosing a random move based on easy difficulty level\n");
+    
+    if (game->game_over()) {
+        game->who_won();
+        return "; Game Over";
+    }
     
     // Find all possible moves
     vector< pair<string, DIRECTION> > all_possible_moves = possible_moves(game, game->current_state);
