@@ -25,6 +25,15 @@ Game::Game(Game* g){
     ai = g->ai;
 }
 
+Game::Game(int newsockfd){
+	display=false;
+    output_to_socket = true;
+    game_type = HA;
+    save_state();
+    ai = new AI();
+	socketfd=newsockfd;
+}
+
 void Game::set_game_type(GAMETYPE g, DIFFICULTY d) {
     
     game_type = g;

@@ -29,10 +29,10 @@ public:
     //  Destructor
     ~Tree(){}
     	
-	Node* get_tree(); //Not sure on the data type for this
-	void add_node_w_children(vector<State> children, vector<long int> value, Node* parent_node/*Or just Node??*/); //Add new_node to node_list
+	Node* get_tree_root(); //Not sure on the data type for this
+//	void add_node_w_children(vector<State> children, vector<long int> value, Node* parent_node/*Or just Node??*/); //Add new_node to node_list
 	//void add_node_w_children(Node new_node);//Not sure which one should be implemented??
-	Node* get_node(int depth/*SOMETHING ELSE IS NEEDED TOO*/);
+	Node* get_node(int depth, int parent_index, int child_index);
 	vector<Node*> get_root_children(); //Basically "return root_node.get_children()"
 	Node* get_min_node();
 	

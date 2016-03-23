@@ -41,6 +41,7 @@ public:
 	int get_depth();
 	vector<Node*> get_children();//Basically "return children;"
 	pair<string, DIRECTION> get_move();
+	pair<string, DIRECTION> get_first_move();
 };
 
 
