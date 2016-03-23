@@ -260,11 +260,10 @@ vector<Node*> children_at_depth(vector<Node*> parents, bool white, int max_depth
 
 Tree evaluation_function(State current_state, int max_depth){
 	Node* parent_node= new Node(value_node(current_state.get_board()), nullptr);
-	//vector<Node*> depth_one_children= find_node_roots(parent_node, current_state.get_board(), current_state.get_turn(), depth);
-
 	parent_node.set_children(find_node_roots(parent_node, current_state.get_board(), current_state.get_turn(), max_depth, 0));
 	
 	vector<vector<Node*>> depth_list;
+	vector<Node*> depth_one_children= find_node_roots(parent_node, current_state.get_board(), current_state.get_turn(), max_depth,1);
 	depth_list.push_back(depth_one_children);
 	
 	for(int d=1; d<depth; d++){
