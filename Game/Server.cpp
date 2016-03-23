@@ -266,7 +266,15 @@ bool do_command(vector<string> command_line){
         if(command_line.size()==2){
             if(is_difficulty(command_line[1].c_str())){
                 socket_output("OK\n");
-                new_game.set_game_type(HA, EASY);
+                if(command_line[1].c_str()=="easy"){
+                    new_game.set_game_type(HA, EASY);
+				}
+                else if(command_line[1].c_str()=="medium"){
+                	new_game.set_game_type(HA, MEDIUM);
+				}
+                else if(command_line[1].c_str()=="hard"){
+                	new_game.set_game_type(HA, HARD);
+                }
             } else{
                 socket_output("; Not a valid difficulty\nILLEGAL\n");
                 sprintf(out_buffer, "%s  is not a difficulty", command_line[1].c_str());
