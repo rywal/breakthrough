@@ -235,8 +235,14 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 			for(int j=0; j<8; j++){
 				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
 					if(white &&  (!(j == 0 && e == -1) && !(j == 7 && e == 1))){
+                        if (i < 7 && parent_board[i+1][j] == 'x' && e == 0) {
+                            continue;
+                        }
 						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
 					}else if(!white && (!(j ==7 && e == -1) && !(j == 0 && e == 1))){ //For formating
+                        if (i > 0 && parent_board[i-1][j] == 'o' && e == 0) {
+                            continue;
+                        }
 						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
 					}
 				}
@@ -244,7 +250,7 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 		}
 	}
 	if(parent->get_depth()!=max_depth){
-		cout<<"Parent depth: "<<parent->get_depth()<<" \n";
+		cout<<"; Parent depth: "<<parent->get_depth()<<" \n";
 		depth_list[parent->get_depth()+1].push_back(children_nodes);
 	}
 	return children_nodes;

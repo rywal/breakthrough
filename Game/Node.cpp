@@ -26,7 +26,7 @@ Node::Node(long int value, Node* pn, int i, int j, int count){
     string position = boost::lexical_cast<string>(col) + to_string(i+1);
     
 	move = std::make_pair (position, dir);
-    cout << "Added node: " << move.first << " " << move.second << " with value: " << current_value << "\n";
+    cout << "; Added node: " << move.first << " " << move.second << " with value: " << current_value << "\n";
 	
 	depth=pn->get_depth()+1;
 }
@@ -38,14 +38,14 @@ vector<Node*> Node::get_children(){return children;}
 pair<string, DIRECTION> Node::get_move(){return move;}
 pair<string, DIRECTION> Node::get_first_move(){
 	if(depth==0){
-        cout << "Depth 0: Returning get_move(). Should this be doing this?\n";
+        cout << "; Depth 0: Returning get_move(). Should this be doing this?\n";
         return get_move();
     } else if(depth==1){
-        cout << "Depth 1: Returning get_move()\n";
+        cout << "; Depth 1: Returning get_move()\n";
 		return get_move();
 	}
     else{
-        cout << "Depth OTHER: Returning parent->get_first_move()\n";
+        cout << "; Depth OTHER: Returning parent->get_first_move()\n";
 		return parent_node->get_first_move();
 	}
 }

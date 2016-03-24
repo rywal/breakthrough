@@ -1,7 +1,3 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-human-ai medium display b2 fwd b3 right c4 right e2 fwd f2 left e3 fwd e4 fwd d2 fwd c2 right e5 left d7 right c6 right c6 right is an invalid move
-
-d6 right e7 left ; White is the winner!
-
-=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
+display human-ai medium b2 fwd c2 fwd c3 fwd c4 right f2 left d5 left ÿôÿ ÿôÿ is not a valid command
