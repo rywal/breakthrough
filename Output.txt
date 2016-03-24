@@ -1,8 +1,3 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-human-ai hard display b2 fwd f2 fwd f3 fwd f4 fwd f6 fwd f6 fwd is an invalid move
-
-f5 left e6 left b3 fwd b4 right c5 left a2 fwd a3 fwd a5 fwd a5 fwd is an invalid move
-
-a4 fwd a5 right b6 fwd b7 fwd ; White is the winner!
-
+human-ai medium display b2 fwd c2 fwd =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=

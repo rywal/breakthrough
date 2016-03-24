@@ -265,8 +265,10 @@ void save_children(vector<vector<char>> node_board, vector<Node*> &children_node
                     //--Create the new Node
                     Node* new_node = new Node(value_node(node_board), parent, i, j, count);
                     if(new_node->get_depth()<max_depth){
+                    	//get the children of that child (if that doesn't exceed the depth)
                         new_node->set_children(get_children(new_node, node_board, !white, max_depth, depth_list));
                     }//--Push back the whole Node
+                    //store child in children vector
                     children_nodes.push_back(new_node);
                 }
             }
