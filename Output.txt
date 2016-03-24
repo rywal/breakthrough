@@ -1,5 +1,3 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-dispay dispay is not a valid command
-display human-ai hard c2 fwd d2 fwd d3 right c3 fwd c4 fwd b1 right c5 fwd c6 right d7 left ; White is the winner!
-
+display human-ai medium b2 fwd b3 fwd b4 fwd b5 right f2 fwd g2 right f3 fwd f4 left c2 right e5 fwd =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
