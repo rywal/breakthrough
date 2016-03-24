@@ -106,7 +106,7 @@ Node* Tree::get_max_node(){
 //----------------A-B Pruning-------------------
 long int min_value (Node* parent, long int a, long int b);
 
-long int max_value (Node* parent, long int a, long int b){
+Node* max_value (Node* parent, long int a, long int b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state
 // if Cutoff(state) then return Utility(state){
 	long int v = -2147483647;
@@ -123,7 +123,7 @@ long int max_value (Node* parent, long int a, long int b){
 	return v;
 }
 
-long int min_value (Node* parent,long int a, long int b){
+ min_value (Node* parent,long int a, long int b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state 
 //if Cutoff(state) then return Utility (state)
 	long int v=2147483647;
