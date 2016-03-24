@@ -104,38 +104,48 @@ Node* Tree::get_max_node(){
 } 
 //______________________________________________
 //----------------A-B Pruning-------------------
-long int min_value (Node* parent, long int a, long int b);
-
-long int max_value (Node* parent, long int a, long int b){
+pair<long int, Node*> max_value (Node* parent, long int a, long int b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state
 // if Cutoff(state) then return Utility(state){
 	long int v = -2147483647;
-	Node* temp;
-	for(int i=0; i<parent->get_num_children(); i++){// each s in Successor(state) do
-		temp=parent->get_children()[i];
-		long int comparison=min_value(temp,a,b);
-		v = (a > comparison) ? a : comparison;
-		if (v >= b){
-			return v; /* CUT!! */
+    Node* temp;
+    pair<long int, Node*> max_move = make_pair(v, parent);
+    
+	for(int i = 0; i < parent->get_num_children(); i++){// each s in Successor(state) do
+		temp = parent->get_children()[i];
+		pair<long int, Node*> comparison = min_value(temp,a,b);
+        
+		max_move.first = (a > comparison.first) ? a : comparison.first;
+        max_move.second = (a > comparison.first) ? parent : temp;
+        
+		if (max_move.first >= b){
+			return comparison; /* CUT!! */
 		} 
-		a = (a > v) ? a : v;
+        a = (a > max_move.first) ? a : max_move.first;
 	}
-	return v;
+    
+	return max_move;
 }
 
-long int min_value (Node* parent,long int a, long int b){
+pair<long int, Node*> min_value (Node* parent,long int a, long int b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state 
 //if Cutoff(state) then return Utility (state)
 	long int v=2147483647;
-	Node* temp;
-		for(int i=0; i<parent->get_num_children(); i++){// each s in Successor(state) do
-			temp=parent->get_children()[i];
-			long int comparison=max_value(temp,a,b);
-			v = (b < comparison) ? b : comparison;
-			if (v <= a){
-				return v; /* CUT!! */
-			} 
-			b = (b < v) ? b : v;
-		}
-	return v;
+    Node* temp;
+    pair<long int, Node*> min_move = make_pair(v, parent);
+    
+    for(int i = 0; i < parent->get_num_children(); i++){// each s in Successor(state) do
+        temp = parent->get_children()[i];
+        pair<long int, Node*> comparison = max_value(temp,a,b);
+        
+        min_move.first = (a < comparison.first) ? a : comparison.first;
+        min_move.second = (a < comparison.first) ? parent : temp;
+        
+        if (min_move.first <= b){
+            return comparison; /* CUT!! */
+        }
+        a = (a < min_move.first) ? a : min_move.first;
+    }
+    
+    return min_move;
 }
