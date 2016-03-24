@@ -102,14 +102,45 @@ Node* Tree::get_max_node(){
     return max_nodes[random_move];
 
 } 
+pair< alphaBeta(node, alpha, beta, maximisingPlayer) {
+    var bestValue;
+    if (node.children.length === 0) {
+        bestValue = node.data;
+    }
+    else if (maximisingPlayer) {
+        bestValue = alpha;
+        
+        // Recurse for all children of node.
+        for (var i=0, c=node.children.length; i<c; i++) {
+            var childValue = alphaBeta(node.children[i], bestValue, beta, false);
+            bestValue = Math.max(bestValue, childValue);
+            if (beta <= bestValue) {
+                break;
+            }
+        }
+    }
+    else {
+        bestValue = beta;
+        
+        // Recurse for all children of node.
+        for (var i=0, c=node.children.length; i<c; i++) {
+            var childValue = alphaBeta(node.children[i], alpha, bestValue, true);
+            bestValue = Math.min(bestValue, childValue);
+            if (bestValue <= alpha) {
+                break;
+            }
+        }
+    }
+    return bestValue;
+}
 //______________________________________________
 //----------------A-B Pruning-------------------
-pair<long int, Node*> Tree::max_value (Node* parent, long int a, long int b){
+pair<long int, Node*> Tree::max_value (Node* parent, long int &a, long int &b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state
 // if Cutoff(state) then return Utility(state){
 	long int v = -2147483647;
     Node* temp;
-    pair<long int, Node*> max_move = make_pair(v, parent);
+    pair<long int, Node*> max_move = make_pair(parent->get_value(), parent);
     
 	for(int i = 0; i < parent->get_num_children(); i++){// each s in Successor(state) do
 		temp = parent->get_children()[i];
@@ -127,13 +158,15 @@ pair<long int, Node*> Tree::max_value (Node* parent, long int a, long int b){
 	return max_move;
 }
 
-pair<long int, Node*> Tree::min_value (Node* parent,long int a, long int b){
+pair<long int, Node*> Tree::min_value (Node* parent,long int &a, long int &b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state 
 //if Cutoff(state) then return Utility (state)
 	long int v=2147483647;
     Node* temp;
     pair<long int, Node*> min_move = make_pair(v, parent);
-    
+    if(parent->get_num_children()==0){
+		min_move.first=parent->get_value();
+	}
     for(int i = 0; i < parent->get_num_children(); i++){// each s in Successor(state) do
         temp = parent->get_children()[i];
         pair<long int, Node*> comparison = max_value(temp,a,b);
@@ -144,6 +177,7 @@ pair<long int, Node*> Tree::min_value (Node* parent,long int a, long int b){
         if (min_move.first <= a){
             return min_move; /* CUT!! */
         }
+		
         b = (b < min_move.first) ? b : min_move.first;
     }
     
