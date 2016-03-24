@@ -1,13 +1,5 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-<<<<<<< HEAD
-<<<<<<< HEAD
-human-ai medium display =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
-=======
-display human-ai medium b2 fwd d2 fwd e2 fwd d3 right h2 fwd h3 fwd h4 fwd h5 left a1 right e4 left d5 fwd e3 left b3 right g2 right c4 right h3 fwd h4 left d4 right g5 left e5 right d5 right c2 right c1 left f2 fwd f3 fwd d3 right e6 right e4 fwd f4 fwd e5 fwd f5 left e6 fwd f6 left g1 fwd g2 fwd g3 keft keft is not a valid direction
-g3 left ; Black is the winner!
-
-=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
->>>>>>> 75aee1481db4ffe87bd56b7f85cfec71b65c868d
-=======
->>>>>>> d67d0f7246bbf56609f8523bfa8ffce776261098
+human-ai medium display b2 fwd c2 fwd d2 fwd b3 fwd ÿôÿ ÿôÿ is not a valid command
+  is not a valid command
+  is not a valid command
