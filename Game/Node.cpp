@@ -1,4 +1,5 @@
 #include "Node.h"
+#include <boost/lexical_cast.hpp>
 
 Node::Node(){}
 
@@ -20,7 +21,12 @@ Node::Node(long int value, Node* pn, int i, int j, int count){
 	} else if (count == 1){
 		dir == RIGHT;
 	}
-	pair<string, DIRECTION> move = std::make_pair (to_string(i)+to_string(j), dir);
+    
+    char col = 'a' + j;
+    string position = boost::lexical_cast<string>(col) + to_string(j+1);
+    
+	pair<string, DIRECTION> move = std::make_pair (position, dir);
+    cout << "Added node(" << position << "): " << move.first << " " << move.second << " from " << i << " " << j << "\n";
 	
 	depth=pn->get_depth()+1;
 }
