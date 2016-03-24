@@ -50,7 +50,7 @@ string AI::make_move(Game* game) {
     } else if(difficulty_level == MEDIUM) {
         return choose_min_max( game );
     } else if(difficulty_level == HARD) {
-        return choose_random( game );
+        return choose_a_b_pruning( game );
     }
     
     return "; No move made";
@@ -162,6 +162,9 @@ string AI::choose_min_max(Game* game) {
     return move_output;
 }
 
+string choose_a_b_pruning(Game* game){
+
+}
 vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
     // Figure out which player we are finding moves for
     char game_piece = state.get_turn() ? 'o' : 'x';
@@ -210,18 +213,21 @@ void save_children(vector<vector<char>> node_board, vector<Node*> &children_node
 		char turn = white ? 'o' : 'x';
 		int row = white ? i+1 : i-1;
 		int col = white ? j+count : j-count; //Direction will be the same for both turns
-		if((row<8)&&(row>=0)){
-			if(node_board[row][col]!=turn){
-				//--Change the new board
-				node_board[i][j]='_';
-				node_board[row][col]=turn;
-				//--Create the new Node
-				Node* new_node = new Node(value_node(node_board), parent, i, j, count);
-				if(new_node->get_depth()<max_depth){
-					new_node->set_children(get_children(new_node, node_board, !white, max_depth, depth_list));
-				}//--Push back the whole Node
-				children_nodes.push_back(new_node);
-			}
+
+		if((row < 8) && (row >= 0)){
+            if (col <= 8 && col >= 0) {
+                if(node_board[row][col]!=turn){
+                    //--Change the new board
+                    node_board[i][j]='_';
+                    node_board[row][col]=turn;
+                    //--Create the new Node
+                    Node* new_node = new Node(value_node(node_board), parent, i, j, count);
+                    if(new_node->get_depth()<max_depth){
+                        new_node->set_children(get_children(new_node, node_board, !white, max_depth, depth_list));
+                    }//--Push back the whole Node
+                    children_nodes.push_back(new_node);
+                }
+            }
 		}
 	}
 }
@@ -239,7 +245,7 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
                             continue;
                         }
 						save_children(parent_board, children_nodes, parent, white ,i,j,e, max_depth, depth_list);
-					}else if(!white && (!(j ==7 && e == -1) && !(j == 0 && e == 1))){ //For formating
+					}else if(!white && (!(j == 7 && e == -1) && !(j == 0 && e == 1))){ //For formating
                         if (i > 0 && parent_board[i-1][j] == 'o' && e == 0) {
                             continue;
                         }

@@ -1,4 +1,6 @@
 #include "Tree.h"
+#include <stdlib.h> // used for rand function
+#include <time.h> // used for time
 
 Tree::Tree(){}
 Tree::Tree(Node* rn, int md, vector<vector<vector<Node*>>> dlist){
@@ -26,19 +28,40 @@ void Tree::display_tree(){
 	}
 }	
 Node* Tree::get_min_node(){
-	Node* min_node=depth_list[1][0][0];
-	int min=depth_list[1][0][0]->get_value();
-	for(int i=1; i<(max_depth+1); i++){
-		for(int j=0; j<depth_list[i].size(); i++){
-			for(int k=0; k<depth_list[i][j].size(); k++){
-				if (min>depth_list[i][j][k]->get_value()){
-					min=depth_list[i][j][k]->get_value();
-					min_node=depth_list[i][j][k];
-				}
+	Node* current_node = depth_list[1][0][0];
+	int min = depth_list[1][0][0]->get_value();
+
+    vector<Node*> min_nodes; // Holds all nodes with same minimum value to randomly select from later
+    
+	for(int i=1; i < (max_depth + 1); i++){
+		for(int j=0; j < depth_list[i].size(); i++){
+			for(int k=0; k < depth_list[i][j].size(); k++){
+                if (min > depth_list[i][j][k]->get_value()){
+                    current_node = depth_list[i][j][k];
+                    
+                    min_nodes.clear();
+                    min_nodes.push_back(current_node);
+                    min = depth_list[i][j][k]->get_value();
+                } else { // Previous min is larger than new min. Clear vector of previous min_nodes
+                    current_node = depth_list[i][j][k];
+                    
+                    // Check if still same value as previous min
+                    if (min == depth_list[i][j][k]->get_value()) {
+                        min_nodes.push_back(current_node);
+                    }
+                }
 			}
 		}		
 	}
-	return min_node;
+    
+    // Randomly pick a possible move
+    srand (time(NULL));
+    int random_move = 0;
+    if (min_nodes.size() > 0) {
+        random_move = rand() % min_nodes.size();
+    }
+    
+	return min_nodes[random_move];
 }
 
 Node* Tree::get_max_node(){
@@ -58,43 +81,38 @@ Node* Tree::get_max_node(){
 }
 //______________________________________________
 //----------------A-B Pruning-------------------
-long int min_value (State state,Game game, long int a, long int b);
+long int min_value (Node* parent, long int a, long int b);
 
 long int max_value (Node* parent, long int a, long int b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state
 // if Cutoff(state) then return Utility(state){
-	long int v=–2147483647;
+	long int v = -2147483647;
 	Node* temp;
 	for(int i=0; i<parent->get_num_children(); i++){// each s in Successor(state) do
 		temp=parent->get_children()[i];
 		long int comparison=min_value(temp,a,b);
 		v = (a > comparison) ? a : comparison;
-		if (v ≥ b){
-			return v /* CUT!! */
+		if (v >= b){
+			return v; /* CUT!! */
 		} 
 		a = (a > v) ? a : v;
 	}
 	return v;
 }
 
-long int min-value (Node* parent,long int a, long int b){
+long int min_value (Node* parent,long int a, long int b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state 
 //if Cutoff(state) then return Utility (state)
-	long int v=2147483648;
+	long int v=2147483647;
 	Node* temp;
 		for(int i=0; i<parent->get_num_children(); i++){// each s in Successor(state) do
 			temp=parent->get_children()[i];
 			long int comparison=max_value(temp,a,b);
 			v = (b < comparison) ? b : comparison;
 			if (v <= a){
-				return v /* CUT!! */
+				return v; /* CUT!! */
 			} 
 			b = (b < v) ? b : v;
 		}
 	return v;
 }
-/*for each s in Successor(state) do
-· v ← Min(β, Max-Value(s,game,α,β))
-· if v ≤ α then return v /* CUT!! */
-/*· β ←Min(β,v) end
-return v*/
