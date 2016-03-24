@@ -1,3 +1,2 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-display human-ai medium b2 fwd c2 fwd c3 fwd c4 right f2 left d5 left ÿôÿ ÿôÿ is not a valid command
