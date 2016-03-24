@@ -1,5 +1,4 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-display human-ai hard b2 fwd b2 fwd b2 fwd is an invalid move
-
-b3 fwd b4 fwd b5 right a2 fwd =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
+display human-ai hard b2 right exit 
+=-=-=-=-=-=-EXITED-=-=-=-=-=-=
