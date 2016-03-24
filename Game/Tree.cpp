@@ -56,3 +56,45 @@ Node* Tree::get_max_node(){
 	}
 	return max_node;
 }
+//______________________________________________
+//----------------A-B Pruning-------------------
+long int min_value (State state,Game game, long int a, long int b);
+
+long int max_value (Node* parent, long int a, long int b){
+// return utility value α: best MAX on path to state ; β: best MIN on path to state
+// if Cutoff(state) then return Utility(state){
+	long int v=–2147483647;
+	Node* temp;
+	for(int i=0; i<parent->get_num_children(); i++){// each s in Successor(state) do
+		temp=parent->get_children()[i];
+		long int comparison=min_value(temp,a,b);
+		v = (a > comparison) ? a : comparison;
+		if (v ≥ b){
+			return v /* CUT!! */
+		} 
+		a = (a > v) ? a : v;
+	}
+	return v;
+}
+
+long int min-value (Node* parent,long int a, long int b){
+// return utility value α: best MAX on path to state ; β: best MIN on path to state 
+//if Cutoff(state) then return Utility (state)
+	long int v=2147483648;
+	Node* temp;
+		for(int i=0; i<parent->get_num_children(); i++){// each s in Successor(state) do
+			temp=parent->get_children()[i];
+			long int comparison=max_value(temp,a,b);
+			v = (b < comparison) ? b : comparison;
+			if (v <= a){
+				return v /* CUT!! */
+			} 
+			b = (b < v) ? b : v;
+		}
+	return v;
+}
+/*for each s in Successor(state) do
+· v ← Min(β, Max-Value(s,game,α,β))
+· if v ≤ α then return v /* CUT!! */
+/*· β ←Min(β,v) end
+return v*/
