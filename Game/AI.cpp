@@ -231,8 +231,8 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 	
 	vector<Node*> children_nodes;
 	if(parent->get_depth() < max_depth){
-		for (int i=7; i>-1; i--){
-			for(int j=0; j<8; j++){
+		for (int i=7; i>-1; i--){ // i is the row (on the board this is 1-8)
+			for(int j=0; j<8; j++){ // j is the column (on the board this is A-H)
 				for(int e = -1; e < 2; e++){//-1 checks for left, 0 for fwd, 1 for right
 					if(white &&  (!(j == 0 && e == -1) && !(j == 7 && e == 1))){
                         if (i < 7 && parent_board[i+1][j] == 'x' && e == 0) {
