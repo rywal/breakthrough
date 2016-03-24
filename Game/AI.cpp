@@ -211,7 +211,7 @@ void save_children(vector<vector<char>> node_board, vector<Node*> &children_node
 		int row = white ? i+1 : i-1;
 		int col = white ? j+count : j-count; //Direction will be the same for both turns
 		if((row < 9) && (row >= 0)){
-            if (col < 7 && col >= 0) {
+            if (col <= 7 && col >= 0) {
                 if(node_board[row][col]!=turn){
                     //--Change the new board
                     node_board[i][j]='_';
