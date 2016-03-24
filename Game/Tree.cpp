@@ -65,17 +65,39 @@ Node* Tree::get_min_node(){
 }
 
 Node* Tree::get_max_node(){
-	Node* max_node=depth_list[1][0][0];
-	int max=depth_list[1][0][0]->get_value();
-	for(int i=1; i<(max_depth+1); i++){
-		for(int j=0; j<depth_list[i].size(); i++){
-			for(int k=0; k<depth_list[i][j].size(); k++){
-				if (max<depth_list[i][j][k]->get_value()){
-					max=depth_list[i][j][k]->get_value();
-					max_node=depth_list[i][j][k];
-				}
-			}
-		}		
-	}
-	return max_node;
+    Node* current_node = depth_list[1][0][0];
+    int max = depth_list[1][0][0]->get_value();
+    
+    vector<Node*> max_nodes; // Holds all nodes with same minimum value to randomly select from later
+    
+    for(int i=1; i < (max_depth + 1); i++){
+        for(int j=0; j < depth_list[i].size(); i++){
+            for(int k=0; k < depth_list[i][j].size(); k++){
+                if (max < depth_list[i][j][k]->get_value()){
+                    current_node = depth_list[i][j][k];
+                    
+                    max_nodes.clear();
+                    max_nodes.push_back(current_node);
+                    max = depth_list[i][j][k]->get_value();
+                } else { // Previous min is larger than new min. Clear vector of previous min_nodes
+                    current_node = depth_list[i][j][k];
+                    
+                    // Check if still same value as previous min
+                    if (max == depth_list[i][j][k]->get_value()) {
+                        max_nodes.push_back(current_node);
+                    }
+                }
+            }
+        }
+    }
+    
+    // Randomly pick a possible move
+    srand (time(NULL));
+    int random_move = 0;
+    if (max_nodes.size() > 0) {
+        random_move = rand() % max_nodes.size();
+    }
+    
+    return max_nodes[random_move];
+
 }
