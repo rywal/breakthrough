@@ -97,6 +97,8 @@ DIFFICULTY to_diff(string d){
     } else if(d=="hard"){
         return HARD;
     }
+    
+    return EASY;
 }
 
 
@@ -117,7 +119,7 @@ bool is_ip(string s){
     }
     char *ptr;
     for(int i = 0; i<ips.size();i++){
-        if(atoi(ips[i].c_str())==0 && ips[i].c_str()!="0"){ //NOT AN INTEGER
+        if(atoi(ips[i].c_str())==0 && ips[i] != "0"){ //NOT AN INTEGER
             sprintf(out_buffer, "In an IP check: %s is not an Integer", ips[i].c_str());
             output_function(7);
             socket_output("; IP address given is not an integer\nILLEGAL\n");
@@ -161,7 +163,7 @@ bool is_server(string s){
         error = 0;
         return true;
     } else{
-        if(error=6){ //Prevent false negatives in Output.txt
+        if(error==6){ //Prevent false negatives in Output.txt
             sprintf(out_buffer, "IP address did not have correct amount of sets of numbers");
             output_function(6);
             socket_output("; IP address did not have correct format\nILLEGAL\n");
@@ -208,6 +210,8 @@ DIRECTION to_dir(string d){
     } else if(d=="right"){
         return RIGHT;
     }
+    
+    return FWD;
 }
 
 // Take a command and direct it to the correct location
