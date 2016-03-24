@@ -38,9 +38,6 @@ public:
     
     pair<long int, Node*> alphaBeta(Node* node, pair<long int, Node*> alpha, pair<long int, Node*> beta, bool maximizePlayer);
     
-    pair<long int, Node*> min_value (Node* parent, long int &a, long int &b);
-    pair<long int, Node*> max_value (Node* parent, long int &a, long int &b);
-    
 	void display_tree();
 	
 };
