@@ -1,5 +1,8 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-ai-ai localhost 5156 breakthrough medium medium ok ok g7 fwd ok g6 fwd ok g5 fwd ok e7 left ok g4 fwd ok f6 fwd ok f5 left ok g4 fwd ok g3 fwd ok b7 right ok d7 left ok e6 right ok d5 fwd ok d4 fwd ok a6 left ok f7 left ok b5 fwd ok b4 fwd ok g6 fwd ok c7 left ok g5 fwd ok g4 fwd ok g3 fwd ok a7 left ok d6 fwd ok d5 left ok e4 fwd ok e3 left ok b6 fwd ok c8 left ok b5 fwd ok b4 fwd ok b3 left ok h7 right ok d7 left ok g6 fwd ok g5 fwd ok g4 fwd ok e6 fwd ok e5 fwd ok b8 left ok e4 fwd ok e3 fwd ok c7 fwd ok c6 fwd ok f8 left ok c5 fwd ok g7 fwd ok g6 fwd ok g5 fwd ok d8 right ok g4 left ok h3 fwd ok c7 fwd ok c6 fwd ok c5 fwd ok h8 right ok c4 fwd ok c3 fwd ; Black is the winner!
+human-ai hard display b2 fwd f2 fwd f3 fwd f4 fwd f6 fwd f6 fwd is an invalid move
 
-=-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
+f5 left e6 left b3 fwd b4 right c5 left a2 fwd a3 fwd a5 fwd a5 fwd is an invalid move
+
+a4 fwd a5 right b6 fwd b7 fwd ; White is the winner!
+
