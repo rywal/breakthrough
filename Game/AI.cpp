@@ -164,7 +164,45 @@ string AI::choose_min_max(Game* game) {
     return move_output;
 }
 
-string choose_a_b_pruning(Game* game){
+string AI::choose_a_b_pruning(Game* game){
+	 printf("; Choosing the best move on the best path based on hard difficulty level\n");
+	
+	string text_move = best_move.first;
+    transform(text_move.begin(), text_move.end(), text_move.begin(), ::toupper);
+    
+    string move_output = text_move + " ";
+    switch (best_move.second) {
+        case FWD:
+            move_output += "FWD\n";
+            break;
+            
+        case LEFT:
+            move_output += "LEFT\n";
+            break;
+            
+        case RIGHT:
+            move_output += "RIGHT\n";
+            break;
+            
+        default:
+            break;
+    }
+    
+    // Write string representation of the move to the correct place
+    if (socketfd) {
+        write(socketfd, move_output.c_str(), move_output.length());
+        cout << move_output;
+    } else {
+        cout << move_output;
+    }
+
+    
+    // Update the game with the best move to make
+    game->update( best_move.first[0],
+                 (best_move.first[1] - '0'),
+                  best_move.second );
+    
+    return move_output;
 
 }
 vector< pair<string, DIRECTION> > AI::possible_moves(Game* game, State state) {
