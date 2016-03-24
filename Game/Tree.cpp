@@ -101,7 +101,42 @@ Node* Tree::get_max_node(){
     
     return max_nodes[random_move];
 
-} 
+}
+
+pair<long int, Node*> Tree::alphaBeta(Node* node, pair<long int, Node*> alpha, pair<long int, Node*> beta, bool maximizePlayer){
+    pair<long int, Node*> bestValue;
+    
+    if (node->get_num_children() == 0) {
+        bestValue = make_pair(node->get_value(), node);
+    } else if (maximizePlayer) {
+        bestValue = alpha;
+        
+        // Run for all children in the node
+        for (int i = 0; i < node->get_num_children(); i++) {
+            pair<long int, Node*> childValue = alphaBeta(node->get_children()[i], bestValue, beta, false);
+            bestValue = (bestValue.first > childValue.first) ? bestValue : childValue;
+            
+            if (beta.first <= bestValue.first) {
+                break;
+            }
+        }
+    } else {
+        bestValue = beta;
+        
+        // Run for all children in the node
+        for (int i = 0; i < node->get_num_children(); i++) {
+            pair<long int, Node*> childValue = alphaBeta(node->get_children()[i], alpha, bestValue, true);
+            bestValue = (bestValue.first < childValue.first) ? bestValue : childValue;
+            
+            if (bestValue.first <= alpha.first) {
+                break;
+            }
+        }
+    }
+    
+    return bestValue;
+}
+
 //______________________________________________
 //----------------A-B Pruning-------------------
 pair<long int, Node*> Tree::max_value (Node* parent, long int &a, long int &b){
