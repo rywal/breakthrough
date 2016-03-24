@@ -166,9 +166,9 @@ string AI::choose_min_max(Game* game) {
 
 string AI::choose_a_b_pruning(Game* game){
 	 printf("; Choosing the best move on the best path based on hard difficulty level\n");
-	Tree new_tree=evaluation_function(game->current_state, 3);
+	Tree new_tree=evaluation_function(game->current_state, 4);
 	
-	pair<string, DIRECTION> best_move= new_tree.max_value(new_tree.get_tree_root(), 0, 0).second->get_first_move();
+	pair<string, DIRECTION> best_move= new_tree.max_value(new_tree.get_tree_root(), -2147483647, 2147483647).second->get_first_move();
 	string text_move = best_move.first;
     transform(text_move.begin(), text_move.end(), text_move.begin(), ::toupper);
     

@@ -1,2 +1,5 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
+dispay dispay is not a valid command
+display human-ai hard c2 fwd d2 fwd d3 right c3 fwd c4 fwd b1 right c5 fwd c6 right d7 left ; White is the winner!
+
