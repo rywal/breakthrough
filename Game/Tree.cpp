@@ -119,7 +119,7 @@ pair<long int, Node*> Tree::max_value (Node* parent, long int a, long int b){
         max_move.second = (a > comparison.first) ? parent : temp;
         
 		if (max_move.first >= b){
-			return comparison; /* CUT!! */
+			return max_move; /* CUT!! */
 		} 
         a = (a > max_move.first) ? a : max_move.first;
 	}
@@ -127,7 +127,7 @@ pair<long int, Node*> Tree::max_value (Node* parent, long int a, long int b){
 	return max_move;
 }
 
-pair<long int, Node*> Tree::min_value (Node* parent,long int &a, long int &b){
+pair<long int, Node*> Tree::min_value (Node* parent,long int a, long int b){
 // return utility value α: best MAX on path to state ; β: best MIN on path to state 
 //if Cutoff(state) then return Utility (state)
 	long int v=2147483647;
@@ -138,13 +138,13 @@ pair<long int, Node*> Tree::min_value (Node* parent,long int &a, long int &b){
         temp = parent->get_children()[i];
         pair<long int, Node*> comparison = max_value(temp,a,b);
         
-        min_move.first = (a < comparison.first) ? a : comparison.first;
-        min_move.second = (a < comparison.first) ? parent : temp;
+        min_move.first = (b < comparison.first) ? b : comparison.first;
+        min_move.second = (b < comparison.first) ? parent : temp;
         
-        if (min_move.first <= b){
-            return comparison; /* CUT!! */
+        if (min_move.first <= a){
+            return min_move; /* CUT!! */
         }
-        a = (a < min_move.first) ? a : min_move.first;
+        b = (b < min_move.first) ? b : min_move.first;
     }
     
     return min_move;
