@@ -1,4 +1,6 @@
 #include "Tree.h"
+#include <stdlib.h> // used for rand function
+#include <time.h> // used for time
 
 Tree::Tree(){}
 Tree::Tree(Node* rn, int md, vector<vector<vector<Node*>>> dlist){
@@ -26,19 +28,40 @@ void Tree::display_tree(){
 	}
 }	
 Node* Tree::get_min_node(){
-	Node* min_node=depth_list[1][0][0];
-	int min=depth_list[1][0][0]->get_value();
-	for(int i=1; i<(max_depth+1); i++){
-		for(int j=0; j<depth_list[i].size(); i++){
-			for(int k=0; k<depth_list[i][j].size(); k++){
-				if (min>depth_list[i][j][k]->get_value()){
-					min=depth_list[i][j][k]->get_value();
-					min_node=depth_list[i][j][k];
-				}
+	Node* current_node = depth_list[1][0][0];
+	int min = depth_list[1][0][0]->get_value();
+
+    vector<Node*> min_nodes; // Holds all nodes with same minimum value to randomly select from later
+    
+	for(int i=1; i < (max_depth + 1); i++){
+		for(int j=0; j < depth_list[i].size(); i++){
+			for(int k=0; k < depth_list[i][j].size(); k++){
+                if (min > depth_list[i][j][k]->get_value()){
+                    current_node = depth_list[i][j][k];
+                    
+                    min_nodes.clear();
+                    min_nodes.push_back(current_node);
+                    min = depth_list[i][j][k]->get_value();
+                } else { // Previous min is larger than new min. Clear vector of previous min_nodes
+                    current_node = depth_list[i][j][k];
+                    
+                    // Check if still same value as previous min
+                    if (min == depth_list[i][j][k]->get_value()) {
+                        min_nodes.push_back(current_node);
+                    }
+                }
 			}
 		}		
 	}
-	return min_node;
+    
+    // Randomly pick a possible move
+    srand (time(NULL));
+    int random_move = 0;
+    if (min_nodes.size() > 0) {
+        random_move = rand() % min_nodes.size();
+    }
+    
+	return min_nodes[random_move];
 }
 
 Node* Tree::get_max_node(){
