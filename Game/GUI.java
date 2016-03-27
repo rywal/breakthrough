@@ -16,9 +16,9 @@ class GUI{
 	static JButton [][] buttons = new JButton[8][8]; 
 	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
-		JPanel full = new JPanel();
-		full.add(topPanel);
-		full.add(centerPanel);
+		JPanel full = new JPanel(new BorderLayout());
+		full.add(topPanel, BorderLayout.NORTH);
+		full.add(centerPanel, BorderLayout.CENTER);
 		return full;
 	}
 	
@@ -42,6 +42,7 @@ class GUI{
 		for(int row = 0; row < 2; row++) {
 			for(int col = 0; col < 8; col++) { 
 				buttons[row][col] = new JButton(xIcon);
+				buttons[row][col].setPreferredSize(new Dimension(1,1));
 				center.add(buttons[row][col]);
 			}
 		}
@@ -57,6 +58,7 @@ class GUI{
 				center.add(buttons[row][col]);
 			}
 		}
+		center.setPreferredSize(new Dimension(450, 450));
 		return center;
 	}
 	
@@ -64,6 +66,7 @@ class GUI{
 		JFrame frame = new JFrame("Breakthrough - Team 11");
 		frame.setVisible(true);
 		frame.setSize(500,500);
+		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		/*JLabel jLabel1 = new javax.swing.JLabel();
