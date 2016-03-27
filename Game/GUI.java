@@ -58,30 +58,6 @@ class GUI{
 		frame.add(centerPanel());
 		
 		
-		//Container gamePane = frame.getContentPane();
-		//gamePane.setLayout(new GridLayout(4,4));
-		/*Color temp;
-		
-		for (int row=0; row<8; row++){
-			if (row%2 == 0){
-				temp=Color.black;
-			} else{
-				temp=Color.black;
-			}
-			for (int j=0; j<8; j++){
-				JPanel gamePane2 = new JPanel();
-				gamePane2.setBackground(temp);
-				gamePane2.setBorder(BorderFactory.createLineBorder(Color.black));
-				if (temp.equals(Color.WHITE)){
-					temp=Color.WHITE;
-				} else{
-					temp=Color.WHITE;
-				}
-				gamePane.add(gamePane2);
-			}
-		}*/
-		
-		
 	}
 }
 		
