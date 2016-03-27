@@ -15,6 +15,15 @@ class GUI{
 	
 	static JButton [][] buttons = new JButton[8][8]; 
 	
+	public static JPanel topPanel() {
+		JPanel top = new JPanel(new GridLayout(1, 2));
+		JLabel title = new JLabel("Breakthrough - Team 11");
+		JButton undo = new JButton("Undo");
+		top.add(title);
+		top.add(undo);
+		return top;
+	}
+	
 	public static JPanel centerPanel() {
 		JPanel center = new JPanel(new GridLayout(8, 8));
 		ImageIcon xIcon = new ImageIcon("x.png");
