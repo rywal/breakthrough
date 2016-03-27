@@ -15,9 +15,17 @@ class GUI{
 	
 	static JButton [][] buttons = new JButton[8][8]; 
 	
+	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
+		JPanel full = new JPanel();
+		full.add(topPanel);
+		full.add(centerPanel);
+		return full;
+	}
+	
 	public static JPanel topPanel() {
-		JPanel top = new JPanel(new GridLayout(1, 2));
+		JPanel top = new JPanel(/*new GridLayout(2, 1)*/);
 		JLabel title = new JLabel("Breakthrough - Team 11");
+		title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JButton undo = new JButton("Undo");
 		top.add(title);
 		top.add(undo);
@@ -58,13 +66,15 @@ class GUI{
 		frame.setSize(500,500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JLabel jLabel1 = new javax.swing.JLabel();
+		/*JLabel jLabel1 = new javax.swing.JLabel();
 		jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18));
 		jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		jLabel1.setText("BreakThrough  -  Team 11");
-		frame.add(jLabel1);
+		frame.add(jLabel1);*/
 		
-		frame.add(centerPanel());
+		
+		frame.add(fullPanel(topPanel(),centerPanel()));
+		//frame.add(centerPanel());
 		
 		
 	}
