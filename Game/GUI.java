@@ -41,7 +41,7 @@ class GUI{
 		ImageIcon xIcon = new ImageIcon("x.png");
 		ImageIcon oIcon = new ImageIcon("o.png");
 		ImageIcon emptyIcon = new ImageIcon("empty.png");
-		
+
 		//Create the 2D array by using two for loops
 		for(int row = 0; row < 2; row++) {
 			for(int col = 0; col < 8; col++) { 
@@ -62,6 +62,24 @@ class GUI{
 				center.add(buttons[row][col]);
 			}
 		}
+		/*
+		//Create the 2D array by using state
+		for(int row = 0; row < 8; row++) {
+			for(int col = 0; col < 8; col++) {
+				if(current_state.get_board()[row][col]=='x'){
+					buttons[row][col] = new JButton(xIcon);
+				} else if(current_state.get_board()[row][col]=='x'){
+					buttons[row][col] = new JButton(emptyIcon);
+				} else {
+					buttons[row][col] = new JButton(oIcon);
+				}	
+				buttons[row][col].setPreferredSize(new Dimension(1,1));
+				center.add(buttons[row][col]);
+			}
+		}
+		center.setPreferredSize(new Dimension(450, 450));
+		return center;
+		*/
 		center.setPreferredSize(new Dimension(450, 450));
 		return center;
 	}
