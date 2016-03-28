@@ -481,7 +481,7 @@ int main(int argc, char *argv[]){
     if (argv[1]) {
         portno = atoi(argv[1]);
     } else {
-        portno = 5156;
+        portno = 5155;
     }
     
     serv_addr.sin_family = AF_INET;
