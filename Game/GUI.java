@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 class GUI{
 	
 	static JButton [][] buttons = new JButton[8][8]; 
+	static JTextArea outputField;
 	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		JPanel full = new JPanel(new BorderLayout());
@@ -72,9 +73,14 @@ class GUI{
 		JButton enter = new JButton("Enter");
 		bottom.add(input);
 		bottom.add(enter,BorderLayout.EAST);
+		outputField = new JTextArea(5, 20);
+		outputField.setText("Default Output");
+		bottom.add(outputField,BorderLayout.SOUTH);
 		
 		return bottom;
 	}
+	
+	
 	
     public static void main(String[] args) {
 		JFrame frame = new JFrame("Breakthrough - Team 11");
