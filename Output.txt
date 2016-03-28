@@ -1,5 +1,2 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-human-ai medium display c2 fwd undo human-ai hard b2 fwd b2 fwd b2 fwd is an invalid move
-
-b3 fwd =-=-=-=-=-=-CTRL+C-=-=-=-=-=-=
