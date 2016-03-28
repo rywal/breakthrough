@@ -38,9 +38,9 @@ class GUI{
 	
 	public static JPanel centerPanel() {
 		JPanel center = new JPanel(new GridLayout(8, 8));
-		ImageIcon xIcon = new ImageIcon("x.png");
-		ImageIcon oIcon = new ImageIcon("o.png");
-		ImageIcon emptyIcon = new ImageIcon("empty.png");
+		ImageIcon xIcon = new ImageIcon("Game/x.png");
+		ImageIcon oIcon = new ImageIcon("Game/o.png");
+		ImageIcon emptyIcon = new ImageIcon("Game/empty.png");
 
 		//Create the 2D array by using two for loops
 		for(int row = 0; row < 2; row++) {
@@ -103,7 +103,7 @@ class GUI{
     public static void main(String[] args) {
 		JFrame frame = new JFrame("Breakthrough - Team 11");
 		frame.setVisible(true);
-		frame.setSize(500,500);
+		frame.setSize(500,550);
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
