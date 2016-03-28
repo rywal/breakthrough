@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 class GUI{
 	
 	static JButton [][] buttons = new JButton[8][8]; 
+	static JTextArea outputField;
 	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		JPanel full = new JPanel(new BorderLayout());
@@ -37,9 +38,9 @@ class GUI{
 	
 	public static JPanel centerPanel() {
 		JPanel center = new JPanel(new GridLayout(8, 8));
-		ImageIcon xIcon = new ImageIcon("x.png");
-		ImageIcon oIcon = new ImageIcon("o.png");
-		ImageIcon emptyIcon = new ImageIcon("empty.png");
+		ImageIcon xIcon = new ImageIcon("Game/x.png");
+		ImageIcon oIcon = new ImageIcon("Game/o.png");
+		ImageIcon emptyIcon = new ImageIcon("Game/empty.png");
 
 		//Create the 2D array by using two for loops
 		for(int row = 0; row < 2; row++) {
@@ -90,14 +91,19 @@ class GUI{
 		JButton enter = new JButton("Enter");
 		bottom.add(input);
 		bottom.add(enter,BorderLayout.EAST);
+		outputField = new JTextArea(5, 20);
+		outputField.setText("Default Output");
+		bottom.add(outputField,BorderLayout.SOUTH);
 		
 		return bottom;
 	}
 	
+	
+	
     public static void main(String[] args) {
 		JFrame frame = new JFrame("Breakthrough - Team 11");
 		frame.setVisible(true);
-		frame.setSize(500,500);
+		frame.setSize(500,550);
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

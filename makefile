@@ -11,6 +11,8 @@ else ifeq ($(UNAME), Darwin)
 else 
     cc = g++-4.7
 endif
+JCC = javac -d $(shell pwd) Game/GUI.java
+JRUN = java -cp $(shell pwd) GUI
 
 .PHONY: all breakthrough clean
 
@@ -18,6 +20,10 @@ all: breakthrough
 	
 breakthrough:
 	$(cc) $(CFLAGS) breakthrough $(SRCS) $(MAIN)
+	
+gui:
+	$(JCC) $(JSRCS)
+	$(JRUN) $(JSRCS)
 
 clean:
 	rm -r *.o *.dSYM breakthrough
