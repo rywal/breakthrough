@@ -19,6 +19,9 @@ class GUI{
 		JPanel full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
 		full.add(centerPanel, BorderLayout.CENTER);
+		//JTextField input_field = new JTextField();
+		//full.add(input);
+		//full.add(bottomPanel, BorderLayout.SOUTH);
 		return full;
 	}
 	
@@ -62,6 +65,17 @@ class GUI{
 		return center;
 	}
 	
+	public static JPanel bottomPanel() {
+		JPanel bottom = new JPanel(new BorderLayout());
+		
+		JTextField input = new JTextField("Default Input");
+		JButton enter = new JButton("Enter");
+		bottom.add(input);
+		bottom.add(enter,BorderLayout.EAST);
+		
+		return bottom;
+	}
+	
     public static void main(String[] args) {
 		JFrame frame = new JFrame("Breakthrough - Team 11");
 		frame.setVisible(true);
@@ -69,15 +83,9 @@ class GUI{
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		/*JLabel jLabel1 = new javax.swing.JLabel();
-		jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18));
-		jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		jLabel1.setText("BreakThrough  -  Team 11");
-		frame.add(jLabel1);*/
-		
 		
 		frame.add(fullPanel(topPanel(),centerPanel()));
-		//frame.add(centerPanel());
+		frame.add(bottomPanel(), BorderLayout.SOUTH);
 		
 		
 	}
