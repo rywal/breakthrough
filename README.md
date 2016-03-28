@@ -4,6 +4,7 @@
 ###Compile##
 
 * To compile the game, use `make breakthrough`
+* To compile and run the GUI, use `make gui`
 
 ###Run###
 
