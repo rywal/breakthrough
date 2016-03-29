@@ -100,7 +100,6 @@ Node* Tree::get_max_node(){
     }
     
     return max_nodes[random_move];
-
 }
 
 // Referenced this article for help on alpha-beta pruning http://will.thimbleby.net/algorithms/doku.php?id=algorithm:minimax_alpha-beta
@@ -134,6 +133,5 @@ pair<long int, Node*> Tree::alphaBeta(Node* node, pair<long int, Node*> alpha, p
             }
         }
     }
-    
     return bestValue;
 }
