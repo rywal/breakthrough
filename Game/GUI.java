@@ -1,3 +1,4 @@
+package graphics;
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+
 class GUI {
 	//static {
 	//	System.loadLibrary("Game");
@@ -31,7 +33,6 @@ class GUI {
 	//public static Game new_game;
 	static JButton [][] buttons = new JButton[8][8]; 
 	static JTextArea outputField;
-	
 	static ImageIcon wgIcon = new ImageIcon("Game/wg.png");//White piece on green background
 	static ImageIcon wmIcon = new ImageIcon("Game/wm.png");//White piece on maroon background
 	static ImageIcon bgIcon = new ImageIcon("Game/bg.png");//Black piece on green background
@@ -39,6 +40,7 @@ class GUI {
 	static ImageIcon egIcon = new ImageIcon("Game/eg.png");//Empty piece on green background
 	static ImageIcon emIcon = new ImageIcon("Game/em.png");//Empty piece on maroon background
 	static String input_txt="Default Input";
+	static boolean first=true;
 	static JTextField input = new JTextField(input_txt);
 	static int row_c;
 	static int column;
@@ -100,7 +102,7 @@ class GUI {
 		} else{
 			buttons[row][col] = new JButton(emIcon); //Just in case
 		}
-		row_c=row;
+		/*row_c=row;
 		column=col+65;
 		buttons[row][col].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -108,7 +110,7 @@ class GUI {
 				input_txt+="" + (char)column;
 				input.setText(input_txt);
 			}
-		});
+		});*/
 		return buttons[row][col];
 	}
 	
@@ -164,8 +166,10 @@ class GUI {
 				}
 			}
 			rowTemp = rowTemp - 2;
-		}
-		
+		}	
+		Buttons myButton= new Buttons(buttons, input, first);
+
+	//	set_buttons();
 		/*
 		//Create the 2D array by using state
 		for(int row = 0; row < 8; row++) {
@@ -202,9 +206,6 @@ class GUI {
 		return bottom;
 	}
 
-	
-	
-	
     public static void main(String[] args) {
 		
 		JFrame frame = new JFrame();
