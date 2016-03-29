@@ -86,6 +86,7 @@ class GUI {
 	public static JButton buttonIcon(int row, int col, int white){//0=black, 1=white, 2=empty
 		if(white==0 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(bgIcon);
+			
 		} else if(white==0 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(bmIcon);
 		} else if(white==1 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
@@ -112,11 +113,48 @@ class GUI {
 	}
 	
 	public static JPanel centerPanel() {
-		JPanel center = new JPanel(new GridLayout(8, 8));
-
+		JPanel center = new JPanel(new GridLayout(9, 9));
+		
+		JLabel r0 = new JLabel(" ");
+		JLabel r1 = new JLabel("A");
+		JLabel r2 = new JLabel("B");
+		JLabel r3 = new JLabel("C");
+		JLabel r4 = new JLabel("D");
+		JLabel r5 = new JLabel("E");
+		JLabel r6 = new JLabel("F");
+		JLabel r7 = new JLabel("G");
+		JLabel r8 = new JLabel("H");
+		
+		r0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		r1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		r2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		r3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		r4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		r5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		r6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		r7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		r8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		
+		center.add(r0);
+		center.add(r1);
+		center.add(r2);
+		center.add(r3);
+		center.add(r4);
+		center.add(r5);
+		center.add(r6);
+		center.add(r7);
+		center.add(r8);
+		
+		int rowTemp=8;
+		
 		//Create the 2D array by using two for loops
 		for(int row = 0; row < 8; row++) {
 			for(int col = 0; col < 8; col++) {
+				if(col==0){
+					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
+					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+					center.add(c0);
+				}
 				if(row<2){
 					center.add(buttonIcon(row, col, 0));
 				} else if(row<8 && row>5){
@@ -125,6 +163,7 @@ class GUI {
 					center.add(buttonIcon(row, col, 2));
 				}
 			}
+			rowTemp = rowTemp - 2;
 		}
 		
 		/*
@@ -208,7 +247,7 @@ class GUI {
 		
 		
 		frame.setVisible(true);
-		frame.setSize(500,625);
+		frame.setSize(500,655);
 		
 		
 	}
