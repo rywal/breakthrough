@@ -27,13 +27,39 @@ class GUI{
 	}
 	
 	public static JPanel topPanel() {
+		JPanel fullTop = new JPanel(new BorderLayout());
+		
 		JPanel top = new JPanel(/*new GridLayout(2, 1)*/);
 		JLabel title = new JLabel("Breakthrough - Team 11");
 		title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JButton undo = new JButton("Undo");
+		JButton startOver = new JButton("Start Over");
 		top.add(title);
 		top.add(undo);
-		return top;
+		top.add(startOver);
+		
+		JPanel bottom = new JPanel(/*new GridLayout(2, 1)*/);
+		String[] gameTypeString = {"human-ai", "ai-ai"};
+		String[] aiString1 = {"Easy", "Medium", "Hard"};
+		String[] aiString2 = {"Easy", "Medium", "Hard"};
+		
+		JComboBox gameType = new JComboBox(gameTypeString);
+		JComboBox aiDif1 = new JComboBox(aiString1);
+		JComboBox aiDif2 = new JComboBox(aiString2);
+		
+		gameType.setEditable(true);
+		aiDif1.setEditable(true);
+		aiDif2.setEditable(true);
+		
+		//gameType.addActionListener(this);
+		bottom.add(gameType);
+		bottom.add(aiDif1);
+		bottom.add(aiDif2);
+		
+		fullTop.add(top, BorderLayout.NORTH);
+		fullTop.add(bottom, BorderLayout.SOUTH);
+		
+		return fullTop;
 	}
 	
 	public static JPanel centerPanel() {
@@ -102,14 +128,15 @@ class GUI{
 	
     public static void main(String[] args) {
 		JFrame frame = new JFrame("Breakthrough - Team 11");
-		frame.setVisible(true);
-		frame.setSize(500,550);
+		
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 		frame.add(fullPanel(topPanel(),centerPanel()));
 		frame.add(bottomPanel(), BorderLayout.SOUTH);
+		frame.setVisible(true);
+		frame.setSize(500,600);
 		
 		
 	}
