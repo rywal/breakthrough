@@ -28,7 +28,7 @@ gui:
 
 connection:
 	javac -d "$(shell pwd)" Game/Connection.java
-	java -cp "$(shell pwd)" game.Connection
+	java -cp "$(shell pwd)" Connection
 
 clean:
 	rm -r *.o *.dSYM breakthrough

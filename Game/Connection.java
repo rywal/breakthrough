@@ -80,12 +80,12 @@ public class Connection{
     }
 
 
-    public static void main(String arg[]) throws Exception{
+ /*   public static void main(String arg[]) throws Exception{
         //Creating a SocketClient object
         while(true){
             Connection connection = new Connection ("localhost", 5155, "breakthrough");
             connection.play();
             break;
         }
-    }
+    }*/
 }
