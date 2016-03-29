@@ -86,6 +86,8 @@ class GUI {
 	static String input_txt="Default Input";
 
 	static boolean first=true;
+	
+	static boolean turn=true;
 
 	static JTextField input = new JTextField(input_txt);
 
@@ -208,24 +210,6 @@ class GUI {
 			buttons[row][col] = new JButton(emIcon); //Just in case
 
 		}
-
-		/*row_c=row;
-
-		column=col+65;
-
-		buttons[row][col].addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent actionEvent) {
-
-				input_txt="" + (char)row_c;
-
-				input_txt+="" + (char)column;
-
-				input.setText(input_txt);
-
-			}
-
-		});*/
 
 		return buttons[row][col];
 
@@ -389,6 +373,34 @@ class GUI {
 
 	}
 
+	public static String to_result(String command, boolean turn){
+		String result="";
+		String dir;
+		if(command.length()>6){
+			int pos_col = (int)command.charAt(0)-(int)command.charAt(6);
+			int pos_row = (int)command.charAt(7)-(int)command.charAt(1);
+			int mult = turn ? 1 : -1;
+			if(pos_row*mult==1){
+				result ="" + command.charAt(0) + command.charAt(1);
+				switch (mult*pos_col){
+					case (-1): 	result += " right";
+								break;
+					case (0):	result += " fwd";
+								break;
+					case (1):	result += " left";
+								break;
+					default : 	result= "Invalid";//column " + (char)pos_col;
+								break;
+				}
+				return result;
+			}
+			else result= "Invaldi";//row :" + (char) pos_row;
+		}
+		else{
+			result = "Invalid";// + (char)command.length();
+		}
+		return result;
+	}
 	
 
 	public static JPanel bottomPanel() {
@@ -398,6 +410,13 @@ class GUI {
 
 
 		JButton enter = new JButton("Enter");
+		
+		enter.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent actionEvent) {
+					String result=to_result(input.getText(), turn);
+					input.setText(result);
+				}
+		});
 
 		bottom.add(input);
 

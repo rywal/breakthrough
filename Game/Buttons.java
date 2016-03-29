@@ -30,7 +30,9 @@ import javax.imageio.ImageIO;
 		static JButton [][] buttons = new JButton[8][8]; 
 		static JTextField input;
 		static String input_txt;
+		static String direction;
 		static boolean first;
+		static boolean white;
 		
 		Buttons( JButton[][] buts, JTextField in, boolean f){
 			buttons=buts;
@@ -38,6 +40,7 @@ import javax.imageio.ImageIO;
 			first=f;
 			set_buttons();
 		}
+		
 		public static void set_buttons(){
 			buttons[0][0].addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent actionEvent) {
