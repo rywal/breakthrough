@@ -1,4 +1,2 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-display human-ai hard b2 right exit 
-=-=-=-=-=-=-EXITED-=-=-=-=-=-=
