@@ -25,7 +25,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 class GUI {
-	
+	//static {
+	//	System.loadLibrary("Game");
+	//}
+	//public static Game new_game;
 	static JButton [][] buttons = new JButton[8][8]; 
 	static JTextArea outputField;
 	
@@ -35,7 +38,10 @@ class GUI {
 	static ImageIcon bmIcon = new ImageIcon("Game/bm.png");//Black piece on maroon background
 	static ImageIcon egIcon = new ImageIcon("Game/eg.png");//Empty piece on green background
 	static ImageIcon emIcon = new ImageIcon("Game/em.png");//Empty piece on maroon background
-	
+	static String input_txt="Default Input";
+	static JTextField input = new JTextField(input_txt);
+	static int row_c;
+	static int column;
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		JPanel full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
@@ -93,7 +99,15 @@ class GUI {
 		} else{
 			buttons[row][col] = new JButton(emIcon); //Just in case
 		}
-		
+		row_c=row;
+		column=col+65;
+		buttons[row][col].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent actionEvent) {
+				input_txt="" + (char)row_c;
+				input_txt+="" + (char)column;
+				input.setText(input_txt);
+			}
+		});
 		return buttons[row][col];
 	}
 	
@@ -138,7 +152,7 @@ class GUI {
 	
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
-		JTextField input = new JTextField("Default Input");
+
 		JButton enter = new JButton("Enter");
 		bottom.add(input);
 		bottom.add(enter,BorderLayout.EAST);
