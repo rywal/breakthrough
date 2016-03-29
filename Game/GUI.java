@@ -1,6 +1,7 @@
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.*;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -10,11 +11,24 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import sun.awt.image.*;
+import java.io.File;
+import java.awt.image.BufferedImage;
+import javax.imageio.*;
+import java.applet.Applet;
+import java.io.*;
+import java.net.URL;
+import java.applet.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 class GUI{
 	
 	static JButton [][] buttons = new JButton[8][8]; 
 	static JTextArea outputField;
+	
 	static ImageIcon wgIcon = new ImageIcon("Game/wg.png");//White piece on green background
 	static ImageIcon wmIcon = new ImageIcon("Game/wm.png");//White piece on maroon background
 	static ImageIcon bgIcon = new ImageIcon("Game/bg.png");//Black piece on green background
@@ -26,23 +40,22 @@ class GUI{
 		JPanel full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
 		full.add(centerPanel, BorderLayout.CENTER);
-		//JTextField input_field = new JTextField();
-		//full.add(input);
-		//full.add(bottomPanel, BorderLayout.SOUTH);
 		return full;
 	}
 	
 	public static JPanel topPanel() {
 		JPanel fullTop = new JPanel(new BorderLayout());
 		
-		JPanel top = new JPanel(/*new GridLayout(2, 1)*/);
+		JPanel top = new JPanel(new BorderLayout());
 		JLabel title = new JLabel("Breakthrough - Team 11");
+		title.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+		
 		title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JButton undo = new JButton("Undo");
 		JButton startOver = new JButton("Start Over");
-		top.add(title);
-		top.add(undo);
-		top.add(startOver);
+		top.add(title, BorderLayout.NORTH);
+		top.add(undo, BorderLayout.WEST);
+		top.add(startOver, BorderLayout.EAST);
 		
 		JPanel bottom = new JPanel(/*new GridLayout(2, 1)*/);
 		String[] gameTypeString = {"Game Type", "human-ai", "ai-ai"};
@@ -64,7 +77,7 @@ class GUI{
 		return fullTop;
 	}
 	
-	public static JButton defaultLayout(int row, int col, int white){//0=black, 1=white, 2=empty
+	public static JButton buttonIcon(int row, int col, int white){//0=black, 1=white, 2=empty
 		if(white==0 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(bgIcon);
 		} else if(white==0 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
@@ -88,22 +101,15 @@ class GUI{
 		JPanel center = new JPanel(new GridLayout(8, 8));
 
 		//Create the 2D array by using two for loops
-		for(int row = 0; row < 2; row++) {
+		for(int row = 0; row < 8; row++) {
 			for(int col = 0; col < 8; col++) {
-				//buttons[row][col] = new JButton(xIcon);
-				//buttons[row][col].setPreferredSize();
-				
-				center.add(defaultLayout(row, col, 0));
-			}
-		}
-		for(int row = 2; row < 6; row++) {
-			for(int col = 0; col < 8; col++) { 
-				center.add(defaultLayout(row, col, 2));
-			}
-		}
-		for(int row = 6; row < 8; row++) {
-			for(int col = 0; col < 8; col++) { 
-				center.add(defaultLayout(row, col, 1));
+				if(row<2){
+					center.add(buttonIcon(row, col, 0));
+				} else if(row<8 && row>5){
+					center.add(buttonIcon(row, col, 1));
+				} else if(row<6 && row>1){
+					center.add(buttonIcon(row, col, 2));
+				}
 			}
 		}
 		
@@ -148,15 +154,13 @@ class GUI{
 	
     public static void main(String[] args) {
 		JFrame frame = new JFrame("Breakthrough - Team 11");
-		
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		
 		frame.add(fullPanel(topPanel(),centerPanel()));
 		frame.add(bottomPanel(), BorderLayout.SOUTH);
 		frame.setVisible(true);
-		frame.setSize(500,600);
+		frame.setSize(500,625);
 		
 		
 	}
