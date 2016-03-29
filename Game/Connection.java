@@ -1,4 +1,4 @@
-package game;
+//package game;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,7 +34,13 @@ public class Connection{
     }
 
     public String read() throws Exception{
-        return in.readLine();
+        String response = in.readLine();
+        String nextLine = in.readLine();
+        while (nextLine != null){
+            response += nextLine;
+            nextLine = in.readLine();
+        }
+        return response;
     }
 
     public Connection(String hostname, int port, String password) throws Exception{
@@ -46,32 +52,33 @@ public class Connection{
 
         String response = in.readLine();
         if(response.startsWith("PASSWORD")) {
+            System.out.println("PASSWORD - " + response);
             authenticate(password);
+            System.out.println(password);
         }
     }
+
+    public void newGame(String )
 
     public void play() throws Exception{
       String response;
         try{
             response = read();
-            if(response.startsWith("PASSWORD")){
-                System.out.println("please enter a password\n");
-                String user_input;
-                Scanner ui = new Scanner(System.in);
-                user_input = ui.nextLine();
-                write(user_input);
-            }
+            System.out.println("Input: " + response);
             while(true){
-                response = read();
-                System.out.println(response);
+                System.out.println("Loop. Input: " + response);
                 if(response.startsWith("WELCOME")) {
+                    write("HUMAN-AI HARD");
+                    System.out.println("HUMAN-AI HARD");
                     write("DISPLAY");
+                    System.out.println("DISPLAY");
                 } else if(response.startsWith("OK")){
                     String user_input;
                     Scanner ui = new Scanner(System.in);
                     user_input = ui.nextLine();
                     write(user_input);
                 }
+                response = read();
             }
         }
         finally{
@@ -84,6 +91,14 @@ public class Connection{
         //Creating a SocketClient object
         while(true){
             Connection connection = new Connection ("localhost", 5155, "breakthrough");
+
+            try{
+
+            }
+            finally{
+                socket.close();
+            }
+
             connection.play();
             break;
         }
