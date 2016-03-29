@@ -27,8 +27,8 @@ gui:
 	$(JRUN) $(JSRCS)
 
 connection:
-    javac -d "$(shell pwd)" Game/Connection.java
-    java -cp "$(shell pwd)" Connection
+	javac -d "$(shell pwd)" Game/Connection.java
+	java -cp "$(shell pwd)" Connection
 
 clean:
 	rm -r *.o *.dSYM breakthrough
