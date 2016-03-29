@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-class GUI{
+class GUI {
 	
 	static JButton [][] buttons = new JButton[8][8]; 
 	static JTextArea outputField;
@@ -138,7 +138,6 @@ class GUI{
 	
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
-		
 		JTextField input = new JTextField("Default Input");
 		JButton enter = new JButton("Enter");
 		bottom.add(input);
@@ -149,16 +148,51 @@ class GUI{
 		
 		return bottom;
 	}
+
 	
 	
 	
     public static void main(String[] args) {
-		JFrame frame = new JFrame("Breakthrough - Team 11");
+		
+		JFrame frame = new JFrame();
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		/*JPanel login = new JPanel(new GridLayout(2, 1));   //DO NOT DELETE
+		
+		JPanel loginTop = new JPanel(new BorderLayout());
+		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
+		
+		JPanel enterPasPan2 = new JPanel(new BorderLayout());
+		JTextField passF = new JTextField("Enter Password");
+		JButton enterP = new JButton("Enter");
+		enterPasPan2.add(passF);
+		enterPasPan2.add(enterP,BorderLayout.EAST);				
+		
+		loginTop.add(enterPas);
+		loginTop.add(enterPasPan2, BorderLayout.SOUTH);
+		
+		JPanel loginBot = new JPanel();
+		
+		loginBot.setOpaque(true);
+		loginTop.setOpaque(true);
+		loginBot.setBackground(Color.CYAN);
+		loginTop.setBackground(Color.CYAN);
+		
+		login.add(loginTop);
+		login.add(loginBot);
+		
+		login.setVisible(true);
+		
+		frame.add(login);*/                                //DO NOT DELETE
+		
+		//passF.addActionListener(this);
+		
+		
 		frame.add(fullPanel(topPanel(),centerPanel()));
 		frame.add(bottomPanel(), BorderLayout.SOUTH);
+		
+		
 		frame.setVisible(true);
 		frame.setSize(500,625);
 		
