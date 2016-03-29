@@ -11,10 +11,11 @@ else ifeq ($(UNAME), Darwin)
 else 
     cc = g++-4.7
 endif
-JCC = javac -d $(shell pwd) Game/GUI.java Game/Buttons.java
-JRUN = java -cp $(shell pwd) graphics.GUI
 
-.PHONY: all breakthrough clean
+JCC = javac -d $(shell pwd) Game/GUI.java Game/Buttons.java
+JRUN = java -cp $(shell pwd) game.GUI
+
+.PHONY: all breakthrough clean gui connection
 
 all: breakthrough
 	
@@ -24,6 +25,10 @@ breakthrough:
 gui:
 	$(JCC) $(JSRCS)
 	$(JRUN) $(JSRCS)
+
+connection:
+    javac -d "$(shell pwd)" Game/Connection.java
+    java -cp "$(shell pwd)" game.Connection
 
 clean:
 	rm -r *.o *.dSYM breakthrough
