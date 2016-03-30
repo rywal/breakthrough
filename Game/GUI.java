@@ -1,4 +1,5 @@
 package breakthroughGUI;
+
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
@@ -108,9 +109,10 @@ class GUI {
 	}
 	
 	public static JPanel centerPanel() {
-		JPanel center = new JPanel(new GridLayout(9, 9));
+		JPanel center = new JPanel(new GridLayout(8, 8));
 		
-		JLabel r0 = new JLabel(" ");
+		/*JLabel r0 = new JLabel(" ");                                                        //UNCOMMENT THIS
+>>>>>>> cab95f7c917f04858e79e25b9db30cb9e56e41e4
 		JLabel r1 = new JLabel("A");
 		JLabel r2 = new JLabel("B");
 		JLabel r3 = new JLabel("C");
@@ -140,16 +142,17 @@ class GUI {
 		center.add(r7);
 		center.add(r8);
 		
-		int rowTemp=8;
+
+		int rowTemp=8;*/                                                                  //UNCOMMENT THI
 		
 		//Create the 2D array by using two for loops
 		for(int row = 0; row < 8; row++) {
 			for(int col = 0; col < 8; col++) {
-				if(col==0){
+				/*if(col==0){                                                               //UNCOMMENT THIS
 					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
 					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					center.add(c0);
-				}
+				} */                                                                         //UNCOMMENT THIS
 				if(row<2){
 					center.add(buttonIcon(row, col, 0));
 				} else if(row<8 && row>5){
@@ -158,7 +161,7 @@ class GUI {
 					center.add(buttonIcon(row, col, 2));
 				}
 			}
-			rowTemp = rowTemp - 2;
+			//rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
 		}	
 		Buttons myButton= new Buttons(buttons, input, first);
 
@@ -206,7 +209,7 @@ class GUI {
 				}
 				return result;
 			}
-			else result= "Invaldi";//row :" + (char) pos_row;
+			else result= "Invalid";//row :" + (char) pos_row;
 		}
 		else{
 			result = "Invalid";// + (char)command.length();
@@ -237,7 +240,10 @@ class GUI {
 
     public static void main(String[] args) {
 		
-		JFrame frame = new JFrame();
+		final JFrame frame = new JFrame("          BreakThrough - Team 11");		
+		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
+		
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -277,7 +283,7 @@ class GUI {
 		
 		
 		frame.setVisible(true);
-		frame.setSize(500,655);
+		frame.setSize(500,600);
 	
 	}
 }
