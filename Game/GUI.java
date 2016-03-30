@@ -107,9 +107,9 @@ class GUI {
 	}
 	
 	public static JPanel centerPanel() {
-		JPanel center = new JPanel(new GridLayout(9, 9));
+		JPanel center = new JPanel(new GridLayout(8, 8));
 		
-		JLabel r0 = new JLabel(" ");                                                        //UNCOMMENT THIS
+		/*JLabel r0 = new JLabel(" ");                                                        //UNCOMMENT THIS
 		JLabel r1 = new JLabel("A");
 		JLabel r2 = new JLabel("B");
 		JLabel r3 = new JLabel("C");
@@ -139,16 +139,16 @@ class GUI {
 		center.add(r7);
 		center.add(r8);
 		
-		int rowTemp=8;                                                                  //UNCOMMENT THIS
+		int rowTemp=8;*/                                                                  //UNCOMMENT THIS
 		
 		//Create the 2D array by using two for loops
 		for(int row = 0; row < 8; row++) {
 			for(int col = 0; col < 8; col++) {
-				if(col==0){                                                               //UNCOMMENT THIS
+				/*if(col==0){                                                               //UNCOMMENT THIS
 					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
 					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					center.add(c0);
-				}                                                                          //UNCOMMENT THIS
+				} */                                                                         //UNCOMMENT THIS
 				if(row<2){
 					center.add(buttonIcon(row, col, 0));
 				} else if(row<8 && row>5){
@@ -157,7 +157,7 @@ class GUI {
 					center.add(buttonIcon(row, col, 2));
 				}
 			}
-			rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
+			//rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
 		}	
 		Buttons myButton= new Buttons(buttons, input, first);
 
@@ -233,17 +233,7 @@ class GUI {
 
     public static void main(String[] args) {
 		
-		final JFrame frame = new JFrame("          BreakThrough - Team 11");
-		//frame.setLocation(50,50);
-		
-		/*Dimension windowSize = getSize();
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        Point centerPoint = ge.getCenterPoint();
-
-        int dx = centerPoint.x - windowSize.width / 2;
-        int dy = centerPoint.y - windowSize.height / 2;    
-        frame.setLocation(dx, dy);*/
-		
+		final JFrame frame = new JFrame("          BreakThrough - Team 11");		
 		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
 		
@@ -296,7 +286,7 @@ class GUI {
 
 		
 		frame.setVisible(true);
-		frame.setSize(500,655);
+		frame.setSize(500,600);
 	
 	}
 }
