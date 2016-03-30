@@ -413,7 +413,7 @@ bool do_command(vector<string> command_line){
                             }
                             new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
                         } else{
-							string temp = "ILLEGAL\n; Invalid move" + string(1, tc) + to_string(t2) + " " + command_line[1].c_str() + "\n";
+							string temp = "ILLEGAL\n";//; Invalid move" + string(1, tc) + to_string(t2) + " " + command_line[1].c_str() + "\n";
                             socket_output(temp.c_str());
                             sprintf(out_buffer, "%c%c %s is an invalid move\n", tc,t2, command_line[1].c_str());
                             if(new_game.get_display())

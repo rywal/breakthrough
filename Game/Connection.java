@@ -1,4 +1,4 @@
-package breakthroughGUI;
+//package breakthroughGUI;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -64,12 +64,15 @@ public class Connection{
             response = read();
         }
 
-        String newMove = "";
-        while(newMove != "") {
-            newMove = read();
-        }
+//        String newMove = "";
+//        System.out.println("Rev:" + response + ".");
+//        while(!(newMove = read()).isEmpty()) {
+//            response = response + "\n" + newMove;
+//            System.out.println("Recv:" + newMove + ".");
+//        }
 
-        response = response + "\n" + newMove;
+        Thread.sleep(2000);
+        
         return response;
     }
 
@@ -115,31 +118,35 @@ public class Connection{
         newGame(gameType, difficulty1, "", "", "", "");
     }
 
-//    public static void main(String[] args) {
-//
-//        try {
-//            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
-//            String response;
-//
-//            connection.newGame("HUMAN-AI", "EASY");
-//            response = connection.read();
-//            System.out.println("Game Response: " + response);
-//
-////            response = connection.command("DISPLAY");
-////            System.out.println("Res: " + response);
-//
-//            response = connection.move("A2 FWD");
+    public static void main(String[] args) {
+
+        try {
+            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
+            String response;
+
+            connection.newGame("HUMAN-AI", "EASY");
+
+            Thread.sleep(2000);
+            connection.read();
+
+//            response = connection.command("DISPLAY");
 //            System.out.println("Res: " + response);
-//
-//            response = connection.move("A1 LEFT");
-//            System.out.println("Res: " + response);
-//
-//            response = connection.command("EXIT");
-//            System.out.println("Res: " + response);
-//
-//            connection.close();
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+            response = connection.move("A2 FWD");
+            System.out.println("A2 FWD: " + response);
+
+
+            response = connection.read();
+            System.out.println("AI: " + response);
+
+            response = connection.move("A1 LEFT");
+            System.out.println("A1 LEFT: " + response);
+
+            connection.command("\nEXIT");
+
+            connection.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
