@@ -244,8 +244,8 @@ class GUI {
 		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
 		
-		frame.setLayout(new BorderLayout());//
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//
+		frame.setLayout(new BorderLayout());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		/*JPanel login = new JPanel(new GridLayout(2, 1));   //DO NOT DELETE
 		
