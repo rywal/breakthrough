@@ -413,7 +413,11 @@ bool do_command(vector<string> command_line){
                             }
                             new_game.update(tc, t2-48, to_dir(command_line[1].c_str()));
                         } else{
+<<<<<<< HEAD
 							string temp = "ILLEGAL\n";//; Invalid move" + string(1, tc) + to_string(t2) + " " + command_line[1].c_str() + "\n";
+=======
+							string temp = "; Invalid move" + string(1, tc) + to_string(t2) + " " + command_line[1].c_str() + "\nILLEGAL\n";
+>>>>>>> 3443a503ed5640dfc5f17f1bffc273cd3eb08f80
                             socket_output(temp.c_str());
                             sprintf(out_buffer, "%c%c %s is an invalid move\n", tc,t2, command_line[1].c_str());
                             if(new_game.get_display())
@@ -421,17 +425,17 @@ bool do_command(vector<string> command_line){
                             output_function(16);
                         }
                     } else{
-                        socket_output("ILLEGAL\n; Invalid direction\n");
+                        socket_output("; Invalid direction\nILLEGAL\n");
                         sprintf(out_buffer, "%s is not a valid direction", command_line[1].c_str());
                         output_function(17);
                     }
                 } else{
-                    socket_output("ILLEGAL\n; Invalid row number\n");
+                    socket_output("; Invalid row number\nILLEGAL\n");
                     sprintf(out_buffer, "%c  is not a valid row number", t2);
                     output_function(18);
                 }
             } else{
-                socket_output("ILLEGAL\n; Invalid column letter\n");
+                socket_output("; Invalid column letter\nILLEGAL\n");
                 sprintf(out_buffer, "%c  is not a valid column letter", tc);
                 output_function(19);
             }
@@ -442,7 +446,7 @@ bool do_command(vector<string> command_line){
             return true;
         }
     }else{
-        socket_output("ILLEGAL\n; Not a valid move\n");
+        socket_output("; Not a valid move\nILLEGAL\n");
         sprintf(out_buffer, "%s is not a valid command", command_line[0].c_str());
         output_function(21);
     }

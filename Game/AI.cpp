@@ -305,7 +305,7 @@ vector<Node*> get_children(Node* parent, vector<vector<char>> parent_board, bool
 		}
 	}
 	if(parent->get_depth()!=max_depth){
-//		cout<<"; Parent depth: "<<parent->get_depth()<<" \n";
+		cout<<"; Parent depth: "<<parent->get_depth()<<" \n";
 		depth_list[parent->get_depth()+1].push_back(children_nodes);
 	}
 	return children_nodes;

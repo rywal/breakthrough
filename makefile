@@ -12,7 +12,7 @@ else
     cc = g++-4.7
 endif
 
-JCC = javac -d "$(shell pwd)" Game/GUI.java Game/Buttons.java
+JCC = javac -d "$(shell pwd)" Game/GUI.java Game/Buttons.java Game/GUI_Game.java
 JRUN = java -cp "$(shell pwd)" breakthroughGUI.GUI
 
 .PHONY: all breakthrough clean gui connection

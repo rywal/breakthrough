@@ -1,6 +1,2 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-human-ai easy a2 fwd a1 left a1 left is an invalid move
-
-exit 
-=-=-=-=-=-=-EXITED-=-=-=-=-=-=

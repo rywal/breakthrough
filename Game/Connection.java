@@ -72,7 +72,7 @@ public class Connection{
 //        }
 
         Thread.sleep(2000);
-        
+
         return response;
     }
 
@@ -99,11 +99,11 @@ public class Connection{
         if (!difficulty2.isEmpty() && !address.isEmpty() && !port.isEmpty() && !password.isEmpty()) {
             System.out.println("Doing my magic here");
             command_response = command(gameType + " " +
-                                        address + " " +
-                                        port + " " +
-                                        password + " " +
-                                        difficulty1 + " " +
-                                        difficulty2);
+                    address + " " +
+                    port + " " +
+                    password + " " +
+                    difficulty1 + " " +
+                    difficulty2);
             System.out.println("New game response(A-A): " + command_response);
             return;
         }
