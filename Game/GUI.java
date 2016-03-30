@@ -52,7 +52,6 @@ class GUI {
 	static int row_c;
 	static int column;
 	static JPanel full;
-	static JPanel new_full;	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
@@ -94,7 +93,8 @@ class GUI {
 		return fullTop;
 	}
 	
-	public static JButton buttonIcon(int row, int col, int white){//-1=black, 0=white, 1=empty
+	public static JButton buttonIcon(int row, int col, int white){//-1=black, 0=empty, 1=white
+		
 		if(white==-1 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(bgIcon);
 			
@@ -228,7 +228,7 @@ class GUI {
 
 		//JButton enter = new JButton("Enter");
 		
-		/*input.addActionListener(new ActionListener(){
+		input.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
@@ -236,25 +236,28 @@ class GUI {
 				//if(server.response=="OK")				
 				input.setText(result);
 				new_game.make_move(result);
-				frame.remove(full);
-				full=fullPanel(topPanel(),centerPanel());
-				frame.add(full);
-				/*if(turn){
-					new_full = fullPanel(topPanel(),centerPanel());
-					frame.add(new_full);
-					frame.remove(full);
-				}
-				else{
+			//	full=fullPanel(topPanel(),centerPanel());
+			//	full.repaint();
+			//	frame.add(full);
+			//new_full = fullPanel(topPanel(),centerPanel());
+				frame.getContentPane().removeAll();
+				frame.add(topPanel());
+				frame.add(centerPanel());
+				frame.add(bottomPanel(), BorderLayout.SOUTH);
+					//frame.repaint();
+			/*	else{
 					full = fullPanel(topPanel(),centerPanel());
 					frame.add(full);
 					frame.remove(new_full);
 				}*/	
 				
-				SwingUtilities.updateComponentTreeUI(frame);
+				//frame.repaint();
+				//SwingUtilities.updateComponentTreeUI(frame);
+
 			}
-		});*/
+		});
 		
-		input.addCaretListener(new CaretListener() {
+		/*input.addCaretListener(new CaretListener() {
 			@Override
 			public void caretUpdate(CaretEvent e) {
 				if(input.getText().length()==8){
@@ -265,11 +268,13 @@ class GUI {
 					//new_game.make_move(result);
 					frame.remove(full);
 					full = fullPanel(topPanel(),centerPanel());
+					full.repaint();
 					frame.add(full);
 					SwingUtilities.updateComponentTreeUI(frame);
+					//get response 
 				}
 			}
-		});
+		});*/
 		
 		bottom.add(input);
 
@@ -316,7 +321,7 @@ class GUI {
 			public void actionPerformed(ActionEvent e) {
 				String passwordText = passF.getText();
 				if(passwordText.equalsIgnoreCase("breakthrough")){
-					full=fullPanel(topPanel(),centerPanel());
+					fullPanel(topPanel(),centerPanel());
 					frame.add(full);
 					frame.add(bottomPanel(), BorderLayout.SOUTH);
 					frame.remove(login);

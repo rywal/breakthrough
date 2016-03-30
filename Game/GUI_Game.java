@@ -33,13 +33,6 @@ import javax.imageio.ImageIO;
 		
 		GUI_Game(){
 			set_start();
-			for(int i=0; i<8; i++){
-				for(int j=0; j<8; j++){
-					System.out.print(i);
-					System.out.print(j);
-					System.out.println(board[i][j]);
-				}
-			}
 		}
 		
 		public static void set_start(){
@@ -64,14 +57,17 @@ import javax.imageio.ImageIO;
 		
 		public static void make_move(String command){
 			int column = (int)command.charAt(0)-65;
-			int row = (int)command.charAt(1)-1;
+			int row = (int)command.charAt(1)-49;
+			System.out.print(column);
+			System.out.print(row);
+			System.out.println("");
 			int shift = white ? 1 : -1;
 			board[row][column]=0;
 			if (command.length()==6){
 				board[row + shift][column]= shift;
 			}
 			else if(command.length()==7){
-				board[row + shift][column - shift]= shift;
+				board[row + shift][column - shift] = shift;
 
 			}
 			else if(command.length()==8){
