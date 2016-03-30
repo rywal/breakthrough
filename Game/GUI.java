@@ -222,15 +222,15 @@ class GUI {
 			}
 		});
 		bottom.add(input);
-		bottom.add(enter,BorderLayout.EAST);
-	
+
+		//bottom.add(enter,BorderLayout.EAST);	
 		return bottom;
 	}
 
 
     public static void main(String[] args) {
 		
-		final JFrame frame = new JFrame("          BreakThrough - Team 11");		
+		final JFrame frame = new JFrame("                     BreakThrough - Team 11");		
 		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
 		
