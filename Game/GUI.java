@@ -246,9 +246,10 @@ class GUI {
 					String result=to_result(input.getText(), turn);
 					//sendto server
 					//if(server.response=="OK")				
-					input.setText(result);
-					new_game.make_move(result);
-					frame[0] = full_panel(topPanel(),centerPanel());
+					//input.setText(result);
+					//new_game.make_move(result);
+					frame.remove(full);
+					full = fullPanel(topPanel(),centerPanel());
 					frame.add(full);
 					SwingUtilities.updateComponentTreeUI(frame);
 				}
