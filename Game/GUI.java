@@ -34,6 +34,7 @@ class GUI {
 	//public static Game new_game;
 	static JButton [][] buttons = new JButton[8][8]; 
 	static JTextArea outputField;
+	static final JFrame frame = new JFrame("                     BreakThrough - Team 11");		
 	static GUI_Game new_game= new GUI_Game();
 	static ImageIcon wgIcon = new ImageIcon("Game/wg.png");//White piece on green background
 	static ImageIcon wmIcon = new ImageIcon("Game/wm.png");//White piece on maroon background
@@ -47,8 +48,9 @@ class GUI {
 	static JTextField input = new JTextField(input_txt);
 	static int row_c;
 	static int column;
+	static JPanel full;
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
-		JPanel full = new JPanel(new BorderLayout());
+		full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
 		full.add(centerPanel, BorderLayout.CENTER);
 		return full;
@@ -218,12 +220,19 @@ class GUI {
 		JPanel bottom = new JPanel(new BorderLayout());
 
 		//JButton enter = new JButton("Enter");
-	
+		
 		input.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
+				//sendto server
+				//if(server.response=="OK")				
 				input.setText(result);
+				new_game.make_move(result);
+				frame.remove(full);
+				full = fullPanel(topPanel(),centerPanel());
+				frame.add(full);
+				SwingUtilities.updateComponentTreeUI(frame);
 			}
 		});
 		bottom.add(input);
@@ -235,7 +244,6 @@ class GUI {
 
     public static void main(String[] args) {
 		
-		final JFrame frame = new JFrame("                     BreakThrough - Team 11");		
 		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
 		
@@ -247,7 +255,7 @@ class GUI {
 		JPanel loginTop = new JPanel(new BorderLayout());
 		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
 	
-		final JTextField passF = new JTextField("Enter Password");
+		final JTextField passF = new JTextField("breakthrough");
 		passF.setHorizontalAlignment(JTextField.CENTER);
 		
 		loginTop.add(enterPas);
