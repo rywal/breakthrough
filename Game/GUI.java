@@ -218,7 +218,7 @@ class GUI {
 		JPanel bottom = new JPanel(new BorderLayout());
 
 		//JButton enter = new JButton("Enter");
-	
+		
 		input.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -247,7 +247,7 @@ class GUI {
 		JPanel loginTop = new JPanel(new BorderLayout());
 		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
 	
-		final JTextField passF = new JTextField("Enter Password");
+		final JTextField passF = new JTextField("breakthrough");
 		passF.setHorizontalAlignment(JTextField.CENTER);
 		
 		loginTop.add(enterPas);
