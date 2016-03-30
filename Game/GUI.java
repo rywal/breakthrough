@@ -51,8 +51,9 @@ class GUI {
 	static JTextField input = new JTextField(input_txt);
 	static int row_c;
 	static int column;
+	static JPanel full;
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
-		JPanel full = new JPanel(new BorderLayout());
+		full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
 		full.add(centerPanel, BorderLayout.CENTER);
 		return full;
@@ -231,7 +232,8 @@ class GUI {
 				//if(server.response=="OK")				
 				input.setText(result);
 				new_game.make_move(result);
-				frame[0] = full_panel(topPanel(),centerPanel());
+				frame.remove(full);
+				full = fullPanel(topPanel(),centerPanel());
 				frame.add(full);
 				SwingUtilities.updateComponentTreeUI(frame);
 			}
