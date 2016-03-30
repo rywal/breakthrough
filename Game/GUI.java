@@ -193,8 +193,11 @@ class GUI {
 		return center;
 	}
 	
-	public static void updateBoard(int row1, int col1, int row2, int col2, int piece) {
-	
+	public static void updateBoard(int row1, int col1, int dir, int piece) {
+		
+		int row2 = row1 - piece;
+		int col2 = col1 + piece*dir;
+		
 		if(((row1%2==0) && (col1%2==0)) || ((row1%2!=0) && (col1%2!=0))){
 			buttons[row1][col1].setIcon(egIcon);
 		} else{
@@ -265,25 +268,26 @@ class GUI {
 			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
 				//sendto server
-				//if(server.response=="OK")				
-				input.setText(result);
-				new_game.make_move(result);
-			//	full=fullPanel(topPanel(),centerPanel());
-			//	full.repaint();
-			//	frame.add(full);
-			//new_full = fullPanel(topPanel(),centerPanel());
-				//frame.getContentPane().removeAll();
-				//frame.add(topPanel());
-				//frame.add(centerPanel());                                  ///////
-				updateBoard(1, 1, 2, 1, 1);
-				//
-				frame.add(bottomPanel(), BorderLayout.SOUTH);
-				frame.repaint();
-			/*	else{
-					full = fullPanel(topPanel(),centerPanel());
-					frame.add(full);
-					frame.remove(new_full);
-				}*/	
+				if(true){//server.response=="OK"){				
+					input.setText(result);
+					new_game.make_move(result);
+					int shift = turn ? 1 : -1;
+					int dir=0;
+					if(result.length()==6)
+						dir = 0;
+					else if(result.length()==7)
+						dir = -1;
+					else if(result.length()==8)
+						dir = 1;
+					else
+							System.out.println("ERROR");
+					updateBoard(7-((int)result.charAt(1)-49), (int)result.charAt(0)-65, dir, shift);
+					frame.repaint();
+					turn=new_game.white;
+				}
+				else{
+				//	input.setText(server_response)
+				}
 				
 				//frame.repaint();
 				//SwingUtilities.updateComponentTreeUI(frame);
