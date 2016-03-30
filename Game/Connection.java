@@ -1,4 +1,4 @@
-//package breakthroughGUI;
+package breakthroughGUI;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -118,35 +118,35 @@ public class Connection{
         newGame(gameType, difficulty1, "", "", "", "");
     }
 
-    public static void main(String[] args) {
-
-        try {
-            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
-            String response;
-
-            connection.newGame("HUMAN-AI", "EASY");
-
-            Thread.sleep(2000);
-            connection.read();
-
-//            response = connection.command("DISPLAY");
-//            System.out.println("Res: " + response);
-
-            response = connection.move("A2 FWD");
-            System.out.println("A2 FWD: " + response);
-
-
-            response = connection.read();
-            System.out.println("AI: " + response);
-
-            response = connection.move("A1 LEFT");
-            System.out.println("A1 LEFT: " + response);
-
-            connection.command("\nEXIT");
-
-            connection.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//
+//        try {
+//            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
+//            String response;
+//
+//            connection.newGame("HUMAN-AI", "EASY");
+//
+//            Thread.sleep(2000);
+//            connection.read();
+//
+////            response = connection.command("DISPLAY");
+////            System.out.println("Res: " + response);
+//
+//            response = connection.move("A2 FWD");
+//            System.out.println("A2 FWD: " + response);
+//
+//
+//            response = connection.read();
+//            System.out.println("AI: " + response);
+//
+//            response = connection.move("A1 LEFT");
+//            System.out.println("A1 LEFT: " + response);
+//
+//            connection.command("\nEXIT");
+//
+//            connection.close();
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
