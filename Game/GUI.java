@@ -1,4 +1,5 @@
 package breakthroughGUI;
+
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
@@ -205,7 +206,7 @@ class GUI {
 				}
 				return result;
 			}
-			else result= "Invaldi";//row :" + (char) pos_row;
+			else result= "Invalid";//row :" + (char) pos_row;
 		}
 		else{
 			result = "Invalid";// + (char)command.length();
