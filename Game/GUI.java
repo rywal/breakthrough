@@ -251,11 +251,17 @@ class GUI {
 					frame.remove(new_full);
 				}*/	
 				
+<<<<<<< HEAD
 				//frame.repaint();
 				//SwingUtilities.updateComponentTreeUI(frame);
 
 			}
 		});
+=======
+				SwingUtilities.updateComponentTreeUI(frame);
+//			}
+//		});*/
+>>>>>>> 9ecd50c6bfb73c1b3c8e354e0d674c7e485c384c
 		
 		/*input.addCaretListener(new CaretListener() {
 			@Override
