@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 //package breakthroughGUI;
+=======
+package breakthroughGUI;
+>>>>>>> d9d447ddec91d7422d00ffd88edfdaf1be46765a
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
