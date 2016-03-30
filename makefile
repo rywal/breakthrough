@@ -6,13 +6,13 @@ CFLAGS= -std=c++11 -g -o
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
     cc = clang++ -I/usr/local/boost -Wno-deprecated-register -Wno-format-security
-else ifeq ($(UNAME), Darwin
+else ifeq ($(UNAME), Darwin)
     cc = g++
 else 
     cc = g++-4.7
 endif
 
-JCC = javac -d "$(shell pwd)" Game/GUI.java Game/Buttons.java Game/GUI_Game.java Game/Connection.java
+JCC = javac -d "$(shell pwd)" Game/GUI.java Game/Buttons.java Game/GUI_Game.java
 JRUN = java -cp "$(shell pwd)" breakthroughGUI.GUI
 
 .PHONY: all breakthrough clean gui connection

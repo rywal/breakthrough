@@ -52,6 +52,8 @@ class GUI {
 	static int row_c;
 	static int column;
 	static JPanel full;
+	static JPanel center = new JPanel(new GridLayout(8, 8));
+	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
@@ -93,20 +95,20 @@ class GUI {
 		return fullTop;
 	}
 	
-	public static JButton buttonIcon(int row, int col, int white){//-1=black, 0=empty, 1=white
+	public static JButton buttonIcon(int row, int col, int piece){//-1=black, 0=empty, 1=white
 		
-		if(white==-1 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
+		if(piece==-1 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(bgIcon);
 			
-		} else if(white==-1 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
+		} else if(piece==-1 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(bmIcon);
-		} else if(white==1 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
+		} else if(piece==1 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(wgIcon);
-		} else if(white==1 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
+		} else if(piece==1 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(wmIcon);
-		} else if(white==0 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
+		} else if(piece==0 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(egIcon);
-		} else if(white==0 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
+		} else if(piece==0 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(emIcon);
 		} else{
 			buttons[row][col] = new JButton(emIcon); //Just in case
@@ -115,7 +117,7 @@ class GUI {
 	}
 	
 	public static JPanel centerPanel() {
-		JPanel center = new JPanel(new GridLayout(8, 8));
+		//JPanel center = new JPanel(new GridLayout(8, 8));
 		
 		/*JLabel r0 = new JLabel(" ");                                                        //UNCOMMENT THIS
 		JLabel r1 = new JLabel("A");
@@ -190,6 +192,36 @@ class GUI {
 		center.setPreferredSize(new Dimension(450, 450));
 		return center;
 	}
+	
+	public static void updateBoard(int row1, int col1, int row2, int col2, int piece) {
+	
+		if(((row1%2==0) && (col1%2==0)) || ((row1%2!=0) && (col1%2!=0))){
+			buttons[row1][col1].setIcon(egIcon);
+		} else{
+			buttons[row1][col1].setIcon(emIcon);
+		}
+		
+		if(piece==-1){
+			if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
+				buttons[row2][col2].setIcon(bgIcon);
+			}
+			else{
+				buttons[row2][col2].setIcon(bmIcon);
+			}
+		} else if(piece==1){
+			if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
+				buttons[row2][col2].setIcon(wgIcon);
+			}
+			else{
+				buttons[row2][col2].setIcon(wmIcon);
+			}
+		} else{
+			System.out.println("ERROR!!!!!!");
+		}
+
+	}
+	
+	
 	public static String to_result(String command, boolean turn){
 		String result="";
 		String dir;
@@ -240,28 +272,24 @@ class GUI {
 			//	full.repaint();
 			//	frame.add(full);
 			//new_full = fullPanel(topPanel(),centerPanel());
-				frame.getContentPane().removeAll();
-				frame.add(topPanel());
-				frame.add(centerPanel());
+				//frame.getContentPane().removeAll();
+				//frame.add(topPanel());
+				//frame.add(centerPanel());                                  ///////
+				updateBoard(1, 1, 2, 1, 1);
+				//
 				frame.add(bottomPanel(), BorderLayout.SOUTH);
-					//frame.repaint();
+				frame.repaint();
 			/*	else{
 					full = fullPanel(topPanel(),centerPanel());
 					frame.add(full);
 					frame.remove(new_full);
 				}*/	
 				
-<<<<<<< HEAD
 				//frame.repaint();
 				//SwingUtilities.updateComponentTreeUI(frame);
 
 			}
 		});
-=======
-				SwingUtilities.updateComponentTreeUI(frame);
-//			}
-//		});*/
->>>>>>> 9ecd50c6bfb73c1b3c8e354e0d674c7e485c384c
 		
 		/*input.addCaretListener(new CaretListener() {
 			@Override
