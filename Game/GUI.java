@@ -251,8 +251,8 @@ class GUI {
 				}*/	
 				
 				SwingUtilities.updateComponentTreeUI(frame);
-			}
-		});*/
+//			}
+//		});*/
 		
 		input.addCaretListener(new CaretListener() {
 			@Override
