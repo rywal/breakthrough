@@ -145,7 +145,7 @@ class GUI {
 		int rowTemp=8;*/                                                                  //UNCOMMENT THI
 		
 		//Create the 2D array by using two for loops
-		for(int row = 7; row > -1; row--) {
+		for(int row = 0; row <8; row++) {
 			for(int col = 0; col < 8; col++) {
 				/*if(col==0){                                                               //UNCOMMENT THIS
 					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
@@ -188,6 +188,10 @@ class GUI {
 			int pos_col = (int)command.charAt(0)-(int)command.charAt(6);
 			int pos_row = (int)command.charAt(7)-(int)command.charAt(1);
 			int mult = turn ? 1 : -1;
+			System.out.println(command.charAt(0));
+			System.out.println(command.charAt(1));
+			System.out.println(command.charAt(6));
+			System.out.println(command.charAt(7));
 			if(pos_row*mult==1){
 				result ="" + command.charAt(0) + command.charAt(1);
 				switch (mult*pos_col){
@@ -197,15 +201,15 @@ class GUI {
 								break;
 					case (1):	result += " left";
 								break;
-					default : 	result= "Invalid";//column " + (char)pos_col;
+					default : 	result= "mInvalid";//column " + (char)pos_col;
 								break;
 				}
 				return result;
 			}
-			else result= "Invalid";//row :" + (char) pos_row;
+			else result= "hInvalid";//row :" + (char) pos_row;
 		}
 		else{
-			result = "Invalid";// + (char)command.length();
+			result = "lInvalid";// + (char)command.length();
 		}
 		return result;
 	}
