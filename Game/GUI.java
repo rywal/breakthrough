@@ -241,16 +241,12 @@ class GUI {
 		
 		JPanel loginTop = new JPanel(new BorderLayout());
 		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
-		
-		JPanel enterPasPan2 = new JPanel(new BorderLayout());
+	
 		final JTextField passF = new JTextField("Enter Password");
-		final JButton enterP = new JButton("Enter");
-		
-		enterPasPan2.add(passF);
-		enterPasPan2.add(enterP,BorderLayout.EAST);				
+		passF.setHorizontalAlignment(JTextField.CENTER);
 		
 		loginTop.add(enterPas);
-		loginTop.add(enterPasPan2, BorderLayout.SOUTH);
+		loginTop.add(passF, BorderLayout.SOUTH);
 		
 		JPanel loginBot = new JPanel();
 		
@@ -266,16 +262,11 @@ class GUI {
 		
 		frame.add(login);
 		
-		
-		frame.add(fullPanel(topPanel(),centerPanel()));
-		frame.add(bottomPanel(), BorderLayout.SOUTH);	
-		
-		
 		passF.addActionListener(new ActionListener(){//
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String passwordText = passF.getText();
-				if(passwordText.equals("breakthrough")){
+				if(passwordText.equalsIgnoreCase("breakthrough")){
 					frame.add(fullPanel(topPanel(),centerPanel()));
 					frame.add(bottomPanel(), BorderLayout.SOUTH);
 					frame.remove(login);
