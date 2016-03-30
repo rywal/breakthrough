@@ -33,6 +33,7 @@ class GUI {
 	//public static Game new_game;
 	static JButton [][] buttons = new JButton[8][8]; 
 	static JTextArea outputField;
+	static GUI_Game new_game;
 	static ImageIcon wgIcon = new ImageIcon("Game/wg.png");//White piece on green background
 	static ImageIcon wmIcon = new ImageIcon("Game/wm.png");//White piece on maroon background
 	static ImageIcon bgIcon = new ImageIcon("Game/bg.png");//Black piece on green background
@@ -56,13 +57,13 @@ class GUI {
 		JPanel fullTop = new JPanel(new BorderLayout());
 		
 		JPanel top = new JPanel(new BorderLayout());
-		//JLabel title = new JLabel("Breakthrough - Team 11");
-		//title.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+		JLabel title = new JLabel("Breakthrough - Team 11");
+		title.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 		
-		//title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JButton undo = new JButton("Undo");
 		JButton startOver = new JButton("Start Over");
-		//top.add(title, BorderLayout.NORTH);
+		top.add(title, BorderLayout.NORTH);
 		top.add(undo, BorderLayout.WEST);
 		top.add(startOver, BorderLayout.EAST);
 		
@@ -109,7 +110,7 @@ class GUI {
 	public static JPanel centerPanel() {
 		JPanel center = new JPanel(new GridLayout(9, 9));
 		
-		JLabel r0 = new JLabel(" ");                                                        //UNCOMMENT THIS
+		JLabel r0 = new JLabel(" ");
 		JLabel r1 = new JLabel("A");
 		JLabel r2 = new JLabel("B");
 		JLabel r3 = new JLabel("C");
@@ -139,16 +140,16 @@ class GUI {
 		center.add(r7);
 		center.add(r8);
 		
-		int rowTemp=8;                                                                  //UNCOMMENT THIS
+		int rowTemp=8;
 		
 		//Create the 2D array by using two for loops
 		for(int row = 0; row < 8; row++) {
 			for(int col = 0; col < 8; col++) {
-				if(col==0){                                                               //UNCOMMENT THIS
+				if(col==0){
 					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
 					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					center.add(c0);
-				}                                                                          //UNCOMMENT THIS
+				}
 				if(row<2){
 					center.add(buttonIcon(row, col, 0));
 				} else if(row<8 && row>5){
@@ -157,7 +158,7 @@ class GUI {
 					center.add(buttonIcon(row, col, 2));
 				}
 			}
-			rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
+			rowTemp = rowTemp - 2;
 		}	
 		Buttons myButton= new Buttons(buttons, input, first);
 
@@ -226,6 +227,9 @@ class GUI {
 		});
 		bottom.add(input);
 		bottom.add(enter,BorderLayout.EAST);
+		outputField = new JTextArea(5, 20);
+		outputField.setText("Default Output");
+		bottom.add(outputField,BorderLayout.SOUTH);
 		
 		return bottom;
 	}
@@ -233,33 +237,18 @@ class GUI {
 
     public static void main(String[] args) {
 		
-		final JFrame frame = new JFrame("          BreakThrough - Team 11");
-		//frame.setLocation(50,50);
-		
-		/*Dimension windowSize = getSize();
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        Point centerPoint = ge.getCenterPoint();
-
-        int dx = centerPoint.x - windowSize.width / 2;
-        int dy = centerPoint.y - windowSize.height / 2;    
-        frame.setLocation(dx, dy);*/
-		
-		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
-		
-		
+		JFrame frame = new JFrame();
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		final JPanel login = new JPanel(new GridLayout(2, 1));
+		/*JPanel login = new JPanel(new GridLayout(2, 1));   //DO NOT DELETE
 		
 		JPanel loginTop = new JPanel(new BorderLayout());
 		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
 		
 		JPanel enterPasPan2 = new JPanel(new BorderLayout());
-		final JTextField passF = new JTextField("Enter Password");
-		final JButton enterP = new JButton("Enter");
-		
+		JTextField passF = new JTextField("Enter Password");
+		JButton enterP = new JButton("Enter");
 		enterPasPan2.add(passF);
 		enterPasPan2.add(enterP,BorderLayout.EAST);				
 		
@@ -278,22 +267,14 @@ class GUI {
 		
 		login.setVisible(true);
 		
-		frame.add(login);
+		frame.add(login);*/                                //DO NOT DELETE
 		
-		enterP.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent actionEvent) {
-				String passwordText = passF.getText();
-				if(passwordText.equals("breakthrough")){
-					frame.add(fullPanel(topPanel(),centerPanel()));
-					frame.add(bottomPanel(), BorderLayout.SOUTH);
-					frame.remove(login);
-					SwingUtilities.updateComponentTreeUI(frame);
-				} else{
-					passF.setText("DENIED!!");
-				}
-		}
-		});
-
+		//passF.addActionListener(this);
+		
+		
+		frame.add(fullPanel(topPanel(),centerPanel()));
+		frame.add(bottomPanel(), BorderLayout.SOUTH);
+		
 		
 		frame.setVisible(true);
 		frame.setSize(500,655);
