@@ -64,11 +64,8 @@ import javax.imageio.ImageIO;
 		
 		public static void make_move(String command){
 			int column = (int)command.charAt(0)-65;
-			int row = (int)command.charAt(1)-49;
+			int row = (int)command.charAt(1)-1;
 			int shift = white ? 1 : -1;
-			System.out.print(column);
-			System.out.println(row);
-			
 			board[row][column]=0;
 			if (command.length()==6){
 				board[row + shift][column]= shift;

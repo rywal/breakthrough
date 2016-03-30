@@ -21,6 +21,7 @@ public class Connection{
     private PrintWriter out;
 
     public void write(String message) throws Exception{
+        out.flush();
         out.println(message);
         out.flush();
     }
@@ -30,6 +31,8 @@ public class Connection{
     }
 
     public void close() throws Exception{
+        write("EXIT");
+        write("EXIT");
         socket.close();
     }
 
@@ -37,7 +40,7 @@ public class Connection{
         // buffer for storing file contents in memory
         StringBuffer responseBuffer = new StringBuffer("");
         // for reading one line
-        String line = null;
+        String line = "";
         // keep reading till readLine returns null
         while (in.ready()) {
 //            System.out.print("Ready and reading: ");
@@ -57,21 +60,42 @@ public class Connection{
         return response;
     }
 
-    public String move(String command) throws Exception{
-        write(command);
+    public String readIgnoringOK() throws Exception{
         String response = read();
-        while(!response.startsWith("OK") && !response.startsWith("ILLEGAL")) {
+
+        while(response.length() == 0) {
+            if (response.startsWith("OK")) {
+                System.out.println("Skipping an OK");
+                response = "";
+            }
+
+            if (response.startsWith("ILLEGAL")) {
+                return "ILLEGAL";
+            }
             response = read();
         }
 
-//        String newMove = "";
-//        System.out.println("Rev:" + response + ".");
-//        while(!(newMove = read()).isEmpty()) {
-//            response = response + "\n" + newMove;
-//            System.out.println("Recv:" + newMove + ".");
-//        }
+        return response;
+    }
 
-        Thread.sleep(2000);
+    public String readUntilOK() throws Exception{
+        String response = read();
+
+        while(response.length() == 0) {
+            if (response.startsWith("OK")) {
+                System.out.println("Skipping an OK");
+                return "";
+            }
+
+            response = read();
+        }
+
+        return response;
+    }
+
+    public String move(String command) throws Exception{
+        write(command);
+        String response = readIgnoringOK();
 
         return response;
     }
@@ -94,16 +118,18 @@ public class Connection{
     // newGame for AI-AI type, with extra info needed
     public void newGame(String gameType, String difficulty1, String difficulty2, String address, String port, String password) throws Exception{
         String command_response;
-        System.out.println("Got it!");
+//        System.out.println("Got it!");
 
         if (!difficulty2.isEmpty() && !address.isEmpty() && !port.isEmpty() && !password.isEmpty()) {
-            System.out.println("Doing my magic here");
-            command_response = command(gameType + " " +
+//            System.out.println("Doing my magic here");
+            String command = gameType + " " +
                     address + " " +
                     port + " " +
                     password + " " +
                     difficulty1 + " " +
-                    difficulty2);
+                    difficulty2;
+            command_response = command(command);
+            System.out.println("Command: " + command);
             System.out.println("New game response(A-A): " + command_response);
             return;
         }
@@ -115,6 +141,7 @@ public class Connection{
     // newGame for HUMAN-AI type
     public void newGame(String gameType, String difficulty1) throws Exception{
         System.out.println("Sending H-A game type to extended method");
+        readUntilOK();
         newGame(gameType, difficulty1, "", "", "", "");
     }
 
@@ -124,27 +151,44 @@ public class Connection{
 //            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
 //            String response;
 //
-//            connection.newGame("HUMAN-AI", "EASY");
-//
-//            Thread.sleep(2000);
-//            connection.read();
-//
-////            response = connection.command("DISPLAY");
-////            System.out.println("Res: " + response);
+//            connection.newGame("HUMAN-AI", "HARD");
 //
 //            response = connection.move("A2 FWD");
 //            System.out.println("A2 FWD: " + response);
 //
 //
-//            response = connection.read();
+//            response = connection.readIgnoringOK();
 //            System.out.println("AI: " + response);
 //
 //            response = connection.move("A1 LEFT");
 //            System.out.println("A1 LEFT: " + response);
 //
-//            connection.command("\nEXIT");
+//            response = connection.move("A3 FWD");
+//            System.out.println("A3 FWD: " + response);
+//
+//            response = connection.readIgnoringOK();
+//            System.out.println("AI: " + response);
 //
 //            connection.close();
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
+//            String response;
+//
+//            connection.newGame("AI-AI", "HARD", "HARD", "127.0.0.1", "5156", "breakthrough");
+//            String line = connection.read();
+//            while(true) {
+//                if (line.length() > 0 && !line.startsWith(";")) {
+//                    System.out.println(line);
+//                }
+//
+//                line = connection.read();
+//            }
+//
+////            connection.close();
 //        } catch(Exception e) {
 //            e.printStackTrace();
 //        }

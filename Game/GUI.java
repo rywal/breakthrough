@@ -25,6 +25,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.awt.event.*;
+import javax.swing.text.*;
+import javax.swing.event.*;
 
 
 class GUI {
@@ -225,7 +228,7 @@ class GUI {
 
 		//JButton enter = new JButton("Enter");
 		
-		input.addActionListener(new ActionListener(){
+		/*input.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
@@ -249,7 +252,25 @@ class GUI {
 				
 				SwingUtilities.updateComponentTreeUI(frame);
 			}
+		});*/
+		
+		input.addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(input.getText().length()==8){
+					String result=to_result(input.getText(), turn);
+					//sendto server
+					//if(server.response=="OK")				
+					//input.setText(result);
+					//new_game.make_move(result);
+					frame.remove(full);
+					full = fullPanel(topPanel(),centerPanel());
+					frame.add(full);
+					SwingUtilities.updateComponentTreeUI(frame);
+				}
+			}
 		});
+		
 		bottom.add(input);
 
 		//bottom.add(enter,BorderLayout.EAST);	
