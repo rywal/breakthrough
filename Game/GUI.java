@@ -236,18 +236,19 @@ class GUI {
 
     public static void main(String[] args) {
 		
-		JFrame frame = new JFrame();
+		final JFrame frame = new JFrame();
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		/*JPanel login = new JPanel(new GridLayout(2, 1));   //DO NOT DELETE
+		final JPanel login = new JPanel(new GridLayout(2, 1));   //DO NOT DELETE
 		
 		JPanel loginTop = new JPanel(new BorderLayout());
 		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
 		
 		JPanel enterPasPan2 = new JPanel(new BorderLayout());
-		JTextField passF = new JTextField("Enter Password");
-		JButton enterP = new JButton("Enter");
+		final JTextField passF = new JTextField("Enter Password");
+		final JButton enterP = new JButton("Enter");
+		
 		enterPasPan2.add(passF);
 		enterPasPan2.add(enterP,BorderLayout.EAST);				
 		
@@ -266,13 +267,24 @@ class GUI {
 		
 		login.setVisible(true);
 		
-		frame.add(login);*/                                //DO NOT DELETE
+		frame.add(login);                                //DO NOT DELETE
+		
+		enterP.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent actionEvent) {
+				String passwordText = passF.getText();
+				if(passwordText.equals("breakthrough")){
+					frame.add(fullPanel(topPanel(),centerPanel()));
+					frame.add(bottomPanel(), BorderLayout.SOUTH);
+					frame.remove(login);
+					SwingUtilities.updateComponentTreeUI(frame);
+				} else{
+					passF.setText("DENIED!!");
+				}
+		}
+		});
 		
 		//passF.addActionListener(this);
 		
-		
-		frame.add(fullPanel(topPanel(),centerPanel()));
-		frame.add(bottomPanel(), BorderLayout.SOUTH);
 		
 		
 		frame.setVisible(true);
