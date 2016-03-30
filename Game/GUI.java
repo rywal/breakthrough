@@ -34,7 +34,7 @@ class GUI {
 	//public static Game new_game;
 	static JButton [][] buttons = new JButton[8][8]; 
 	static JTextArea outputField;
-	static GUI_Game new_game;
+	static GUI_Game new_game= new GUI_Game();
 	static ImageIcon wgIcon = new ImageIcon("Game/wg.png");//White piece on green background
 	static ImageIcon wmIcon = new ImageIcon("Game/wm.png");//White piece on maroon background
 	static ImageIcon bgIcon = new ImageIcon("Game/bg.png");//Black piece on green background
@@ -88,19 +88,19 @@ class GUI {
 		return fullTop;
 	}
 	
-	public static JButton buttonIcon(int row, int col, int white){//0=black, 1=white, 2=empty
-		if(white==0 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
+	public static JButton buttonIcon(int row, int col, int white){//-1=black, 0=white, 1=empty
+		if(white==-1 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(bgIcon);
 			
-		} else if(white==0 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
+		} else if(white==-1 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(bmIcon);
 		} else if(white==1 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(wgIcon);
 		} else if(white==1 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(wmIcon);
-		} else if(white==2 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
+		} else if(white==0 && (((row%2==0) && (col%2==0)) || ((row%2!=0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(egIcon);
-		} else if(white==2 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
+		} else if(white==0 && (((row%2!=0) && (col%2==0)) || ((row%2==0) && (col%2!=0)))){
 			buttons[row][col] = new JButton(emIcon);
 		} else{
 			buttons[row][col] = new JButton(emIcon); //Just in case
@@ -112,7 +112,6 @@ class GUI {
 		JPanel center = new JPanel(new GridLayout(8, 8));
 		
 		/*JLabel r0 = new JLabel(" ");                                                        //UNCOMMENT THIS
->>>>>>> cab95f7c917f04858e79e25b9db30cb9e56e41e4
 		JLabel r1 = new JLabel("A");
 		JLabel r2 = new JLabel("B");
 		JLabel r3 = new JLabel("C");
@@ -146,14 +145,14 @@ class GUI {
 		int rowTemp=8;*/                                                                  //UNCOMMENT THI
 		
 		//Create the 2D array by using two for loops
-		for(int row = 0; row < 8; row++) {
+		for(int row = 7; row > -1; row--) {
 			for(int col = 0; col < 8; col++) {
 				/*if(col==0){                                                               //UNCOMMENT THIS
 					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
 					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					center.add(c0);
 				} */  				//UNCOMMENT THIS
-				center.add(buttonIcon(row, col, new_game.board[row][column]+1));
+				center.add(buttonIcon(row, col, new_game.board[row][column]));
 			}
 			//rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
 		}	
@@ -224,10 +223,7 @@ class GUI {
 		});
 		bottom.add(input);
 		bottom.add(enter,BorderLayout.EAST);
-		outputField = new JTextArea(5, 20);
-		outputField.setText("Default Output");
-		bottom.add(outputField,BorderLayout.SOUTH);
-		
+	
 		return bottom;
 	}
 
@@ -241,14 +237,15 @@ class GUI {
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		/*JPanel login = new JPanel(new GridLayout(2, 1));   //DO NOT DELETE
+		final JPanel login = new JPanel(new GridLayout(2, 1));
 		
 		JPanel loginTop = new JPanel(new BorderLayout());
 		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
 		
 		JPanel enterPasPan2 = new JPanel(new BorderLayout());
-		JTextField passF = new JTextField("Enter Password");
-		JButton enterP = new JButton("Enter");
+		final JTextField passF = new JTextField("Enter Password");
+		final JButton enterP = new JButton("Enter");
+		
 		enterPasPan2.add(passF);
 		enterPasPan2.add(enterP,BorderLayout.EAST);				
 		
@@ -267,9 +264,7 @@ class GUI {
 		
 		login.setVisible(true);
 		
-		frame.add(login);*/                                //DO NOT DELETE
-		
-		//passF.addActionListener(this);
+		frame.add(login);
 		
 		
 		frame.add(fullPanel(topPanel(),centerPanel()));
