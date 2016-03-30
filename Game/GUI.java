@@ -56,13 +56,13 @@ class GUI {
 		JPanel fullTop = new JPanel(new BorderLayout());
 		
 		JPanel top = new JPanel(new BorderLayout());
-		JLabel title = new JLabel("Breakthrough - Team 11");
-		title.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+		//JLabel title = new JLabel("Breakthrough - Team 11");
+		//title.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 		
-		title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		//title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JButton undo = new JButton("Undo");
 		JButton startOver = new JButton("Start Over");
-		top.add(title, BorderLayout.NORTH);
+		//top.add(title, BorderLayout.NORTH);
 		top.add(undo, BorderLayout.WEST);
 		top.add(startOver, BorderLayout.EAST);
 		
@@ -109,7 +109,7 @@ class GUI {
 	public static JPanel centerPanel() {
 		JPanel center = new JPanel(new GridLayout(9, 9));
 		
-		JLabel r0 = new JLabel(" ");
+		JLabel r0 = new JLabel(" ");                                                        //UNCOMMENT THIS
 		JLabel r1 = new JLabel("A");
 		JLabel r2 = new JLabel("B");
 		JLabel r3 = new JLabel("C");
@@ -139,16 +139,16 @@ class GUI {
 		center.add(r7);
 		center.add(r8);
 		
-		int rowTemp=8;
+		int rowTemp=8;                                                                  //UNCOMMENT THIS
 		
 		//Create the 2D array by using two for loops
 		for(int row = 0; row < 8; row++) {
 			for(int col = 0; col < 8; col++) {
-				if(col==0){
+				if(col==0){                                                               //UNCOMMENT THIS
 					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
 					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					center.add(c0);
-				}
+				}                                                                          //UNCOMMENT THIS
 				if(row<2){
 					center.add(buttonIcon(row, col, 0));
 				} else if(row<8 && row>5){
@@ -157,7 +157,7 @@ class GUI {
 					center.add(buttonIcon(row, col, 2));
 				}
 			}
-			rowTemp = rowTemp - 2;
+			rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
 		}	
 		Buttons myButton= new Buttons(buttons, input, first);
 
@@ -226,9 +226,6 @@ class GUI {
 		});
 		bottom.add(input);
 		bottom.add(enter,BorderLayout.EAST);
-		outputField = new JTextArea(5, 20);
-		outputField.setText("Default Output");
-		bottom.add(outputField,BorderLayout.SOUTH);
 		
 		return bottom;
 	}
@@ -236,11 +233,25 @@ class GUI {
 
     public static void main(String[] args) {
 		
-		final JFrame frame = new JFrame();
+		final JFrame frame = new JFrame("          BreakThrough - Team 11");
+		//frame.setLocation(50,50);
+		
+		/*Dimension windowSize = getSize();
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Point centerPoint = ge.getCenterPoint();
+
+        int dx = centerPoint.x - windowSize.width / 2;
+        int dy = centerPoint.y - windowSize.height / 2;    
+        frame.setLocation(dx, dy);*/
+		
+		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
+		
+		
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		final JPanel login = new JPanel(new GridLayout(2, 1));   //DO NOT DELETE
+		final JPanel login = new JPanel(new GridLayout(2, 1));
 		
 		JPanel loginTop = new JPanel(new BorderLayout());
 		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
@@ -267,7 +278,7 @@ class GUI {
 		
 		login.setVisible(true);
 		
-		frame.add(login);                                //DO NOT DELETE
+		frame.add(login);
 		
 		enterP.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -282,10 +293,7 @@ class GUI {
 				}
 		}
 		});
-		
-		//passF.addActionListener(this);
-		
-		
+
 		
 		frame.setVisible(true);
 		frame.setSize(500,655);
