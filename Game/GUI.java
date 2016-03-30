@@ -242,9 +242,13 @@ class GUI {
 			public void caretUpdate(CaretEvent e) {
 				if(input.getText().length()==8){
 					String result=to_result(input.getText(), turn);
-					//SwingUtilities.updateComponentTreeUI(frame);
+					//sendto server
+					//if(server.response=="OK")				
 					input.setText(result);
-					//SwingUtilities.updateComponentTreeUI(frame);
+					new_game.make_move(result);
+					frame[0] = full_panel(topPanel(),centerPanel());
+					frame.add(full);
+					SwingUtilities.updateComponentTreeUI(frame);
 				}
 			}
 		});
