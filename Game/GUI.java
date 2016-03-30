@@ -25,6 +25,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.awt.event.*;
+import javax.swing.text.*;
+import javax.swing.event.*;
 
 
 class GUI {
@@ -219,13 +222,26 @@ class GUI {
 
 		//JButton enter = new JButton("Enter");
 		
-		input.addActionListener(new ActionListener(){
+		/*input.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
 				input.setText(result);
 			}
+		});*/
+		
+		input.addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(input.getText().length()==8){
+					String result=to_result(input.getText(), turn);
+					//SwingUtilities.updateComponentTreeUI(frame);
+					input.setText(result);
+					//SwingUtilities.updateComponentTreeUI(frame);
+				}
+			}
 		});
+		
 		bottom.add(input);
 
 		//bottom.add(enter,BorderLayout.EAST);	
