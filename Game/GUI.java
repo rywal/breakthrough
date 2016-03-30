@@ -52,6 +52,7 @@ class GUI {
 	static int row_c;
 	static int column;
 	static JPanel full;
+	static JPanel new_full;	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
@@ -157,6 +158,9 @@ class GUI {
 					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					center.add(c0);
 				} */  				//UNCOMMENT THIS
+					System.out.print(row);
+					System.out.print(col);
+					System.out.println(new_game.board[row][col]);
 				center.add(buttonIcon(row, col, new_game.board[7-row][column]));
 			}
 			//rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
@@ -233,8 +237,19 @@ class GUI {
 				input.setText(result);
 				new_game.make_move(result);
 				frame.remove(full);
-				full = fullPanel(topPanel(),centerPanel());
+				full=fullPanel(topPanel(),centerPanel());
 				frame.add(full);
+				/*if(turn){
+					new_full = fullPanel(topPanel(),centerPanel());
+					frame.add(new_full);
+					frame.remove(full);
+				}
+				else{
+					full = fullPanel(topPanel(),centerPanel());
+					frame.add(full);
+					frame.remove(new_full);
+				}*/	
+				
 				SwingUtilities.updateComponentTreeUI(frame);
 			}
 		});*/
@@ -301,7 +316,8 @@ class GUI {
 			public void actionPerformed(ActionEvent e) {
 				String passwordText = passF.getText();
 				if(passwordText.equalsIgnoreCase("breakthrough")){
-					frame.add(fullPanel(topPanel(),centerPanel()));
+					full=fullPanel(topPanel(),centerPanel());
+					frame.add(full);
 					frame.add(bottomPanel(), BorderLayout.SOUTH);
 					frame.remove(login);
 					SwingUtilities.updateComponentTreeUI(frame);
