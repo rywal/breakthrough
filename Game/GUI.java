@@ -51,6 +51,7 @@ class GUI {
 	static JTextField input = new JTextField(input_txt);
 	static int row_c;
 	static int column;
+	static int moveAlreadyMade=0;
 	static JPanel full;
 	static JPanel center = new JPanel(new GridLayout(8, 8));
 	
@@ -225,6 +226,7 @@ class GUI {
 	public static String to_result(String command, boolean turn){
 		String result="";
 		String dir;
+		System.out.println(" ");
 		if(command.length()>6){
 			int pos_col = (int)command.charAt(0)-(int)command.charAt(6);
 			int pos_row = (int)command.charAt(7)-(int)command.charAt(1);
@@ -260,7 +262,7 @@ class GUI {
 
 		//JButton enter = new JButton("Enter");
 		
-		input.addActionListener(new ActionListener(){
+		/*input.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
@@ -283,32 +285,28 @@ class GUI {
 					full = fullPanel(topPanel(),centerPanel());
 					frame.add(full);
 					frame.remove(new_full);
-				}*/	
+				}	
 				
 				//frame.repaint();
 				//SwingUtilities.updateComponentTreeUI(frame);
 
 			}
-		});
+		});*/
 		
-		/*input.addCaretListener(new CaretListener() {
+		input.addCaretListener(new CaretListener() {
 			@Override
 			public void caretUpdate(CaretEvent e) {
 				if(input.getText().length()==8){
-					String result=to_result(input.getText(), turn);
-					//sendto server
-					//if(server.response=="OK")				
-					//input.setText(result);
+					String result=to_result(input.getText(), turn);			
+					//input.setText("THIS IS DONE");
 					//new_game.make_move(result);
-					frame.remove(full);
-					full = fullPanel(topPanel(),centerPanel());
-					full.repaint();
-					frame.add(full);
-					SwingUtilities.updateComponentTreeUI(frame);
-					//get response 
+					updateBoard(1, 1, 2, 1, 1);
+					//
+					//frame.add(bottomPanel(), BorderLayout.SOUTH);
+					//frame.repaint();
 				}
 			}
-		});*/
+		});
 		
 		bottom.add(input);
 
