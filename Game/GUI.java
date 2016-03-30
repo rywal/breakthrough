@@ -152,7 +152,7 @@ class GUI {
 					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					center.add(c0);
 				} */  				//UNCOMMENT THIS
-				center.add(buttonIcon(row, col, new_game.board[row][column]));
+				center.add(buttonIcon(row, col, new_game.board[7-row][column]));
 			}
 			//rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
 		}	
