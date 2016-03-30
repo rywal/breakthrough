@@ -1,4 +1,4 @@
-//package breakthroughGUI;
+package breakthroughGUI;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -122,13 +122,14 @@ public class Connection{
 
         if (!difficulty2.isEmpty() && !address.isEmpty() && !port.isEmpty() && !password.isEmpty()) {
 //            System.out.println("Doing my magic here");
-            command_response = command(gameType + " " +
+            String command = gameType + " " +
                     address + " " +
                     port + " " +
                     password + " " +
                     difficulty1 + " " +
-                    difficulty2);
-            readUntilOK();
+                    difficulty2;
+            command_response = command(command);
+            System.out.println("Command: " + command);
             System.out.println("New game response(A-A): " + command_response);
             return;
         }
@@ -144,33 +145,52 @@ public class Connection{
         newGame(gameType, difficulty1, "", "", "", "");
     }
 
-    public static void main(String[] args) {
-
-        try {
-            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
-            String response;
-
-            connection.newGame("HUMAN-AI", "HARD");
-
-            response = connection.move("A2 FWD");
-            System.out.println("A2 FWD: " + response);
-
-
-            response = connection.readIgnoringOK();
-            System.out.println("AI: " + response);
-
-            response = connection.move("A1 LEFT");
-            System.out.println("A1 LEFT: " + response);
-
-            response = connection.move("A3 FWD");
-            System.out.println("A3 FWD: " + response);
-
-            response = connection.readIgnoringOK();
-            System.out.println("AI: " + response);
-
-            connection.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//
+//        try {
+//            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
+//            String response;
+//
+//            connection.newGame("HUMAN-AI", "HARD");
+//
+//            response = connection.move("A2 FWD");
+//            System.out.println("A2 FWD: " + response);
+//
+//
+//            response = connection.readIgnoringOK();
+//            System.out.println("AI: " + response);
+//
+//            response = connection.move("A1 LEFT");
+//            System.out.println("A1 LEFT: " + response);
+//
+//            response = connection.move("A3 FWD");
+//            System.out.println("A3 FWD: " + response);
+//
+//            response = connection.readIgnoringOK();
+//            System.out.println("AI: " + response);
+//
+//            connection.close();
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
+//            String response;
+//
+//            connection.newGame("AI-AI", "HARD", "HARD", "127.0.0.1", "5156", "breakthrough");
+//            String line = connection.read();
+//            while(true) {
+//                if (line.length() > 0 && !line.startsWith(";")) {
+//                    System.out.println(line);
+//                }
+//
+//                line = connection.read();
+//            }
+//
+////            connection.close();
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
