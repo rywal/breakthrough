@@ -239,8 +239,8 @@ class GUI {
 		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
 		
 		
-		frame.setLayout(new BorderLayout());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new BorderLayout());//
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//
 		
 		final JPanel login = new JPanel(new GridLayout(2, 1));
 		
@@ -271,8 +271,11 @@ class GUI {
 		
 		frame.add(login);
 		
-		enterP.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent actionEvent) {
+		
+		
+		passF.addActionListener(new ActionListener(){//
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				String passwordText = passF.getText();
 				if(passwordText.equals("breakthrough")){
 					frame.add(fullPanel(topPanel(),centerPanel()));
