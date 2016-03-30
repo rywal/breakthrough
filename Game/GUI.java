@@ -219,7 +219,7 @@ class GUI {
 		JPanel bottom = new JPanel(new BorderLayout());
 
 		//JButton enter = new JButton("Enter");
-	
+		
 		input.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
