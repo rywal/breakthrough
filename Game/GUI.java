@@ -213,10 +213,11 @@ class GUI {
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
 
-		JButton enter = new JButton("Enter");
+		//JButton enter = new JButton("Enter");
 	
-		enter.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent actionEvent) {
+		input.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
 				input.setText(result);
 			}
