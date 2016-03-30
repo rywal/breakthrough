@@ -1,4 +1,4 @@
-//package game;
+//package breakthroughGUI;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.lang.Exception;
 
 
 public class Connection{
@@ -19,27 +20,56 @@ public class Connection{
     private BufferedReader in;
     private PrintWriter out;
 
-    public void authenticate(String password) throws Exception{
-        out.println(password);
+    public void write(String message) throws Exception{
+        out.println(message);
         out.flush();
+    }
+
+    public void authenticate(String password) throws Exception{
+        write(password);
     }
 
     public void close() throws Exception{
         socket.close();
     }
 
-    public void write(String message) throws Exception{
-        out.println(message);
-        out.flush();
+    public String read() throws Exception{
+        // buffer for storing file contents in memory
+        StringBuffer responseBuffer = new StringBuffer("");
+        // for reading one line
+        String line = null;
+        // keep reading till readLine returns null
+        while (in.ready()) {
+//            System.out.print("Ready and reading: ");
+            line = in.readLine();
+//            System.out.println(line + ".");
+            // keep appending last line read to buffer
+            responseBuffer.append(line);
+        }
+
+        return responseBuffer.toString();
     }
 
-    public String read() throws Exception{
-        String response = in.readLine();
-        String nextLine = in.readLine();
-        while (nextLine != null){
-            response += nextLine;
-            nextLine = in.readLine();
+    public String command(String command) throws Exception{
+        write(command);
+        String response = read();
+
+        return response;
+    }
+
+    public String move(String command) throws Exception{
+        write(command);
+        String response = read();
+        while(!response.startsWith("OK") && !response.startsWith("ILLEGAL")) {
+            response = read();
         }
+
+        String newMove = "";
+        while(newMove != "") {
+            newMove = read();
+        }
+
+        response = response + "\n" + newMove;
         return response;
     }
 
@@ -50,7 +80,7 @@ public class Connection{
         in =  new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
 
-        String response = in.readLine();
+        String response = read();
         if(response.startsWith("PASSWORD")) {
             System.out.println("PASSWORD - " + response);
             authenticate(password);
@@ -58,49 +88,58 @@ public class Connection{
         }
     }
 
-    public void newGame(String )
+    // newGame for AI-AI type, with extra info needed
+    public void newGame(String gameType, String difficulty1, String difficulty2, String address, String port, String password) throws Exception{
+        String command_response;
+        System.out.println("Got it!");
 
-    public void play() throws Exception{
-      String response;
-        try{
-            response = read();
-            System.out.println("Input: " + response);
-            while(true){
-                System.out.println("Loop. Input: " + response);
-                if(response.startsWith("WELCOME")) {
-                    write("HUMAN-AI HARD");
-                    System.out.println("HUMAN-AI HARD");
-                    write("DISPLAY");
-                    System.out.println("DISPLAY");
-                } else if(response.startsWith("OK")){
-                    String user_input;
-                    Scanner ui = new Scanner(System.in);
-                    user_input = ui.nextLine();
-                    write(user_input);
-                }
-                response = read();
-            }
+        if (!difficulty2.isEmpty() && !address.isEmpty() && !port.isEmpty() && !password.isEmpty()) {
+            System.out.println("Doing my magic here");
+            command_response = command(gameType + " " +
+                                        address + " " +
+                                        port + " " +
+                                        password + " " +
+                                        difficulty1 + " " +
+                                        difficulty2);
+            System.out.println("New game response(A-A): " + command_response);
+            return;
         }
-        finally{
-            socket.close();
-        }
+
+        command_response = command(gameType + " " + difficulty1);
+        System.out.println("New game(H-A) response: " + command_response);
     }
 
+    // newGame for HUMAN-AI type
+    public void newGame(String gameType, String difficulty1) throws Exception{
+        System.out.println("Sending H-A game type to extended method");
+        newGame(gameType, difficulty1, "", "", "", "");
+    }
 
- /*   public static void main(String arg[]) throws Exception{
-        //Creating a SocketClient object
-        while(true){
-            Connection connection = new Connection ("localhost", 5155, "breakthrough");
+    public static void main(String[] args) {
 
-            try{
+        try {
+            Connection connection = new Connection("127.0.0.1", 5155, "breakthrough");
+            String response;
 
-            }
-            finally{
-                socket.close();
-            }
+            connection.newGame("HUMAN-AI", "EASY");
+            response = connection.read();
+            System.out.println("Game Response: " + response);
 
-            connection.play();
-            break;
+//            response = connection.command("DISPLAY");
+//            System.out.println("Res: " + response);
+
+            response = connection.move("A2 FWD");
+            System.out.println("Res: " + response);
+
+            response = connection.move("A1 LEFT");
+            System.out.println("Res: " + response);
+
+            response = connection.command("EXIT");
+            System.out.println("Res: " + response);
+
+            connection.close();
+        } catch(Exception e) {
+            e.printStackTrace();
         }
-    }*/
+    }
 }

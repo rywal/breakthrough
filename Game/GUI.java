@@ -1,5 +1,5 @@
 
-//package game;
+package breakthroughGUI;
 
 
 
@@ -394,7 +394,7 @@ class GUI {
 				}
 				return result;
 			}
-			else result= "Invaldi";//row :" + (char) pos_row;
+			else result= "Invalid";//row :" + (char) pos_row;
 		}
 		else{
 			result = "Invalid";// + (char)command.length();
