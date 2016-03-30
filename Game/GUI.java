@@ -152,14 +152,8 @@ class GUI {
 					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
 					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 					center.add(c0);
-				} */                                                                         //UNCOMMENT THIS
-				if(row<2){
-					center.add(buttonIcon(row, col, 0));
-				} else if(row<8 && row>5){
-					center.add(buttonIcon(row, col, 1));
-				} else if(row<6 && row>1){
-					center.add(buttonIcon(row, col, 2));
-				}
+				} */  				//UNCOMMENT THIS
+				center.add(buttonIcon(row, col, new_game.board[row][column]+1));
 			}
 			//rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
 		}	
