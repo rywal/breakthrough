@@ -249,7 +249,7 @@ class GUI {
 				System.out.println("ERROR!!!!!!");
 			}
 		} else{
-			System.out.println("OUT OF RANGE: row1" + row1 + " col1"+col1+" row2"+row2+" col2"+col2);
+			System.out.println("OUT OF RANGE: row1 " + row1 + " col1 "+col1+" row2 "+row2+" col2 "+col2);
 		}
 	}
 	
@@ -259,15 +259,17 @@ class GUI {
 		String dir;
 		System.out.println(" ");
 		if(command.length()>6){
-			int pos_col = (int)command.charAt(0)-(int)command.charAt(6);
-			int pos_row = (int)command.charAt(7)-(int)command.charAt(1);
+			int pos_col = ((int)command.charAt(0)-65)-((int)command.charAt(6)-65);
+			System.out.println("Col: " + command.charAt(0) + " - " + command.charAt(6) + " = " + pos_col);
+			int pos_row = ((int)command.charAt(7)-49)-((int)command.charAt(1)-49);
+			System.out.println("Row: " + command.charAt(7) + " - " + command.charAt(1) + " = " + pos_row);
 			int mult = turn ? 1 : -1;
 			System.out.println(command.charAt(0));
 			System.out.println(command.charAt(1));
 			System.out.println(command.charAt(6));
 			System.out.println(command.charAt(7));
-			if(pos_row*mult==1){
-				result ="" + command.charAt(0) + command.charAt(1);
+			if(pos_row*mult == 1){
+				result = "" + command.charAt(0) + command.charAt(1);
 				switch (mult*pos_col){
 					case (-1): 	result += " right";
 								break;
@@ -275,15 +277,15 @@ class GUI {
 								break;
 					case (1):	result += " left";
 								break;
-					default : 	result= "mInvalid";//column " + (char)pos_col;
+					default : 	result= "Invalid";//column " + (char)pos_col;
 								break;
 				}
 				return result;
+			} else {
+				result = "Invalid";//row :" + (char) pos_row;
 			}
-			else result= "hInvalid";//row :" + (char) pos_row;
-		}
-		else{
-			result = "lInvalid";// + (char)command.length();
+		} else{
+			result = "Invalid";// + (char)command.length();
 		}
 		return result;
 	}
@@ -335,40 +337,47 @@ class GUI {
 					new_game.make_move(result);
 					
 					updateBoard(1, 1, -1, 1);*/
-					
+					System.out.println("Sent to result: " + input.getText() + ", " + turn);
 					String result=to_result(input.getText(), turn);
-				//sendto server
-				if(true){//server.response=="OK"){				
-					//input.setText(result);
-					inputHolder.setText(result);
-					new_game.make_move(result);
-					int shift = turn ? 1 : -1;
-					int dir=0;
-					if(result.length()==6)
-						dir = 0;
-					else if(result.length()==7)
-						dir = -1;
-					else if(result.length()==8)
-						dir = 1;
-					else
-							System.out.println("ERROR");
-					updateBoard(7-((int)result.charAt(1)-49), (int)result.charAt(0)-65, dir, shift);
-					//frame.repaint();
-					turn=new_game.white;
-				}
-			
-					
-				} else if(input.getText().length()==6){
-					moveAlreadyMade=0;
-					inputHolder.setText(input.getText());
-				}
-				
-			}
-		});
-		bottom.add(inputHolder);
+					System.out.println("Result: " + result);
+					//sendto server
+					if(true){//server.response=="OK"){
+						//input.setText(result);
+						inputHolder.setText(result);
+						new_game.make_move(result);
+						int shift = turn ? 1 : -1;
+						int dir=0;
+						if(result.length()==6)
+							dir = 0;
+						else if(result.length()==7)
+							dir = -1;
+						else if(result.length()==8)
+							dir = 1;
+						else
+								System.out.println("ERROR");
 
-		return bottom;
-	}
+						int row = 7 - ((int)result.charAt(1)-49);
+						int column = (int)result.charAt(0)-65;
+
+						System.out.println("Row: " + row + " Col: " + column + " Dir: " + dir + " Shift: " + shift);
+						updateBoard(row, column, dir, shift);
+						//frame.repaint();
+						turn=new_game.white;
+					}
+
+
+					} else if(input.getText().length()==6){
+						moveAlreadyMade=0;
+						inputHolder.setText(input.getText());
+					}
+
+				}
+			});
+
+			bottom.add(inputHolder);
+
+			return bottom;
+		}
 
 
     public static void main(String[] args) {
