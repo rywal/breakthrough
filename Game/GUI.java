@@ -63,8 +63,8 @@ class GUI {
 	static boolean aiAiTog = false;
 	
 	public static JLabel fullPanel() {
-		JLabel backboard=new JLabel(new ImageIcon("Game/login.png"));
-		backboard.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+		JLabel backboard=new JLabel(new ImageIcon("Game/backboard.png"));
+		backboard.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 		backboard.add(topPanel());
 		backboard.add(centerPanel());
 		backboard.add(bottomPanel());
