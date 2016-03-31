@@ -63,16 +63,11 @@ class GUI {
 	static boolean aiAiTog = false;
 	
 	public static JLabel fullPanel() {
-		JLabel backboard=new JLabel(new ImageIcon("Game/login.png"));
-		backboard.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+		JLabel backboard=new JLabel(new ImageIcon("Game/backboard.png"));
+		backboard.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 		backboard.add(topPanel());
 		backboard.add(centerPanel());
 		backboard.add(bottomPanel());
-		/*full = new JPanel(new BorderLayout());
-		full.add(topPanel(), BorderLayout.NORTH);
-		full.add(centerPanel(), BorderLayout.CENTER);
-		full.add(bottomPanel(), BorderLayout.SOUTH);
-		return full;*/
 		return backboard;
 	}
 	
@@ -170,6 +165,7 @@ class GUI {
 		fullTop.add(top, BorderLayout.NORTH);
 		fullTop.add(bottom, BorderLayout.SOUTH);
 		fullTop.setBackground(new Color(0, 0, 0, 0));
+		fullTop.setOpaque(false);
 		return fullTop;
 	}
 	
