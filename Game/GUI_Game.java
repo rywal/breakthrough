@@ -61,7 +61,7 @@ import javax.imageio.ImageIO;
 			System.out.print(column);
 			System.out.print(row);
 			int shift = white ? 1 : -1;
-			board[row][column]=0;
+			//board[row][column]=0;
 			if (command.length()==6){
 				if((row + shift)< 8 && (row + shift)>0 ){
 					board[row + shift][column]= shift;
