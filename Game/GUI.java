@@ -221,8 +221,12 @@ class GUI {
 		int col2 = col1 + piece*dir;
 		
 		if(((row1%2==0) && (col1%2==0)) || ((row1%2!=0) && (col1%2!=0))){
+			System.out.println("Row: " + row1 + " Col: " + col1);
+			System.out.println("Row2: " + row2 + " Col2: " + col2);
 			buttons[row1][col1].setIcon(egIcon);
 		} else{
+			System.out.println("Row: " + row1 + " Col: " + col1);
+			System.out.println("Row2: " + row2 + " Col2: " + col2);
 			buttons[row1][col1].setIcon(emIcon);
 		}
 		
@@ -321,12 +325,34 @@ class GUI {
 			public void caretUpdate(CaretEvent e) {
 				if(input.getText().length()==8 && moveAlreadyMade==0){
 					moveAlreadyMade=1;
-					String result=to_result(input.getText(), turn);
+					/*String result=to_result(input.getText(), turn);
 					inputHolder.setText(result);
 					
 					new_game.make_move(result);
 					
-					updateBoard(1, 1, -1, 1);
+					updateBoard(1, 1, -1, 1);*/
+					
+					String result=to_result(input.getText(), turn);
+				//sendto server
+				if(true){//server.response=="OK"){				
+					//input.setText(result);
+					inputHolder.setText(result);
+					new_game.make_move(result);
+					int shift = turn ? 1 : -1;
+					int dir=0;
+					if(result.length()==6)
+						dir = 0;
+					else if(result.length()==7)
+						dir = -1;
+					else if(result.length()==8)
+						dir = 1;
+					else
+							System.out.println("ERROR");
+					updateBoard(7-((int)result.charAt(1)-49), (int)result.charAt(0)-65, dir, shift);
+					//frame.repaint();
+					turn=new_game.white;
+				}
+			
 					
 				} else if(input.getText().length()==6){
 					moveAlreadyMade=0;

@@ -60,26 +60,28 @@ import javax.imageio.ImageIO;
 			int row = (int)command.charAt(1)-49;
 			System.out.println(command + ": " + column + " " + row);
 			int shift = white ? 1 : -1;
-			board[column][row] = 0;
-			if (command.length()==6){
-				if((row + shift)< 8 && (row + shift)>0 ){
-					board[row + shift][column]= shift;
+			if (command.toUpperCase().endsWith("FWD")){
+				if((row + shift) < 8 && (row + shift)>0 ){
+					board[row+shift][column]=0;
+					board[row + shift][column] = shift;
 				} else{
 					System.out.println("Length 6: The row" + (row+shift) + " or column" + (column) + "is out of range" );
 				}
 			}
-			else if(command.length()==7){
-				if((row + shift)< 8 && (row + shift)>0 && (column - shift)<8 && (column - shift)>0){
+			else if(command.toUpperCase().endsWith("LEFT")){
+				if((row + shift) < 8 && (row + shift) > 0 && (column - shift) < 8 && (column - shift) >= 0){
+					board[row+shift][column-shift]=0;
 					board[row + shift][column - shift] = shift;
 				} else{
 					System.out.println("Length 7: The row" + (row+shift) + " or column" + (column-shift) + "is out of range" );
 				}
 			}
-			else if(command.length()==8){
-				if((row + shift)< 8 && (row + shift)>0 && (column + shift)<8 && (column + shift)>0){
+			else if(command.toUpperCase().endsWith("RIGHT")){
+				if((row + shift) < 8 && (row + shift) > 0 && (column + shift) < 8 && (column + shift) >= 0){
+					board[row+shift][column+shift]=0;
 					board[row + shift][column + shift] = shift;
 				} else{
-					System.out.println("Length 8: The row" + (row+shift) + " or column" + (column+shift) + "is out of range" );
+					System.out.println("Length 8: The row " + (row+shift) + " or column " + (column+shift) + " is out of range" );
 				}
 			}
 			int[][] temp = board;
