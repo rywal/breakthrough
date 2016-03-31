@@ -124,7 +124,7 @@ import javax.imageio.ImageIO;
 			return buttons;
 		}
 		
-		public JButton [][] make_move(String command, JButton [][] buttons){
+		public JButton [][] make_move(String command, JButton [][] buttons, boolean ai){
 			int column = (int)command.charAt(0)-65;
 			int row = (int)command.charAt(1)-49;
 			System.out.println(command + ": " + column + " " + row);
@@ -157,6 +157,9 @@ import javax.imageio.ImageIO;
 			white=!white;
 			boards.add(temp);
 
+			if (ai)
+				return buttons;
+
 			try {
 				if (white){
 					return buttons;
@@ -169,7 +172,7 @@ import javax.imageio.ImageIO;
 				String next_move = connection.readIgnoringOK();
 				if (!white){
 					System.out.println("Making AI move: " + next_move);
-					buttons = make_move(next_move, buttons);
+					buttons = make_move(next_move, buttons, false);
 					buttons = update_board(next_move, buttons);
 					white = !white;
 					return buttons;

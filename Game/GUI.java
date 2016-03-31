@@ -85,6 +85,21 @@ class GUI {
 			bottom.remove(aiDif2);
 		}
 	}
+
+	public static void runAIAIGame() {
+		try {
+			String line = connection.read();
+			if (line.length() > 0 && !line.startsWith(";") && !line.toUpperCase().startsWith("ILLEGAL")) {
+				System.out.println("Making move: " + line);
+				move(line);
+				turn = !turn;
+				SwingUtilities.updateComponentTreeUI(frame);
+			}
+
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 	public static JPanel topPanel() {
 		JPanel fullTop = new JPanel(new BorderLayout());
@@ -120,7 +135,14 @@ class GUI {
 					}
 				} else if(gameType.getSelectedItem().toString()=="ai-ai"){
 					if(aiDif2.getSelectedItem().toString()!="Difficulty #2" && aiDif1.getSelectedItem().toString()!="Difficulty #1"){
-						//Start ai-ai aiDif1.getSelectedItem().toString() aiDif2.getSelectedItem().toString();
+						try {
+							connection.newGame("AI-AI", aiDif1.getSelectedItem().toString(), aiDif2.getSelectedItem().toString(), "127.0.0.1", "5156", "breakthrough");
+
+							while(true)
+								runAIAIGame();
+						} catch(Exception e1) {
+							e1.printStackTrace();
+						}
 					}
 				}
 			}
@@ -214,31 +236,37 @@ class GUI {
 		int row2 = row1 - piece;
 		int col2 = col1 + piece*dir;
 
-		if(row2>=0 && row2 < 8 && col2>=0 && col2<8 && row1>=0 && row1 < 8 && col1>=0 && col1<8){
+		if(row2>=0 && row2 <= 8 && col2>=0 && col2<=8 && row1>=0 && row1 <= 8 && col1>=0 && col1<=8){
 			if(buttons[row1][col1].getIcon()!=emIcon && buttons[row1][col1].getIcon()!=egIcon){
 				if(((row1%2==0) && (col1%2==0)) || ((row1%2!=0) && (col1%2!=0))){
-					System.out.println("Row: " + row1 + " Col: " + col1);
-					System.out.println("Row2: " + row2 + " Col2: " + col2);
+//					System.out.println("Row: " + row1 + " Col: " + col1);
+//					System.out.println("Row2: " + row2 + " Col2: " + col2);
 					buttons[row1][col1].setIcon(egIcon);
+					System.out.println("Board updated 1");
 				} else{
-					System.out.println("Row: " + row1 + " Col: " + col1);
-					System.out.println("Row2: " + row2 + " Col2: " + col2);
+//					System.out.println("Row: " + row1 + " Col: " + col1);
+//					System.out.println("Row2: " + row2 + " Col2: " + col2);
 					buttons[row1][col1].setIcon(emIcon);
+					System.out.println("Board updated 2");
 				}
 				
 				if(piece==-1){
 					if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
 						buttons[row2][col2].setIcon(bgIcon);
+						System.out.println("Board updated 3");
 					}
 					else{
 						buttons[row2][col2].setIcon(bmIcon);
+						System.out.println("Board updated 4");
 					}
 				} else if(piece==1){
 					if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
 						buttons[row2][col2].setIcon(wgIcon);
+						System.out.println("Board updated 5");
 					}
 					else{
 						buttons[row2][col2].setIcon(wmIcon);
+						System.out.println("Board updated 6");
 					}
 				} else{
 					System.out.println("ERROR!!!!!!");
@@ -303,13 +331,13 @@ class GUI {
 		int row = 7 - ((int)move.charAt(1)-49);
 		int column = (int)move.charAt(0)-65;
 
-		System.out.println("Row: " + row + " Col: " + column + " Dir: " + dir + " Shift: " + shift);
+		System.out.println("Sending to update board - Row: " + row + " Col: " + column + " Dir: " + dir + " Shift: " + shift);
 		updateBoard(row, column, dir, shift);
 	}
 
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
-		
+
 		input.addCaretListener(new CaretListener() {
 			@Override
 			public void caretUpdate(CaretEvent e) {
@@ -325,7 +353,7 @@ class GUI {
 //						turn = new_game.white;
 
 						move(result);
-						buttons = new_game.make_move(result, buttons);
+						buttons = new_game.make_move(result, buttons, false);
 					}
 				} else if(input.getText().length()==6){
 					moveAlreadyMade=0;
