@@ -250,7 +250,7 @@ class GUI {
 					System.out.println("ERROR!!!!!!");
 				}
 			} else{
-				System.out.println("OUT OF RANGE: row1" + row1 + " col1"+col1+" row2"+row2+" col2"+col2);
+				System.out.println("Cannot move empty space!!");
 			}
 		} else{
 			System.out.println("OUT OF RANGE: row1 " + row1 + " col1 "+col1+" row2 "+row2+" col2 "+col2);
