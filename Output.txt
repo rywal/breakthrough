@@ -1,6 +1,2 @@
 =-=-=-=-=-=-BEGIN=-=-=-=-=-=-=
 The current file is: Game/Server.cpp
-ai-ai 127.0.0.1 5156 breakthrough easy easy ok g7 right g7 right is an invalid move
-
-ok h7 fwd ok d7 fwd ok a7 left ok b8 right ok h6 fwd ok f6 left ok f7 fwd ok h5 right ok g5 right ok d6 right ok c8 left ok d7 right ok c6 left ok g8 right ok g4 left ok b7 right ok d5 right ok d8 fwd ok f8 left ok a8 left ok g7 fwd ; White is the winner!
-
