@@ -297,45 +297,10 @@ class GUI {
 
 		System.out.println("Row: " + row + " Col: " + column + " Dir: " + dir + " Shift: " + shift);
 		updateBoard(row, column, dir, shift);
-		//frame.repaint();
-		turn=new_game.white;
 	}
 
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
-
-		//JButton enter = new JButton("Enter");
-		
-		/*input.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String result=to_result(input.getText(), turn);
-				//sendto server
-				if(true){//server.response=="OK"){				
-					input.setText(result);
-					new_game.make_move(result);
-					int shift = turn ? 1 : -1;
-					int dir=0;
-					if(result.length()==6)
-						dir = 0;
-					else if(result.length()==7)
-						dir = -1;
-					else if(result.length()==8)
-						dir = 1;
-					else
-							System.out.println("ERROR");
-					updateBoard(7-((int)result.charAt(1)-49), (int)result.charAt(0)-65, dir, shift);
-					frame.repaint();
-					turn=new_game.white;
-				}
-				else{
-				//	input.setText(server_response)
-				}
-				//frame.repaint();
-				//SwingUtilities.updateComponentTreeUI(frame);
-
-			}
-		});*/
 		
 		input.addCaretListener(new CaretListener() {
 			@Override
@@ -355,9 +320,10 @@ class GUI {
 					if(!result.startsWith("Invalid")){//server.response=="OK"){
 						//input.setText(result);
 						inputHolder.setText(result);
-						new_game.make_move(result);
+//						turn = new_game.white;
 
 						move(result);
+						buttons = new_game.make_move(result, buttons);
 					}
 				} else if(input.getText().length()==6){
 					moveAlreadyMade=0;
@@ -411,7 +377,6 @@ class GUI {
 		login.setVisible(true);
 		
 		frame.add(login);
-		
 		
 		passF.addActionListener(new ActionListener(){//
 			@Override

@@ -26,7 +26,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 	class GUI_Game{
-		
 		public int[][] board= new int[8][8];
 		boolean white;
 		public java.util.List<int[][]> boards= new ArrayList<int[][]>();
@@ -56,8 +55,76 @@ import javax.imageio.ImageIO;
 			white = true;
 			boards.add(temp);
 		}
+
+		public JButton [][] update_board(String move, JButton [][] buttons) {
+			ImageIcon wgIcon = new ImageIcon("Game/wg.png");//White piece on green background
+			ImageIcon wmIcon = new ImageIcon("Game/wm.png");//White piece on maroon background
+			ImageIcon bgIcon = new ImageIcon("Game/bg.png");//Black piece on green background
+			ImageIcon bmIcon = new ImageIcon("Game/bm.png");//Black piece on maroon background
+			ImageIcon egIcon = new ImageIcon("Game/eg.png");//Empty piece on green background
+			ImageIcon emIcon = new ImageIcon("Game/em.png");//Empty piece on maroon background
+
+			int shift = white ? -1 : 1;
+			int dir=0;
+			if(move.toUpperCase().endsWith("FWD"))
+				dir = 0;
+			else if(move.toUpperCase().endsWith("LEFT"))
+				dir = -1;
+			else if(move.toUpperCase().endsWith("RIGHT"))
+				dir = 1;
+			else
+				System.out.println("ERROR");
+
+			int piece = shift;
+
+			int row1 = 7 - ((int)move.charAt(1)-49);
+			int col1 = (int)move.charAt(0)-65;
+
+			int row2 = row1 - piece;
+			int col2 = col1 + piece*dir;
+
+			if(row2 >=0 && row2 <= 8 && col2>=0 && col2<8 && row1>=0 && row1 < 8 && col1>=0 && col1<8){
+				if(buttons[row1][col1].getIcon()!=emIcon && buttons[row1][col1].getIcon()!=egIcon){
+					if(((row1%2==0) && (col1%2==0)) || ((row1%2!=0) && (col1%2!=0))){
+						System.out.println("Row: " + row1 + " Col: " + col1);
+						System.out.println("Row2: " + row2 + " Col2: " + col2);
+						buttons[row1][col1].setIcon(egIcon);
+					} else{
+						System.out.println("Row: " + row1 + " Col: " + col1);
+						System.out.println("Row2: " + row2 + " Col2: " + col2);
+						buttons[row1][col1].setIcon(emIcon);
+					}
+
+					if(piece==-1){
+						if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
+							buttons[row2][col2].setIcon(bgIcon);
+						}
+						else{
+							buttons[row2][col2].setIcon(bmIcon);
+						}
+					} else if(piece==1){
+						if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
+							buttons[row2][col2].setIcon(wgIcon);
+						}
+						else{
+							buttons[row2][col2].setIcon(wmIcon);
+						}
+					} else{
+						System.out.println("ERROR!!!!!!");
+					}
+				} else{
+					System.out.println("Cannot move empty space!!");
+				}
+			} else{
+				System.out.println("HERE OUT OF RANGE: row1 " + row1 + " col1 "+col1+" row2 "+row2+" col2 "+col2);
+			}
+
+			white = !white;
+
+			return buttons;
+		}
 		
-		public void make_move(String command){
+		public JButton [][] make_move(String command, JButton [][] buttons){
 			int column = (int)command.charAt(0)-65;
 			int row = (int)command.charAt(1)-49;
 			System.out.println(command + ": " + column + " " + row);
@@ -92,7 +159,7 @@ import javax.imageio.ImageIO;
 
 			try {
 				if (white){
-					return;
+					return buttons;
 				}
 
 				System.out.println("Sending command to server...");
@@ -102,11 +169,16 @@ import javax.imageio.ImageIO;
 				String next_move = connection.readIgnoringOK();
 				if (!white){
 					System.out.println("Making AI move: " + next_move);
-					make_move(next_move);
+					buttons = make_move(next_move, buttons);
+					buttons = update_board(next_move, buttons);
+					white = !white;
+					return buttons;
 				}
 			} catch(Exception e1) {
 				e1.printStackTrace();
 			}
+
+			return buttons;
 		}
 		
 		public void undo(){

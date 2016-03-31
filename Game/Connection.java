@@ -141,7 +141,6 @@ public class Connection{
     // newGame for HUMAN-AI type
     public void newGame(String gameType, String difficulty1) throws Exception{
         System.out.println("Sending H-A game type to extended method");
-        readUntilOK();
         newGame(gameType, difficulty1, "", "", "", "");
     }
 
