@@ -219,29 +219,32 @@ class GUI {
 		
 		int row2 = row1 - piece;
 		int col2 = col1 + piece*dir;
-		
-		if(((row1%2==0) && (col1%2==0)) || ((row1%2!=0) && (col1%2!=0))){
-			buttons[row1][col1].setIcon(egIcon);
+		if(row2>=0 && row2 < 8 && col2>=0 && col2<8 && row1>=0 && row1 < 8 && col1>=0 && col1<8){
+			if(((row1%2==0) && (col1%2==0)) || ((row1%2!=0) && (col1%2!=0))){
+				buttons[row1][col1].setIcon(egIcon);
+			} else{
+				buttons[row1][col1].setIcon(emIcon);
+			}
+			
+			if(piece==-1){
+				if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
+					buttons[row2][col2].setIcon(bgIcon);
+				}
+				else{
+					buttons[row2][col2].setIcon(bmIcon);
+				}
+			} else if(piece==1){
+				if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
+					buttons[row2][col2].setIcon(wgIcon);
+				}
+				else{
+					buttons[row2][col2].setIcon(wmIcon);
+				}
+			} else{
+				System.out.println("ERROR!!!!!!");
+			}
 		} else{
-			buttons[row1][col1].setIcon(emIcon);
-		}
-		
-		if(piece==-1){
-			if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
-				buttons[row2][col2].setIcon(bgIcon);
-			}
-			else{
-				buttons[row2][col2].setIcon(bmIcon);
-			}
-		} else if(piece==1){
-			if(((row2%2==0) && (col2%2==0)) || ((row2%2!=0) && (col2%2!=0))){
-				buttons[row2][col2].setIcon(wgIcon);
-			}
-			else{
-				buttons[row2][col2].setIcon(wmIcon);
-			}
-		} else{
-			System.out.println("ERROR!!!!!!");
+			System.out.println("OUT OF RANGE: row1" + row1 + " col1"+col1+" row2"+row2+" col2"+col2);
 		}
 	}
 	
