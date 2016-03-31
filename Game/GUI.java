@@ -279,7 +279,28 @@ class GUI {
 		}
 		return result;
 	}
-	
+
+	public static void move(String move) {
+		int shift = turn ? 1 : -1;
+		int dir=0;
+		if(move.toUpperCase().endsWith("FWD"))
+			dir = 0;
+		else if(move.toUpperCase().endsWith("LEFT"))
+			dir = -1;
+		else if(move.toUpperCase().endsWith("RIGHT"))
+			dir = 1;
+		else
+			System.out.println("ERROR");
+
+		int row = 7 - ((int)move.charAt(1)-49);
+		int column = (int)move.charAt(0)-65;
+
+		System.out.println("Row: " + row + " Col: " + column + " Dir: " + dir + " Shift: " + shift);
+		updateBoard(row, column, dir, shift);
+		//frame.repaint();
+		turn=new_game.white;
+	}
+
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
 
@@ -336,24 +357,7 @@ class GUI {
 						inputHolder.setText(result);
 						new_game.make_move(result);
 
-						int shift = turn ? 1 : -1;
-						int dir=0;
-						if(result.length()==6)
-							dir = 0;
-						else if(result.length()==7)
-							dir = -1;
-						else if(result.length()==8)
-							dir = 1;
-						else
-								System.out.println("ERROR");
-
-						int row = 7 - ((int)result.charAt(1)-49);
-						int column = (int)result.charAt(0)-65;
-
-						System.out.println("Row: " + row + " Col: " + column + " Dir: " + dir + " Shift: " + shift);
-						updateBoard(row, column, dir, shift);
-						//frame.repaint();
-						turn=new_game.white;
+						move(result);
 					}
 				} else if(input.getText().length()==6){
 					moveAlreadyMade=0;
@@ -392,8 +396,14 @@ class GUI {
 		
 		loginBot.setOpaque(true);
 		loginTop.setOpaque(true);
-		loginBot.setBackground(Color.CYAN);
-		loginTop.setBackground(Color.CYAN);
+		//loginBot.setBackground(Color.CYAN);
+		//loginTop.setBackground(Color.CYAN);
+		
+//		try {
+//    		loginBot.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("Game/bg.png")))));
+//    	} catch (IOException e) {
+//    		e.printStackTrace();
+//    	}
 		
 		login.add(loginTop);
 		login.add(loginBot);
@@ -401,6 +411,7 @@ class GUI {
 		login.setVisible(true);
 		
 		frame.add(login);
+		
 		
 		passF.addActionListener(new ActionListener(){//
 			@Override
