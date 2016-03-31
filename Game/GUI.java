@@ -78,6 +78,7 @@ class GUI {
 		if(aiAiTog){
 			bottom.add(aiDif2);
 		} else{
+			aiDif2.setSelectedIndex(0);
 			bottom.remove(aiDif2);
 		}
 	}
@@ -98,7 +99,7 @@ class GUI {
 			public void actionPerformed(ActionEvent e) {
 				//UNDO!!
 				System.out.println("THE UNDO BUTTON HAS BEEN CLICKED!!!");
-		}
+			}
 		});
 		
 		start.addActionListener(new ActionListener(){//
@@ -106,7 +107,19 @@ class GUI {
 			public void actionPerformed(ActionEvent e) {
 				//START OVER
 				System.out.println("THE START BUTTON HAS BEEN CLICKED!!!");
-		}
+				System.out.println("Game Type: " + gameType.getSelectedItem().toString());
+				System.out.println("AI Dif 1: " + aiDif1.getSelectedItem().toString());
+				System.out.println("AI Dif 2: " + aiDif2.getSelectedItem().toString());
+				if(gameType.getSelectedItem().toString()=="human-ai"){
+					if(aiDif1.getSelectedItem().toString()!="Difficulty #1"){
+						//Start human-ai aiDif1.getSelectedItem().toString();
+					}
+				} else if(gameType.getSelectedItem().toString()=="ai-ai"){
+					if(aiDif2.getSelectedItem().toString()!="Difficulty #2" && aiDif1.getSelectedItem().toString()!="Difficulty #1"){
+						//Start ai-ai aiDif1.getSelectedItem().toString() aiDif2.getSelectedItem().toString();
+					}
+				}
+			}
 		});
 		
 		top.add(title, BorderLayout.NORTH);
