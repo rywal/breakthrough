@@ -74,6 +74,7 @@ class GUI {
 		if(aiAiTog){
 			bottom.add(aiDif2);
 		} else{
+			aiDif2.setSelectedIndex(0);
 			bottom.remove(aiDif2);
 		}
 	}
@@ -87,17 +88,46 @@ class GUI {
 		
 		title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JButton undo = new JButton("Undo");
-		JButton startOver = new JButton("Start Over");
+		JButton start = new JButton("Start");
+		
+		undo.addActionListener(new ActionListener(){//
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//UNDO!!
+				System.out.println("THE UNDO BUTTON HAS BEEN CLICKED!!!");
+			}
+		});
+		
+		start.addActionListener(new ActionListener(){//
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//START OVER
+				System.out.println("THE START BUTTON HAS BEEN CLICKED!!!");
+				System.out.println("Game Type: " + gameType.getSelectedItem().toString());
+				System.out.println("AI Dif 1: " + aiDif1.getSelectedItem().toString());
+				System.out.println("AI Dif 2: " + aiDif2.getSelectedItem().toString());
+				if(gameType.getSelectedItem().toString()=="human-ai"){
+					if(aiDif1.getSelectedItem().toString()!="Difficulty #1"){
+						//Start human-ai aiDif1.getSelectedItem().toString();
+					}
+				} else if(gameType.getSelectedItem().toString()=="ai-ai"){
+					if(aiDif2.getSelectedItem().toString()!="Difficulty #2" && aiDif1.getSelectedItem().toString()!="Difficulty #1"){
+						//Start ai-ai aiDif1.getSelectedItem().toString() aiDif2.getSelectedItem().toString();
+					}
+				}
+			}
+		});
+		
 		top.add(title, BorderLayout.NORTH);
 		top.add(undo, BorderLayout.WEST);
-		top.add(startOver, BorderLayout.EAST);
+		top.add(start, BorderLayout.EAST);
 		
 		final JPanel bottom = new JPanel(/*new GridLayout(2, 1)*/);
 		
 		bottom.add(gameType);
 		bottom.add(aiDif1);
 			
-		ItemListener dif2 = new ItemListener() {
+		ItemListener gameT = new ItemListener() {
 			public void itemStateChanged(ItemEvent itemEvent) {
 				if(itemEvent.getItem().toString()=="ai-ai"){
 					aiAiToggle(bottom);
@@ -105,7 +135,7 @@ class GUI {
 				}
 			}
 		};
-		gameType.addItemListener(dif2);
+		gameType.addItemListener(gameT);
 				
 		fullTop.add(top, BorderLayout.NORTH);
 		fullTop.add(bottom, BorderLayout.SOUTH);
@@ -135,55 +165,15 @@ class GUI {
 	}
 	
 	public static JPanel centerPanel() {
-		//JPanel center = new JPanel(new GridLayout(8, 8));
-		
-		/*JLabel r0 = new JLabel(" ");                                                        //UNCOMMENT THIS
-		JLabel r1 = new JLabel("A");
-		JLabel r2 = new JLabel("B");
-		JLabel r3 = new JLabel("C");
-		JLabel r4 = new JLabel("D");
-		JLabel r5 = new JLabel("E");
-		JLabel r6 = new JLabel("F");
-		JLabel r7 = new JLabel("G");
-		JLabel r8 = new JLabel("H");
-		
-		r0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		r1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		r2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		r3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		r4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		r5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		r6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		r7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		r8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		
-		center.add(r0);
-		center.add(r1);
-		center.add(r2);
-		center.add(r3);
-		center.add(r4);
-		center.add(r5);
-		center.add(r6);
-		center.add(r7);
-		center.add(r8);
-		
-
-		int rowTemp=8;*/                                                                  //UNCOMMENT THI
 		
 		//Create the 2D array by using two for loops
 		for(int row = 0; row <8; row++) {
 			for(int col = 0; col < 8; col++) {
-				/*if(col==0){                                                               //UNCOMMENT THIS
-					JLabel c0 = new JLabel(Integer.toString(row+rowTemp));
-					c0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-					center.add(c0);
-				} */  				//UNCOMMENT THIS
 					System.out.print(row);
 					System.out.print(col);
 					System.out.println(new_game.board[row][col]);
 				center.add(buttonIcon(row, col, new_game.board[7-row][column]));
 			}
-			//rowTemp = rowTemp - 2;                                                         //UNCOMMENT THIS
 		}	
 		Buttons myButton= new Buttons(buttons, input, first);
 
@@ -365,8 +355,6 @@ class GUI {
 						//frame.repaint();
 						turn=new_game.white;
 					}
-
-
 				} else if(input.getText().length()==6){
 					moveAlreadyMade=0;
 					inputHolder.setText(input.getText());
