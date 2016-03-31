@@ -377,36 +377,19 @@ class GUI {
 		
 		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
-		
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		final JPanel login = new JPanel(new GridLayout(2, 1));
-		
-		JPanel loginTop = new JPanel(new BorderLayout());
-		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
-
+		final JPanel login = new JPanel(new BorderLayout());
 		final JTextField passF = new JTextField("breakthrough");
 		passF.setHorizontalAlignment(JTextField.CENTER);
+		passF.setPreferredSize( new Dimension( 400, 24 ) );
 		
-		loginTop.add(enterPas);
-		loginTop.add(passF, BorderLayout.SOUTH);
+		JLabel background=new JLabel(new ImageIcon("Game/login.png"));
 		
-		JPanel loginBot = new JPanel();
-		
-		loginBot.setOpaque(true);
-		loginTop.setOpaque(true);
-		//loginBot.setBackground(Color.CYAN);
-		//loginTop.setBackground(Color.CYAN);
-		
-//		try {
-//    		loginBot.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("Game/bg.png")))));
-//    	} catch (IOException e) {
-//    		e.printStackTrace();
-//    	}
-		
-		login.add(loginTop);
-		login.add(loginBot);
+		login.add(background);
+		background.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 250));
+		background.add(passF);
 		
 		login.setVisible(true);
 		
@@ -419,7 +402,7 @@ class GUI {
 				String passwordText = passF.getText();
 				if(passwordText.equalsIgnoreCase("breakthrough")){
 					try {
-						connection = new Connection("127.0.0.1", 5155, "breakthrough");
+						connection = new Connection("127.0.0.1", 5690, "breakthrough");
 						connection.newGame("HUMAN-AI", "HARD");
 						new_game = new GUI_Game(connection);
 					} catch(Exception e1) {
