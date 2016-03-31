@@ -385,8 +385,14 @@ class GUI {
 		
 		loginBot.setOpaque(true);
 		loginTop.setOpaque(true);
-		loginBot.setBackground(Color.CYAN);
-		loginTop.setBackground(Color.CYAN);
+		//loginBot.setBackground(Color.CYAN);
+		//loginTop.setBackground(Color.CYAN);
+		
+		try {
+    		loginBot.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("Game/bg.png")))));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
 		
 		login.add(loginTop);
 		login.add(loginBot);
@@ -394,6 +400,7 @@ class GUI {
 		login.setVisible(true);
 		
 		frame.add(login);
+		
 		
 		passF.addActionListener(new ActionListener(){//
 			@Override
