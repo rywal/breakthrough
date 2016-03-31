@@ -33,14 +33,11 @@ import javax.swing.event.*;
 
 
 class GUI {
-	//static {
-	//	System.loadLibrary("Game");
-	//}
-	//public static Game new_game;
-	static JButton [][] buttons = new JButton[8][8]; 
+	static JButton [][] buttons = new JButton[8][8];
 	static JTextArea outputField;
-	static final JFrame frame = new JFrame("                     BreakThrough - Team 11");		
-	static GUI_Game new_game= new GUI_Game();
+	static Connection connection;
+	static final JFrame frame = new JFrame("                     BreakThrough - Team 11");
+	static GUI_Game new_game;
 	static ImageIcon wgIcon = new ImageIcon("Game/wg.png");//White piece on green background
 	static ImageIcon wmIcon = new ImageIcon("Game/wm.png");//White piece on maroon background
 	static ImageIcon bgIcon = new ImageIcon("Game/bg.png");//Black piece on green background
@@ -64,7 +61,6 @@ class GUI {
 	static JPanel full;
 	static JPanel center = new JPanel(new GridLayout(8, 8));
 	static boolean aiAiTog = false;
-	
 	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		full = new JPanel(new BorderLayout());
@@ -342,13 +338,14 @@ class GUI {
 					
 					updateBoard(1, 1, -1, 1);*/
 					System.out.println("Sent to result: " + input.getText() + ", " + turn);
-					String result=to_result(input.getText(), turn);
+					String result = to_result(input.getText(), turn);
 					System.out.println("Result: " + result);
 					//sendto server
-					if(true){//server.response=="OK"){
+					if(!result.startsWith("Invalid")){//server.response=="OK"){
 						//input.setText(result);
 						inputHolder.setText(result);
 						new_game.make_move(result);
+
 						int shift = turn ? 1 : -1;
 						int dir=0;
 						if(result.length()==6)
@@ -370,18 +367,18 @@ class GUI {
 					}
 
 
-					} else if(input.getText().length()==6){
-						moveAlreadyMade=0;
-						inputHolder.setText(input.getText());
-					}
-
+				} else if(input.getText().length()==6){
+					moveAlreadyMade=0;
+					inputHolder.setText(input.getText());
 				}
-			});
 
-			bottom.add(inputHolder);
+			}
+		});
 
-			return bottom;
-		}
+		bottom.add(inputHolder);
+
+		return bottom;
+	}
 
 
     public static void main(String[] args) {
@@ -391,12 +388,12 @@ class GUI {
 		
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		final JPanel login = new JPanel(new GridLayout(2, 1));
 		
 		JPanel loginTop = new JPanel(new BorderLayout());
 		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
-	
+
 		final JTextField passF = new JTextField("breakthrough");
 		passF.setHorizontalAlignment(JTextField.CENTER);
 		
@@ -422,6 +419,13 @@ class GUI {
 			public void actionPerformed(ActionEvent e) {
 				String passwordText = passF.getText();
 				if(passwordText.equalsIgnoreCase("breakthrough")){
+					try {
+						connection = new Connection("127.0.0.1", 5155, "breakthrough");
+						connection.newGame("HUMAN-AI", "HARD");
+						new_game = new GUI_Game(connection);
+					} catch(Exception e1) {
+						e1.printStackTrace();
+					}
 					fullPanel(topPanel(),centerPanel());
 					frame.add(full);
 					frame.add(bottomPanel(), BorderLayout.SOUTH);

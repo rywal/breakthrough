@@ -27,15 +27,17 @@ import javax.imageio.ImageIO;
 
 	class GUI_Game{
 		
-		public static int[][] board= new int[8][8];
-		static boolean white;
-		public static java.util.List<int[][]> boards= new ArrayList<int[][]>();
+		public int[][] board= new int[8][8];
+		boolean white;
+		public java.util.List<int[][]> boards= new ArrayList<int[][]>();
+		Connection connection;
 		
-		GUI_Game(){
+		GUI_Game(Connection c){
 			set_start();
+			connection = c;
 		}
 		
-		public static void set_start(){
+		public void set_start(){
 			for(int i=0; i<8; i++){
 				for(int j=0; j<8; j++){
 						switch (i){
@@ -55,7 +57,7 @@ import javax.imageio.ImageIO;
 			boards.add(temp);
 		}
 		
-		public static void make_move(String command){
+		public void make_move(String command){
 			int column = (int)command.charAt(0)-65;
 			int row = (int)command.charAt(1)-49;
 			System.out.println(command + ": " + column + " " + row);
@@ -87,12 +89,39 @@ import javax.imageio.ImageIO;
 			int[][] temp = board;
 			white=!white;
 			boards.add(temp);
+
+			try {
+				if (white){
+					return;
+				}
+
+				System.out.println("Sending command to server...");
+				String server_response = connection.move(command);
+				System.out.println("Response from server: " + server_response);
+
+				String next_move = connection.readIgnoringOK();
+				if (!white){
+					System.out.println("Making AI move: " + next_move);
+					make_move(next_move);
+				}
+			} catch(Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 		
-		public static void undo(){
+		public void undo(){
+			try {
+				System.out.println("Sending UNDO command to server...");
+				String server_response = connection.command("UNDO");
+				System.out.println("Response from server: " + server_response);
+			} catch(Exception e1) {
+				e1.printStackTrace();
+			}
+
 			boards.remove(boards.size()-1);
 			boards.remove(boards.size()-1);
 			board= boards.get(boards.size()-1);
+
 		}
 		
 	}
