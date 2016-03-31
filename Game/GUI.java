@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,21 +47,35 @@ class GUI {
 	static ImageIcon bmIcon = new ImageIcon("Game/bm.png");//Black piece on maroon background
 	static ImageIcon egIcon = new ImageIcon("Game/eg.png");//Empty piece on green background
 	static ImageIcon emIcon = new ImageIcon("Game/em.png");//Empty piece on maroon background
+	static String[] gameTypeString = {"Game Type", "human-ai", "ai-ai"};
+	static String[] aiString1 = {"Difficulty #1", "Easy", "Medium", "Hard"};
+	static String[] aiString2 = {"Difficulty #2", "Easy", "Medium", "Hard"};
+	static final JComboBox aiDif1 = new JComboBox(aiString1);
+	static final JComboBox aiDif2 = new JComboBox(aiString2);
+	static final JComboBox gameType = new JComboBox(gameTypeString);
 	static String input_txt="Default Input";
+	static int moveAlreadyMade=0;
 	static boolean first=true;
 	static boolean turn=true;
 	static JTextField input = new JTextField(input_txt);
+	static JTextField tempInput = new JTextField(" ");
 	static int row_c;
 	static int column;
-	static int moveAlreadyMade=0;
 	static JPanel full;
 	static JPanel center = new JPanel(new GridLayout(8, 8));
+	static boolean aiAiTog = false;
+	
 	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
 		full.add(centerPanel, BorderLayout.CENTER);
 		return full;
+	}
+	
+	public static void aiAiToggle(JPanel bottom){
+		aiAiTog = !aiAiTog;
+		aiAiTog ? bottom.add(aiDif2): bottom.remove(aiDif2);
 	}
 	
 	public static JPanel topPanel() {
@@ -76,19 +92,38 @@ class GUI {
 		top.add(undo, BorderLayout.WEST);
 		top.add(startOver, BorderLayout.EAST);
 		
-		JPanel bottom = new JPanel(/*new GridLayout(2, 1)*/);
-		String[] gameTypeString = {"Game Type", "human-ai", "ai-ai"};
-		String[] aiString1 = {"Difficulty #1", "Easy", "Medium", "Hard"};
-		String[] aiString2 = {"Difficulty #2", "Easy", "Medium", "Hard"};
+		final JPanel bottom = new JPanel(/*new GridLayout(2, 1)*/);
 		
-		JComboBox gameType = new JComboBox(gameTypeString);
-		JComboBox aiDif1 = new JComboBox(aiString1);
-		JComboBox aiDif2 = new JComboBox(aiString2);
 		
-		//gameType.addActionListener(this);
+		
+		//JComboBox gameType = new JComboBox(gameTypeString);
+		//JComboBox aiDif1 = new JComboBox(aiString1);
+		
 		bottom.add(gameType);
 		bottom.add(aiDif1);
-		bottom.add(aiDif2);
+			
+		
+		ItemListener dif2 = new ItemListener() {
+			public void itemStateChanged(ItemEvent itemEvent) {
+				if(itemEvent.getItem().toString()=="ai-ai"){
+					aiAiToggle(bottom);
+					SwingUtilities.updateComponentTreeUI(frame);
+				}
+				//ItemSelectable is = itemEvent.getItemSelectable();
+				//System.out.println(", Selected: " + selectedString(is));
+				}
+		};
+		gameType.addItemListener(dif2);
+				
+				
+				
+				/*if(aiDif1.getSelectedItem().toString()=="ai-ai"){
+					
+					JComboBox aiDif2 = new JComboBox(aiString2);
+					bottom.add(aiDif2);
+				}*/
+
+
 		
 		fullTop.add(top, BorderLayout.NORTH);
 		fullTop.add(bottom, BorderLayout.SOUTH);
@@ -194,8 +229,11 @@ class GUI {
 		return center;
 	}
 	
-	public static void updateBoard(int row1, int col1, int row2, int col2, int piece) {
-	
+	public static void updateBoard(int row1, int col1, int dir, int piece) {
+		
+		int row2 = row1 - piece;
+		int col2 = col1 + piece*dir;
+		
 		if(((row1%2==0) && (col1%2==0)) || ((row1%2!=0) && (col1%2!=0))){
 			buttons[row1][col1].setIcon(egIcon);
 		} else{
@@ -219,7 +257,6 @@ class GUI {
 		} else{
 			System.out.println("ERROR!!!!!!");
 		}
-
 	}
 	
 	
@@ -257,6 +294,13 @@ class GUI {
 		return result;
 	}
 	
+	public static void tempReplace(String command){
+		tempInput.setText(command);
+		bottomPanel().setVisible(false);
+		frame.add(tempInput, BorderLayout.SOUTH);
+		SwingUtilities.updateComponentTreeUI(frame);
+	}
+	
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
 
@@ -267,26 +311,26 @@ class GUI {
 			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
 				//sendto server
-				//if(server.response=="OK")				
-				input.setText(result);
-				new_game.make_move(result);
-			//	full=fullPanel(topPanel(),centerPanel());
-			//	full.repaint();
-			//	frame.add(full);
-			//new_full = fullPanel(topPanel(),centerPanel());
-				//frame.getContentPane().removeAll();
-				//frame.add(topPanel());
-				//frame.add(centerPanel());                                  ///////
-				updateBoard(1, 1, 2, 1, 1);
-				//
-				frame.add(bottomPanel(), BorderLayout.SOUTH);
-				frame.repaint();
-			/*	else{
-					full = fullPanel(topPanel(),centerPanel());
-					frame.add(full);
-					frame.remove(new_full);
-				}	
-				
+				if(true){//server.response=="OK"){				
+					input.setText(result);
+					new_game.make_move(result);
+					int shift = turn ? 1 : -1;
+					int dir=0;
+					if(result.length()==6)
+						dir = 0;
+					else if(result.length()==7)
+						dir = -1;
+					else if(result.length()==8)
+						dir = 1;
+					else
+							System.out.println("ERROR");
+					updateBoard(7-((int)result.charAt(1)-49), (int)result.charAt(0)-65, dir, shift);
+					frame.repaint();
+					turn=new_game.white;
+				}
+				else{
+				//	input.setText(server_response)
+				}
 				//frame.repaint();
 				//SwingUtilities.updateComponentTreeUI(frame);
 
@@ -296,15 +340,24 @@ class GUI {
 		input.addCaretListener(new CaretListener() {
 			@Override
 			public void caretUpdate(CaretEvent e) {
-				if(input.getText().length()==8){
-					String result=to_result(input.getText(), turn);			
-					//input.setText("THIS IS DONE");
+				if(input.getText().length()==8 && moveAlreadyMade==0){
+					moveAlreadyMade=1;
+					String result=to_result(input.getText(), turn);
+					tempReplace(result);
+					//input.setText(result);
+					//
 					//new_game.make_move(result);
-					updateBoard(1, 1, 2, 1, 1);
+					
+					updateBoard(1, 1, -1, 1);
+					
 					//
 					//frame.add(bottomPanel(), BorderLayout.SOUTH);
 					//frame.repaint();
+				} else if(input.getText().length()==6){
+					moveAlreadyMade=0;
+					bottomPanel().setVisible(true);
 				}
+				
 			}
 		});
 		
