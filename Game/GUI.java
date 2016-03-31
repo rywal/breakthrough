@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,20 +47,39 @@ class GUI {
 	static ImageIcon bmIcon = new ImageIcon("Game/bm.png");//Black piece on maroon background
 	static ImageIcon egIcon = new ImageIcon("Game/eg.png");//Empty piece on green background
 	static ImageIcon emIcon = new ImageIcon("Game/em.png");//Empty piece on maroon background
+	static String[] gameTypeString = {"Game Type", "human-ai", "ai-ai"};
+	static String[] aiString1 = {"Difficulty #1", "Easy", "Medium", "Hard"};
+	static String[] aiString2 = {"Difficulty #2", "Easy", "Medium", "Hard"};
+	static final JComboBox aiDif1 = new JComboBox(aiString1);
+	static final JComboBox aiDif2 = new JComboBox(aiString2);
+	static final JComboBox gameType = new JComboBox(gameTypeString);
 	static String input_txt="Default Input";
+	static int moveAlreadyMade=0;
 	static boolean first=true;
 	static boolean turn=true;
 	static JTextField input = new JTextField(input_txt);
+	static JTextField inputHolder = new JTextField(input_txt);
 	static int row_c;
 	static int column;
 	static JPanel full;
 	static JPanel center = new JPanel(new GridLayout(8, 8));
+	static boolean aiAiTog = false;
+	
 	
 	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
 		full = new JPanel(new BorderLayout());
 		full.add(topPanel, BorderLayout.NORTH);
 		full.add(centerPanel, BorderLayout.CENTER);
 		return full;
+	}
+	
+	public static void aiAiToggle(JPanel bottom){
+		aiAiTog = !aiAiTog;
+		if(aiAiTog){
+			bottom.add(aiDif2);
+		} else{
+			bottom.remove(aiDif2);
+		}
 	}
 	
 	public static JPanel topPanel() {
@@ -75,20 +96,21 @@ class GUI {
 		top.add(undo, BorderLayout.WEST);
 		top.add(startOver, BorderLayout.EAST);
 		
-		JPanel bottom = new JPanel(/*new GridLayout(2, 1)*/);
-		String[] gameTypeString = {"Game Type", "human-ai", "ai-ai"};
-		String[] aiString1 = {"Difficulty #1", "Easy", "Medium", "Hard"};
-		String[] aiString2 = {"Difficulty #2", "Easy", "Medium", "Hard"};
+		final JPanel bottom = new JPanel(/*new GridLayout(2, 1)*/);
 		
-		JComboBox gameType = new JComboBox(gameTypeString);
-		JComboBox aiDif1 = new JComboBox(aiString1);
-		JComboBox aiDif2 = new JComboBox(aiString2);
-		
-		//gameType.addActionListener(this);
 		bottom.add(gameType);
 		bottom.add(aiDif1);
-		bottom.add(aiDif2);
-		
+			
+		ItemListener dif2 = new ItemListener() {
+			public void itemStateChanged(ItemEvent itemEvent) {
+				if(itemEvent.getItem().toString()=="ai-ai"){
+					aiAiToggle(bottom);
+					SwingUtilities.updateComponentTreeUI(frame);
+				}
+			}
+		};
+		gameType.addItemListener(dif2);
+				
 		fullTop.add(top, BorderLayout.NORTH);
 		fullTop.add(bottom, BorderLayout.SOUTH);
 		
@@ -221,13 +243,13 @@ class GUI {
 		} else{
 			System.out.println("ERROR!!!!!!");
 		}
-
 	}
 	
 	
 	public static String to_result(String command, boolean turn){
 		String result="";
 		String dir;
+		System.out.println(" ");
 		if(command.length()>6){
 			int pos_col = (int)command.charAt(0)-(int)command.charAt(6);
 			int pos_row = (int)command.charAt(7)-(int)command.charAt(1);
@@ -263,7 +285,7 @@ class GUI {
 
 		//JButton enter = new JButton("Enter");
 		
-		input.addActionListener(new ActionListener(){
+		/*input.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String result=to_result(input.getText(), turn);
@@ -288,35 +310,31 @@ class GUI {
 				else{
 				//	input.setText(server_response)
 				}
-				
 				//frame.repaint();
 				//SwingUtilities.updateComponentTreeUI(frame);
 
 			}
-		});
-		
-		/*input.addCaretListener(new CaretListener() {
-			@Override
-			public void caretUpdate(CaretEvent e) {
-				if(input.getText().length()==8){
-					String result=to_result(input.getText(), turn);
-					//sendto server
-					//if(server.response=="OK")				
-					//input.setText(result);
-					//new_game.make_move(result);
-					frame.remove(full);
-					full = fullPanel(topPanel(),centerPanel());
-					full.repaint();
-					frame.add(full);
-					SwingUtilities.updateComponentTreeUI(frame);
-					//get response 
-				}
-			}
 		});*/
 		
-		bottom.add(input);
+		input.addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(input.getText().length()==8 && moveAlreadyMade==0){
+					moveAlreadyMade=1;
+					String result=to_result(input.getText(), turn);
+					inputHolder.setText(result);
+					
+					updateBoard(1, 1, -1, 1);
+					
+				} else if(input.getText().length()==6){
+					moveAlreadyMade=0;
+					inputHolder.setText(input.getText());
+				}
+				
+			}
+		});
+		bottom.add(inputHolder);
 
-		//bottom.add(enter,BorderLayout.EAST);	
 		return bottom;
 	}
 
