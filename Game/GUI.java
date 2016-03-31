@@ -324,6 +324,8 @@ class GUI {
 					String result=to_result(input.getText(), turn);
 					inputHolder.setText(result);
 					
+					new_game.make_move(result);
+					
 					updateBoard(1, 1, -1, 1);
 					
 				} else if(input.getText().length()==6){
