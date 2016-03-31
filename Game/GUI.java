@@ -402,7 +402,7 @@ class GUI {
 				String passwordText = passF.getText();
 				if(passwordText.equalsIgnoreCase("breakthrough")){
 					try {
-						connection = new Connection("127.0.0.1", 5690, "breakthrough");
+						connection = new Connection("127.0.0.1", 5155, "breakthrough");
 						connection.newGame("HUMAN-AI", "HARD");
 						new_game = new GUI_Game(connection);
 					} catch(Exception e1) {
