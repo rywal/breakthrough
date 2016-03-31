@@ -45,8 +45,8 @@ class GUI {
 	static ImageIcon egIcon = new ImageIcon("Game/eg.png");//Empty piece on green background
 	static ImageIcon emIcon = new ImageIcon("Game/em.png");//Empty piece on maroon background
 	static String[] gameTypeString = {"Game Type", "human-ai", "ai-ai"};
-	static String[] aiString1 = {"Difficulty #1", "Easy", "Medium", "Hard"};
-	static String[] aiString2 = {"Difficulty #2", "Easy", "Medium", "Hard"};
+	static String[] aiString1 = {"Difficulty #1", "EASY", "MEDIUM", "HARD"};
+	static String[] aiString2 = {"Difficulty #2", "EASY", "MEDIUM", "HARD"};
 	static final JComboBox aiDif1 = new JComboBox(aiString1);
 	static final JComboBox aiDif2 = new JComboBox(aiString2);
 	static final JComboBox gameType = new JComboBox(gameTypeString);
@@ -95,6 +95,7 @@ class GUI {
 			public void actionPerformed(ActionEvent e) {
 				//UNDO!!
 				System.out.println("THE UNDO BUTTON HAS BEEN CLICKED!!!");
+				new_game.undo();
 			}
 		});
 		
@@ -102,13 +103,13 @@ class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//START OVER
-				System.out.println("THE START BUTTON HAS BEEN CLICKED!!!");
-				System.out.println("Game Type: " + gameType.getSelectedItem().toString());
-				System.out.println("AI Dif 1: " + aiDif1.getSelectedItem().toString());
-				System.out.println("AI Dif 2: " + aiDif2.getSelectedItem().toString());
 				if(gameType.getSelectedItem().toString()=="human-ai"){
 					if(aiDif1.getSelectedItem().toString()!="Difficulty #1"){
-						//Start human-ai aiDif1.getSelectedItem().toString();
+						try{
+							connection.newGame("HUMAN-AI", aiDif1.getSelectedItem().toString() );
+						} catch(Exception e1) {
+							e1.printStackTrace();
+						}
 					}
 				} else if(gameType.getSelectedItem().toString()=="ai-ai"){
 					if(aiDif2.getSelectedItem().toString()!="Difficulty #2" && aiDif1.getSelectedItem().toString()!="Difficulty #1"){
@@ -169,9 +170,9 @@ class GUI {
 		//Create the 2D array by using two for loops
 		for(int row = 0; row <8; row++) {
 			for(int col = 0; col < 8; col++) {
-					System.out.print(row);
-					System.out.print(col);
-					System.out.println(new_game.board[row][col]);
+		//			System.out.print(row);
+		//			System.out.print(col);
+		//			System.out.println(new_game.board[row][col]);
 				center.add(buttonIcon(row, col, new_game.board[7-row][column]));
 			}
 		}	
@@ -343,36 +344,19 @@ class GUI {
 		
 		Dimension screenRes = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(screenRes.width/3-frame.getSize().width, screenRes.height/4-frame.getSize().height);
-		
 		frame.setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		final JPanel login = new JPanel(new GridLayout(2, 1));
-		
-		JPanel loginTop = new JPanel(new BorderLayout());
-		JLabel enterPas = new JLabel("Enter Password to Continue", JLabel.CENTER);
-
+		final JPanel login = new JPanel(new BorderLayout());
 		final JTextField passF = new JTextField("breakthrough");
 		passF.setHorizontalAlignment(JTextField.CENTER);
+		passF.setPreferredSize( new Dimension( 400, 24 ) );
 		
-		loginTop.add(enterPas);
-		loginTop.add(passF, BorderLayout.SOUTH);
+		JLabel background=new JLabel(new ImageIcon("Game/login.png"));
 		
-		JPanel loginBot = new JPanel();
-		
-		loginBot.setOpaque(true);
-		loginTop.setOpaque(true);
-		//loginBot.setBackground(Color.CYAN);
-		//loginTop.setBackground(Color.CYAN);
-		
-//		try {
-//    		loginBot.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("Game/bg.png")))));
-//    	} catch (IOException e) {
-//    		e.printStackTrace();
-//    	}
-		
-		login.add(loginTop);
-		login.add(loginBot);
+		login.add(background);
+		background.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 250));
+		background.add(passF);
 		
 		login.setVisible(true);
 		

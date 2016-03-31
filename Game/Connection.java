@@ -118,7 +118,6 @@ public class Connection{
     // newGame for AI-AI type, with extra info needed
     public void newGame(String gameType, String difficulty1, String difficulty2, String address, String port, String password) throws Exception{
         String command_response;
-//        System.out.println("Got it!");
 
         if (!difficulty2.isEmpty() && !address.isEmpty() && !port.isEmpty() && !password.isEmpty()) {
 //            System.out.println("Doing my magic here");
