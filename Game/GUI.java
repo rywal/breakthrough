@@ -62,11 +62,18 @@ class GUI {
 	static JPanel center = new JPanel(new GridLayout(8, 8));
 	static boolean aiAiTog = false;
 	
-	public static JPanel fullPanel(JPanel topPanel, JPanel centerPanel) {
-		full = new JPanel(new BorderLayout());
-		full.add(topPanel, BorderLayout.NORTH);
-		full.add(centerPanel, BorderLayout.CENTER);
-		return full;
+	public static JLabel fullPanel() {
+		JLabel backboard=new JLabel(new ImageIcon("Game/login.png"));
+		backboard.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+		backboard.add(topPanel());
+		backboard.add(centerPanel());
+		backboard.add(bottomPanel());
+		/*full = new JPanel(new BorderLayout());
+		full.add(topPanel(), BorderLayout.NORTH);
+		full.add(centerPanel(), BorderLayout.CENTER);
+		full.add(bottomPanel(), BorderLayout.SOUTH);
+		return full;*/
+		return backboard;
 	}
 	
 	public static void aiAiToggle(JPanel bottom){
@@ -83,10 +90,10 @@ class GUI {
 		JPanel fullTop = new JPanel(new BorderLayout());
 		
 		JPanel top = new JPanel(new BorderLayout());
-		JLabel title = new JLabel("Breakthrough - Team 11");
-		title.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+		//JLabel title = new JLabel("Breakthrough - Team 11");
+		//title.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 		
-		title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		//title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		JButton undo = new JButton("Undo");
 		JButton start = new JButton("Start");
 		
@@ -119,7 +126,7 @@ class GUI {
 			}
 		});
 		
-		top.add(title, BorderLayout.NORTH);
+		//top.add(title, BorderLayout.NORTH);
 		top.add(undo, BorderLayout.WEST);
 		top.add(start, BorderLayout.EAST);
 		
@@ -140,7 +147,7 @@ class GUI {
 				
 		fullTop.add(top, BorderLayout.NORTH);
 		fullTop.add(bottom, BorderLayout.SOUTH);
-		
+		fullTop.setBackground(new Color(0, 0, 0, 0));
 		return fullTop;
 	}
 	
@@ -304,50 +311,12 @@ class GUI {
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
 
-		//JButton enter = new JButton("Enter");
-		
-		/*input.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String result=to_result(input.getText(), turn);
-				//sendto server
-				if(true){//server.response=="OK"){				
-					input.setText(result);
-					new_game.make_move(result);
-					int shift = turn ? 1 : -1;
-					int dir=0;
-					if(result.length()==6)
-						dir = 0;
-					else if(result.length()==7)
-						dir = -1;
-					else if(result.length()==8)
-						dir = 1;
-					else
-							System.out.println("ERROR");
-					updateBoard(7-((int)result.charAt(1)-49), (int)result.charAt(0)-65, dir, shift);
-					frame.repaint();
-					turn=new_game.white;
-				}
-				else{
-				//	input.setText(server_response)
-				}
-				//frame.repaint();
-				//SwingUtilities.updateComponentTreeUI(frame);
-
-			}
-		});*/
-		
+	
 		input.addCaretListener(new CaretListener() {
 			@Override
 			public void caretUpdate(CaretEvent e) {
 				if(input.getText().length()==8 && moveAlreadyMade==0){
 					moveAlreadyMade=1;
-					/*String result=to_result(input.getText(), turn);
-					inputHolder.setText(result);
-					
-					new_game.make_move(result);
-					
-					updateBoard(1, 1, -1, 1);*/
 					System.out.println("Sent to result: " + input.getText() + ", " + turn);
 					String result = to_result(input.getText(), turn);
 					System.out.println("Result: " + result);
@@ -408,10 +377,10 @@ class GUI {
 					} catch(Exception e1) {
 						e1.printStackTrace();
 					}
-					fullPanel(topPanel(),centerPanel());
-					frame.add(full);
-					frame.add(bottomPanel(), BorderLayout.SOUTH);
+
 					frame.remove(login);
+					frame.add(fullPanel());
+					
 					SwingUtilities.updateComponentTreeUI(frame);
 				} else{
 					passF.setText("DENIED!!");
