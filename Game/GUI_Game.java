@@ -58,10 +58,9 @@ import javax.imageio.ImageIO;
 		public static void make_move(String command){
 			int column = (int)command.charAt(0)-65;
 			int row = (int)command.charAt(1)-49;
-			System.out.print(column);
-			System.out.print(row);
+			System.out.println(command + ": " + column + " " + row);
 			int shift = white ? 1 : -1;
-			board[row][column]=0;
+			board[column][row] = 0;
 			if (command.length()==6){
 				if((row + shift)< 8 && (row + shift)>0 ){
 					board[row + shift][column]= shift;
