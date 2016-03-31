@@ -33,10 +33,10 @@ import javax.swing.event.*;
 
 
 class GUI {
-	static JButton [][] buttons = new JButton[8][8];
+	static JButton [][] buttons = new JButton[8][8];//This will be the game board
 	static JTextArea outputField;
-	static Connection connection;
-	static final JFrame frame = new JFrame("                     BreakThrough - Team 11");
+	static Connection connection;//This is how the connection to the server is made
+	static final JFrame frame = new JFrame("                     BreakThrough - Team 11"); //trying to center the text on the window
 	static GUI_Game new_game;
 	static ImageIcon wgIcon = new ImageIcon("Game/wg.png");//White piece on green background
 	static ImageIcon wmIcon = new ImageIcon("Game/wm.png");//White piece on maroon background
@@ -44,25 +44,24 @@ class GUI {
 	static ImageIcon bmIcon = new ImageIcon("Game/bm.png");//Black piece on maroon background
 	static ImageIcon egIcon = new ImageIcon("Game/eg.png");//Empty piece on green background
 	static ImageIcon emIcon = new ImageIcon("Game/em.png");//Empty piece on maroon background
-	static String[] gameTypeString = {"Game Type", "human-ai", "ai-ai"};
+	static String[] gameTypeString = {"Game Type", "human-ai", "ai-ai"}; //This is for the game-type drop down menu
 	static String[] aiString1 = {"Difficulty #1", "EASY", "MEDIUM", "HARD"};
 	static String[] aiString2 = {"Difficulty #2", "EASY", "MEDIUM", "HARD"};
-	static final JComboBox aiDif1 = new JComboBox(aiString1);
+	static final JComboBox aiDif1 = new JComboBox(aiString1);//These are for the difficulty drop down menus
 	static final JComboBox aiDif2 = new JComboBox(aiString2);
 	static final JComboBox gameType = new JComboBox(gameTypeString);
 	static String input_txt="Default Input";
-	static int moveAlreadyMade=0;
+	static int moveAlreadyMade=0; //automatically make a move by clicking two cells in the board
 	static boolean first=true;
 	static boolean turn=true;
-	static JTextField input = new JTextField(input_txt);
-	static JTextField inputHolder = new JTextField(input_txt);
+	static JTextField input = new JTextField(input_txt);//invisible to the viewer (for internal use)
+	static JTextField inputHolder = new JTextField(input_txt);//Visible to user (Shows first and second clicked cells)
 	static int row_c;
 	static int column;
-	static JPanel full;
-	static JPanel center = new JPanel(new GridLayout(8, 8));
-	static boolean aiAiTog = false;
+	static JPanel center = new JPanel(new GridLayout(8, 8)); //board's interface
+	static boolean aiAiTog = false; //for AI-AI's 2nd hardness
 	
-	public static JLabel fullPanel() {
+	public static JLabel fullPanel() {//This has the background and the three main panels
 		JLabel backboard=new JLabel(new ImageIcon("Game/backboard.png"));
 		backboard.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 		backboard.add(topPanel());
@@ -71,7 +70,7 @@ class GUI {
 		return backboard;
 	}
 	
-	public static void aiAiToggle(JPanel bottom){
+	public static void aiAiToggle(JPanel bottom){//toggles AI-AI's 2nd difficulty
 		aiAiTog = !aiAiTog;
 		if(aiAiTog){
 			bottom.add(aiDif2);
