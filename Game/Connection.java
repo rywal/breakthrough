@@ -75,6 +75,7 @@ public class Connection{
             response = read();
         }
 
+        Thread.sleep(200);
         return response;
     }
 
@@ -127,9 +128,9 @@ public class Connection{
                     password + " " +
                     difficulty1 + " " +
                     difficulty2;
-            command_response = command(command);
+            write(command);
             System.out.println("Command: " + command);
-            System.out.println("New game response(A-A): " + command_response);
+//            System.out.println("New game response(A-A): " + command_response);
             return;
         }
 

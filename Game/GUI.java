@@ -80,21 +80,6 @@ class GUI {
 			bottom.remove(aiDif2);
 		}
 	}
-
-	public static void runAIAIGame() {
-		try {
-			String line = connection.read();
-			if (line.length() > 0 && !line.startsWith(";") && !line.toUpperCase().startsWith("ILLEGAL")) {
-				System.out.println("Making move: " + line);
-				move(line);
-				turn = !turn;
-				SwingUtilities.updateComponentTreeUI(frame);
-			}
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-	}
 	
 	public static JPanel topPanel() {
 		JPanel fullTop = new JPanel(new BorderLayout());
@@ -133,8 +118,17 @@ class GUI {
 						try {
 							connection.newGame("AI-AI", aiDif1.getSelectedItem().toString(), aiDif2.getSelectedItem().toString(), "127.0.0.1", "5156", "breakthrough");
 
-							while(true)
-								runAIAIGame();
+							String line = connection.readIgnoringOK();
+							while (!line.endsWith("winner!")) {
+								if (line.length() > 0 && !line.startsWith(";") && !line.toUpperCase().startsWith("ILLEGAL")) {
+									System.out.println("Making move: " + line);
+									move(line);
+									turn = !turn;
+									SwingUtilities.updateComponentTreeUI(frame);
+								}
+
+								line = connection.readIgnoringOK();
+							}
 						} catch(Exception e1) {
 							e1.printStackTrace();
 						}
@@ -166,6 +160,7 @@ class GUI {
 		fullTop.add(bottom, BorderLayout.SOUTH);
 		fullTop.setBackground(new Color(0, 0, 0, 0));
 		fullTop.setOpaque(false);
+
 		return fullTop;
 	}
 	
