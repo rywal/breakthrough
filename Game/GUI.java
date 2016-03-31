@@ -58,7 +58,7 @@ class GUI {
 	static boolean first=true;
 	static boolean turn=true;
 	static JTextField input = new JTextField(input_txt);
-	static JTextField tempInput = new JTextField(" ");
+	static JTextField inputHolder = new JTextField(input_txt);
 	static int row_c;
 	static int column;
 	static JPanel full;
@@ -75,7 +75,11 @@ class GUI {
 	
 	public static void aiAiToggle(JPanel bottom){
 		aiAiTog = !aiAiTog;
-		aiAiTog ? bottom.add(aiDif2): bottom.remove(aiDif2);
+		if(aiAiTog){
+			bottom.add(aiDif2);
+		} else{
+			bottom.remove(aiDif2);
+		}
 	}
 	
 	public static JPanel topPanel() {
@@ -94,37 +98,19 @@ class GUI {
 		
 		final JPanel bottom = new JPanel(/*new GridLayout(2, 1)*/);
 		
-		
-		
-		//JComboBox gameType = new JComboBox(gameTypeString);
-		//JComboBox aiDif1 = new JComboBox(aiString1);
-		
 		bottom.add(gameType);
 		bottom.add(aiDif1);
 			
-		
 		ItemListener dif2 = new ItemListener() {
 			public void itemStateChanged(ItemEvent itemEvent) {
 				if(itemEvent.getItem().toString()=="ai-ai"){
 					aiAiToggle(bottom);
 					SwingUtilities.updateComponentTreeUI(frame);
 				}
-				//ItemSelectable is = itemEvent.getItemSelectable();
-				//System.out.println(", Selected: " + selectedString(is));
-				}
+			}
 		};
 		gameType.addItemListener(dif2);
 				
-				
-				
-				/*if(aiDif1.getSelectedItem().toString()=="ai-ai"){
-					
-					JComboBox aiDif2 = new JComboBox(aiString2);
-					bottom.add(aiDif2);
-				}*/
-
-
-		
 		fullTop.add(top, BorderLayout.NORTH);
 		fullTop.add(bottom, BorderLayout.SOUTH);
 		
@@ -294,13 +280,6 @@ class GUI {
 		return result;
 	}
 	
-	public static void tempReplace(String command){
-		tempInput.setText(command);
-		bottomPanel().setVisible(false);
-		frame.add(tempInput, BorderLayout.SOUTH);
-		SwingUtilities.updateComponentTreeUI(frame);
-	}
-	
 	public static JPanel bottomPanel() {
 		JPanel bottom = new JPanel(new BorderLayout());
 
@@ -343,27 +322,19 @@ class GUI {
 				if(input.getText().length()==8 && moveAlreadyMade==0){
 					moveAlreadyMade=1;
 					String result=to_result(input.getText(), turn);
-					tempReplace(result);
-					//input.setText(result);
-					//
-					//new_game.make_move(result);
+					inputHolder.setText(result);
 					
 					updateBoard(1, 1, -1, 1);
 					
-					//
-					//frame.add(bottomPanel(), BorderLayout.SOUTH);
-					//frame.repaint();
 				} else if(input.getText().length()==6){
 					moveAlreadyMade=0;
-					bottomPanel().setVisible(true);
+					inputHolder.setText(input.getText());
 				}
 				
 			}
 		});
-		
-		bottom.add(input);
+		bottom.add(inputHolder);
 
-		//bottom.add(enter,BorderLayout.EAST);	
 		return bottom;
 	}
 
