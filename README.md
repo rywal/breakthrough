@@ -14,24 +14,24 @@ Contains a C++ server and Java GUI to play breakthrough game. The game server su
 
 Client-Server protocol:
 ```
-statement	          ::= password | command | move | comment
-password	           ::= arbitrary string
+statement           ::= password | command | move | comment
+password            ::= arbitrary string
 command             ::= EXIT 
                     | DISPLAY 
                     | UNDO 
                     | HUMAN-HUMAN
                     | HUMAN-AI difficulty
                     |AI-AI server port password my-difficulty opponent-difficulty
-move	               ::= column row move-dir
-move-dir	           ::= FWD | LEFT | RIGHT
-difficulty	         ::= EASY | MEDIUM | HARD
-my-difficulty	      ::= difficulty
+move                ::= column row move-dir
+move-dir            ::= FWD | LEFT | RIGHT
+difficulty          ::= EASY | MEDIUM | HARD
+my-difficulty       ::= difficulty
 opponent-difficulty	::= difficulty
 comment	            ::= ; *
-column	             ::= a | b | c | d | e | f | g
-row	                ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-server	             ::= IP address or hostname
-port	               ::= positive integer
+column	            ::= a | b | c | d | e | f | g
+row                 ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+server              ::= IP address or hostname
+port                ::= positive integer
 ```
 
 Command descriptions:
@@ -56,6 +56,7 @@ Command descriptions:
 
 ***
 _Created as part of CSCE 315 at Texas A&M University_
+_Excerpts borrowed from Project 2 Outline created by Dr. Choe_
 
 Contributors:
 * Ryan Walters
