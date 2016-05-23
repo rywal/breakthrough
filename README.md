@@ -12,7 +12,29 @@ Contains a C++ server and Java GUI to play breakthrough game. The game server su
 * AI to AI
   * Direct two servers to play each other with their respective AIs.
 
-Server commands:
+Client-Server protocol:
+```
+statement	          ::= password | command | move | comment
+password	           ::= arbitrary string
+command             ::= EXIT 
+                    | DISPLAY 
+                    | UNDO 
+                    | HUMAN-HUMAN
+                    | HUMAN-AI difficulty
+                    |AI-AI server port password my-difficulty opponent-difficulty
+move	               ::= column row move-dir
+move-dir	           ::= FWD | LEFT | RIGHT
+difficulty	         ::= EASY | MEDIUM | HARD
+my-difficulty	      ::= difficulty
+opponent-difficulty	::= difficulty
+comment	            ::= ; *
+column	             ::= a | b | c | d | e | f | g
+row	                ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+server	             ::= IP address or hostname
+port	               ::= positive integer
+```
+
+Command descriptions:
 * `EXIT`: exit and disconnect from the server
 * `DISPLAY`: toggles board display
 * `UNDO`: undo AI's move and your last move. Up to 10 UNDOs are supported.
