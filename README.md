@@ -6,9 +6,9 @@ Contains a C++ server and Java GUI to play breakthrough game. The game server su
 * Human to AI
   * Turn based play, locally via command-line interface or the Java GUI
   * AI has three difficulties:
-    * Easy: uses a random algorithm to pick the next move
-    * Medium: uses minimax algorithm at a depth of 4 to determine the best move for the AI
-    * Hard: uses minimax algorithm with alpha-beta pruning
+    * *Easy*: uses a random algorithm to pick the next move
+    * *Medium*: uses minimax algorithm at a depth of 4 to determine the best move for the AI
+    * *Hard*: uses minimax algorithm with alpha-beta pruning
 * AI to AI
   * Direct two servers to play each other with their respective AIs.
 
