@@ -55,8 +55,7 @@ Command descriptions:
 * Use password `breakthrough` to connect to server
 
 ***
-_Created as part of CSCE 315 at Texas A&M University_
-_Excerpts borrowed from Project 2 Outline created by Dr. Choe_
+_Created as part of CSCE 315 at Texas A&M University. Some parts of this Readme borrowed from Project 2 Outline created by Dr. Choe_
 
 Contributors:
 * Ryan Walters
